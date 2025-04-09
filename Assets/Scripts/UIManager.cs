@@ -43,7 +43,6 @@ public class UIManager : MonoBehaviour
             DraggableBlock draggableBlock = blockUI.GetComponent<DraggableBlock>();
             if (draggableBlock != null)
             {
-                draggableBlock.SetBlockType(blockType);
             }
         }
     }
