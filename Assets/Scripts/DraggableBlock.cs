@@ -49,20 +49,20 @@ public class DraggableBlock : MonoBehaviour
         {
             target = new Vector3(targetPosition.x, targetPosition.y, fixedZ) + offset;
             transform.position = Vector3.Lerp(transform.position, target, moveSpeed * Time.deltaTime);
-            if (Vector3.Distance(transform.position, target) < 0.03f && targetBool)
+            if (Vector3.Distance(transform.position, target) < 0.03f)
             {
-                targetBool = false;
-                CheckGridStation();
+                if (targetBool)
+                {
+                    targetBool = false;
+                    CheckGridStation();
+                }
+               
+                    
             }
             else
             {
                 targetBool = true;
             }
-        }
-        else
-        {
-            target = new Vector3(targetPosition.x, targetPosition.y, fixedZ) + offset;
-            transform.position = Vector3.Lerp(transform.position, target, moveSpeed * Time.deltaTime);
         }
     }
 
