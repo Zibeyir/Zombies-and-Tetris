@@ -10,7 +10,7 @@ public class GameInitializer : MonoBehaviour
     [SerializeField] private GameObject uiManagerPrefab;
 
     [Header("Block Types")]
-    [SerializeField] private List<BlockType> availableBlockTypes = new List<BlockType>();
+    //[SerializeField] private List<BlockType> availableBlockTypes = new List<BlockType>();
 
     [Header("Ball Settings")]
     [SerializeField] private GameObject ballPrefab;
@@ -46,7 +46,7 @@ public class GameInitializer : MonoBehaviour
         // Connect components
         if (uiManager != null)
         {
-            uiManager.SetupUI(availableBlockTypes);
+            //uiManager.SetupUI(availableBlockTypes);
         }
 
         // Spawn initial balls

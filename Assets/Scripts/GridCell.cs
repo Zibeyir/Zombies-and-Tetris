@@ -11,10 +11,17 @@ public class GridCell : MonoBehaviour
         if (draggableBlock != null) return;
 
         draggableBlock = _draggableBlock;
-        draggableBlock.GetGridObject(this);
+        BlockBool = true;
+        draggableBlock.SetGridCell(this);
     }
-    public void RemoveGraggableBlock()
+    public void GetDraggableBlockfromParts(DraggableBlock _draggableBlock)
+    {                
+        //draggableBlock = _draggableBlock;
+    }
+    public void RemoveDraggableBlock()
     {
         draggableBlock=null;
+        BlockBool = false;
+
     }
 }

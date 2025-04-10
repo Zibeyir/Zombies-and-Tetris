@@ -15,7 +15,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject draggableBlockPrefab; 
 
     [Header("Game Settings")]
-    [SerializeField] private List<BlockType> availableBlocks = new List<BlockType>();
+    //[SerializeField] private List<BlockType> availableBlocks = new List<BlockType>();
 
     [Header("Events")]
     public UnityEvent onGameStart;
@@ -28,24 +28,24 @@ public class UIManager : MonoBehaviour
         SetupButtons();
     }
 
-    public void SetupUI(List<BlockType> blockTypes)
-    {
-        if (blockContainer == null || draggableBlockPrefab == null) return;
+    //public void SetupUI(List<BlockType> blockTypes)
+    //{
+    //    if (blockContainer == null || draggableBlockPrefab == null) return;
 
-        foreach (Transform child in blockContainer)
-        {
-            Destroy(child.gameObject);
-        }
+    //    foreach (Transform child in blockContainer)
+    //    {
+    //        Destroy(child.gameObject);
+    //    }
 
-        foreach (BlockType blockType in blockTypes)
-        {
-            GameObject blockUI = Instantiate(draggableBlockPrefab, blockContainer);
-            DraggableBlock draggableBlock = blockUI.GetComponent<DraggableBlock>();
-            if (draggableBlock != null)
-            {
-            }
-        }
-    }
+    //    foreach (BlockType blockType in blockTypes)
+    //    {
+    //        GameObject blockUI = Instantiate(draggableBlockPrefab, blockContainer);
+    //        DraggableBlock draggableBlock = blockUI.GetComponent<DraggableBlock>();
+    //        if (draggableBlock != null)
+    //        {
+    //        }
+    //    }
+    //}
 
     private void SetupButtons()
     {
