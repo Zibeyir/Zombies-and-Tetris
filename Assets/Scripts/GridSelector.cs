@@ -5,6 +5,7 @@ public class GridSelector : MonoBehaviour
     [SerializeField] private string selectableTag = "SelectedBlock";
     [SerializeField] private float yTouchOffset = 0.5f;
 
+    public static float TimeSpeed { get; private set; } = 1;
     private Camera mainCam;
     private GameObject selectedObject;
     private DraggableBlock draggableBlock;
@@ -12,6 +13,8 @@ public class GridSelector : MonoBehaviour
     private GridCell pastCell;
     private bool isDragging = false;
     public LayerMask layerMask;
+
+  
     private void Start()
     {
         layerMask = ~(1 << LayerMask.NameToLayer("Wall"));
@@ -32,6 +35,8 @@ public class GridSelector : MonoBehaviour
             Ray ray = GetPointerRay(0);
             if (Physics.Raycast(ray, out RaycastHit hit,100,layerMask) && hit.collider.CompareTag(selectableTag))
             {
+
+                TimeSpeed = .2f;
                 selectedObject = hit.collider.gameObject;
                 draggableBlock = selectedObject.GetComponent<DraggableBlock>();
                 yTouchOffset = selectedObject.GetComponent<BoxCollider>().size.y;
@@ -72,6 +77,7 @@ public class GridSelector : MonoBehaviour
     {
         if (!isDragging || !(Input.GetMouseButtonUp(0) || (Input.touchCount == 0 && Input.touchSupported)))
             return;
+        TimeSpeed = 1f;
 
         draggableBlock.SetGridStatus(true);
 

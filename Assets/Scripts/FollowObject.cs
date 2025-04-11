@@ -3,7 +3,7 @@ using UnityEngine;
 public class FollowObject : MonoBehaviour
 {
     private Transform targetParent; 
-    public float followSpeed = 20f; 
+    public float followSpeedZ = 20f; 
 
     private void Start()
     {
@@ -15,6 +15,6 @@ public class FollowObject : MonoBehaviour
     {
         if (targetParent == null) return;
 
-        transform.position = Vector3.Lerp(transform.position, targetParent.position, followSpeed * Time.deltaTime);
+        transform.position = Vector3.Lerp(transform.position, targetParent.position, followSpeedZ * Time.deltaTime);
     }
 }

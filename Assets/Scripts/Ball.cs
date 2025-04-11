@@ -38,12 +38,12 @@ public class Ball : MonoBehaviour
             0
         ).normalized;
 
-        rb.velocity = randomDirection * initialSpeed;
+        rb.velocity = randomDirection * initialSpeed * GridSelector.TimeSpeed;
     }
 
     private void FixedUpdate()
     {
-        lastVelocity = rb.velocity;
+        lastVelocity = rb.velocity*GridSelector.TimeSpeed;
 
         if (transform.position.z != 0)
         {
