@@ -1,8 +1,8 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class DraggableBlock : MonoBehaviour
 {
-    public GridCell[] currentGridCell=new GridCell[4];
+    public GridCell currentGridCell;
     public bool isInGrid = false;
     public float moveSpeed = 25f;
 
@@ -17,7 +17,7 @@ public class DraggableBlock : MonoBehaviour
     private void Start()
     {
         targetBool = true;
-        currentGridCell = new GridCell[4];
+       
         blockPartsChecks = GetComponentsInChildren<BlockPartsCheck>();
         foreach (var part in blockPartsChecks)
             part.draggableBlock = this;
@@ -28,17 +28,19 @@ public class DraggableBlock : MonoBehaviour
 
     public void SetGridCell(GridCell newCell)
     {
-        if (currentGridCell[0] != null)
-            currentGridCell[0].RemoveDraggableBlock();
+        if (currentGridCell != null)
+        {
+            Debug.Log("Removed");
 
-        currentGridCell[0] = newCell;
-        targetPosition = currentGridCell[0].GetComponent<Renderer>().bounds.center;
+            currentGridCell.RemoveDraggableBlock();
+        }
+        currentGridCell = newCell;
+        targetPosition = currentGridCell.GetComponent<Renderer>().bounds.center;
         isInGrid = true;
     }
 
     public void SetGridStatus(bool status)
     {
-        Debug.Log("SetGridStatus");
         isInGrid = status;
 
     }
@@ -48,21 +50,25 @@ public class DraggableBlock : MonoBehaviour
         if (isInGrid)
         {
             target = new Vector3(targetPosition.x, targetPosition.y, fixedZ) + offset;
-            transform.position = Vector3.Lerp(transform.position, target, moveSpeed * Time.deltaTime);
-            if (Vector3.Distance(transform.position, target) < 0.03f)
+            transform.position = Vector3.MoveTowards(transform.position, target, moveSpeed * Time.deltaTime);
+            Debug.Log(Vector3.Distance(transform.position, target));
+
+            if (Vector3.Distance(transform.position, target) < 0.005f)
             {
+                Debug.Log(Vector3.Distance(transform.position, target));
                 if (targetBool)
                 {
                     targetBool = false;
                     CheckGridStation();
                 }
+                else
+                {
+                    targetBool = true;
+                }
                
                     
             }
-            else
-            {
-                targetBool = true;
-            }
+           
         }
     }
 
@@ -71,14 +77,33 @@ public class DraggableBlock : MonoBehaviour
     {
         if (AllPartsOverValidGrids())
         {
-            targetBase = targetPosition; Debug.Log("targetBase");
-
+            if (targetBase != targetPosition)
+            {
+                targetBase = targetPosition;
+                targetBool = true;
+            }
         }
         else
         {
-            targetPosition = targetBase; Debug.Log("targetPosition");
-
+            if (targetPosition != targetBase)
+            {
+                targetPosition = targetBase;
+                targetBool = true;
+            }
         }
+    }
+
+
+    public bool AllCellTouchCell()
+    {
+        foreach (var checker in blockPartsChecks)
+        {
+            if (!checker.CellIsFull()) {
+                Debug.Log("false");
+                return false;
+            }
+        }
+        return true;
     }
     public bool AllPartsOverValidGrids()
     {

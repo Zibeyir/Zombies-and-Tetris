@@ -7,6 +7,7 @@ TagManager:
   - Ball
   - 'SelectedBlock '
   - Selectedblock
+  - Cell
   layers:
   - Default
   - TransparentFX

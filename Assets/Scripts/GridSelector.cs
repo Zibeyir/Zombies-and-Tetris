@@ -54,11 +54,13 @@ public class GridSelector : MonoBehaviour
             currentCell = hit.collider.GetComponent<GridCell>();
             if (currentCell != null)
             {
+                Debug.Log("DontMove");
+
                 currentCell.GetDraggableBlock(draggableBlock);
             }
             else
             {
-
+                Debug.Log("Move");
                 draggableBlock.SetGridStatus(false);
                 selectedObject.transform.position = new Vector3(hit.point.x, hit.point.y, selectedObject.transform.position.z);
             }
