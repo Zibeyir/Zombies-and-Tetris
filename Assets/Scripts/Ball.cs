@@ -7,7 +7,9 @@ public class Ball : MonoBehaviour
     [SerializeField] private float maxSpeed = 10f;
     [SerializeField] private float minSpeed = 3f;
     [SerializeField] private float bounceForce = 5f;
-    [SerializeField] private float rotationSpeed = 360f; 
+    [SerializeField] private float rotationSpeed = 360f;
+    [SerializeField] private float ZPosition = -1.257f;
+
 
     private Rigidbody rb;
     private Vector3 lastVelocity;
@@ -45,7 +47,7 @@ public class Ball : MonoBehaviour
 
         if (transform.position.z != 0)
         {
-            transform.position = new Vector3(transform.position.x, transform.position.y, -1.612f);
+            transform.position = new Vector3(transform.position.x, transform.position.y, ZPosition);
         }
 
         if (rb.velocity.magnitude < minSpeed)

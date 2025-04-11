@@ -11,9 +11,10 @@ public class GridSelector : MonoBehaviour
     private GridCell currentCell;
     private GridCell pastCell;
     private bool isDragging = false;
-
+    public LayerMask layerMask;
     private void Start()
     {
+        layerMask = ~(1 << LayerMask.NameToLayer("Wall"));
         mainCam = Camera.main;
     }
 
@@ -29,7 +30,7 @@ public class GridSelector : MonoBehaviour
         if ((Input.GetMouseButtonDown(0) || Input.touchCount > 0) && !isDragging)
         {
             Ray ray = GetPointerRay(0);
-            if (Physics.Raycast(ray, out RaycastHit hit) && hit.collider.CompareTag(selectableTag))
+            if (Physics.Raycast(ray, out RaycastHit hit,100,layerMask) && hit.collider.CompareTag(selectableTag))
             {
                 selectedObject = hit.collider.gameObject;
                 draggableBlock = selectedObject.GetComponent<DraggableBlock>();
@@ -49,7 +50,7 @@ public class GridSelector : MonoBehaviour
 
         Ray ray = GetPointerRay(yTouchOffset);
 
-        if (Physics.Raycast(ray, out RaycastHit hit, 100f))
+        if (Physics.Raycast(ray, out RaycastHit hit, 100, layerMask))
         {
             currentCell = hit.collider.GetComponent<GridCell>();
             if (currentCell != null&&draggableBlock.AllCellTouchCell())

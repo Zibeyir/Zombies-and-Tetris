@@ -5,9 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - Ball
-  - 'SelectedBlock '
   - Selectedblock
   - Cell
+  - Walls
   layers:
   - Default
   - TransparentFX
@@ -15,9 +15,9 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
-  - 
+  - Wall
+  - Ball
+  - Block
   - 
   - 
   - 

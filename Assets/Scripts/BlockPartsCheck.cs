@@ -10,11 +10,14 @@ public class BlockPartsCheck : MonoBehaviour
     public Vector3 boxOffset = Vector3.zero;
     public GridCell ownCcell=null;
     public GridCell PastCcell=null;
+    public LayerMask layerMask;
 
     public bool checkCellBool=false;
     float sizeBoxCollider;
     private void OnEnable()
     {
+        layerMask = ~(1 << LayerMask.NameToLayer("Wall"));
+
         print(ownCcell==PastCcell?true:false);
         sizeBoxCollider = 0.2f;
         boxHalfExtents = new Vector3(sizeBoxCollider, sizeBoxCollider, sizeBoxCollider);
@@ -23,7 +26,7 @@ public class BlockPartsCheck : MonoBehaviour
     public bool IsOverValidGrid()
     {
         Vector3 boxCenter = transform.position + boxOffset;
-        Collider[] hits = Physics.OverlapBox(boxCenter, boxHalfExtents);
+        Collider[] hits = Physics.OverlapBox(boxCenter, boxHalfExtents, Quaternion.identity, layerMask);
 
         foreach (var hitz in hits)
         {
@@ -47,7 +50,7 @@ public class BlockPartsCheck : MonoBehaviour
     public bool CellIsFull()
     {
         Vector3 boxCenter = transform.position + boxOffset;
-        Collider[] hits = Physics.OverlapBox(boxCenter, boxHalfExtents);
+        Collider[] hits = Physics.OverlapBox(boxCenter, boxHalfExtents, Quaternion.identity, layerMask);
 
         foreach (var hit in hits)
         {
