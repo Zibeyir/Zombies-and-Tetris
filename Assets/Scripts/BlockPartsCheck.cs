@@ -8,23 +8,18 @@ public class BlockPartsCheck : MonoBehaviour
     public DraggableBlock draggableBlock;
     public Vector3 boxHalfExtents;
     public Vector3 boxOffset = Vector3.zero;
+    public GridCell ownCcell=null;
+    public GridCell PastCcell=null;
+
+    public bool checkCellBool=false;
+    float sizeBoxCollider;
     private void OnEnable()
     {
-        boxHalfExtents = new Vector3(0.2f, 0.2f, 0.2f);
+        print(ownCcell==PastCcell?true:false);
+        sizeBoxCollider = 0.2f;
+        boxHalfExtents = new Vector3(sizeBoxCollider, sizeBoxCollider, sizeBoxCollider);
     }
-    //public bool IsOverValidGrid()
-    //{
-
-    //    Ray ray = new Ray( transform.position, -Vector3.forward);
-    //    if (Physics.Raycast(ray, out RaycastHit hit, 20f))
-    //    {
-    //        GridCell cell = hit.collider.GetComponent<GridCell>();
-    //        Debug.Log(cell != null && (cell.draggableBlock == null || cell.draggableBlock == draggableBlock));
-
-    //        return cell != null && (cell.draggableBlock==null||cell.draggableBlock==draggableBlock);
-    //    }
-    //    return false;
-    //}
+   
     public bool IsOverValidGrid()
     {
         Vector3 boxCenter = transform.position + boxOffset;
@@ -33,8 +28,15 @@ public class BlockPartsCheck : MonoBehaviour
         foreach (var hitz in hits)
         {
             GridCell cell = hitz.GetComponent<GridCell>();
-
-            return cell != null && (cell.draggableBlock == null || cell.draggableBlock == draggableBlock);
+            checkCellBool = (cell != null && (cell.draggableBlock == null || cell.draggableBlock == draggableBlock));
+            Debug.Log(checkCellBool + "CheckParts");
+            if (checkCellBool)
+            {
+                if (ownCcell != null) ownCcell.RemoveDraggableBlock();
+                ownCcell = cell;
+                 
+            }
+            return checkCellBool;
 
         }
 
@@ -60,7 +62,7 @@ public class BlockPartsCheck : MonoBehaviour
     {
         Gizmos.color = Color.red;
         Vector3 boxCenter = transform.position + boxOffset;
-        Gizmos.DrawWireCube(boxCenter, boxHalfExtents * 2f); // 2x çünki halfExtents-dir
+        Gizmos.DrawWireCube(boxCenter, boxHalfExtents * 2f); 
     }
 
     private void Update()
