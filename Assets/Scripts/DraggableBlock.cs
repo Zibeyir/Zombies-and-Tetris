@@ -10,6 +10,7 @@ public class DraggableBlock : MonoBehaviour
     private Vector3 target;
     private Vector3 targetBase;
     public bool targetBool;
+    public bool LastBool=false;
     [SerializeField] Vector3 offset;
     private float fixedZ;
 
@@ -29,46 +30,32 @@ public class DraggableBlock : MonoBehaviour
     public void SetGridCell(GridCell newCell)
     {
         if (currentGridCell != null)
-        {
-            Debug.Log("Removed");
-
             currentGridCell.RemoveDraggableBlock();
-        }
+
         currentGridCell = newCell;
         targetPosition = currentGridCell.GetComponent<Renderer>().bounds.center;
         isInGrid = true;
+        targetBool = true; 
     }
+
 
     public void SetGridStatus(bool status)
     {
         isInGrid = status;
-
+        LastBool=status;
     }
 
     private void FixedUpdate()
     {
-        if (isInGrid)
-        {
-            target = new Vector3(targetPosition.x, targetPosition.y, fixedZ) + offset;
-            transform.position = Vector3.MoveTowards(transform.position, target, moveSpeed * Time.deltaTime);
-            Debug.Log(Vector3.Distance(transform.position, target));
+        if (!isInGrid || currentGridCell == null) return;
 
-            if (Vector3.Distance(transform.position, target) < 0.005f)
-            {
-                Debug.Log(Vector3.Distance(transform.position, target));
-                if (targetBool)
-                {
-                    targetBool = false;
-                    CheckGridStation();
-                }
-                else
-                {
-                    targetBool = true;
-                }
-               
-                    
-            }
-           
+        target = new Vector3(targetPosition.x, targetPosition.y, fixedZ) + offset;
+        transform.position = target;
+
+        if (Vector3.Distance(transform.position, target) < 0.01f && targetBool)
+        {
+            targetBool = false;
+            CheckGridStation();
         }
     }
 
@@ -77,19 +64,20 @@ public class DraggableBlock : MonoBehaviour
     {
         if (AllPartsOverValidGrids())
         {
-            if (targetBase != targetPosition)
-            {
-                targetBase = targetPosition;
-                targetBool = true;
-            }
+            targetBase = targetPosition;
+            //targetBool = true; // hər dəfə valid olsa belə true saxla
+            Debug.Log("AllCheck");
         }
         else
         {
-            if (targetPosition != targetBase)
+            if (LastBool)
             {
                 targetPosition = targetBase;
-                targetBool = true;
+                Debug.Log("Not AllCheck");
+
             }
+            targetPosition = targetBase;
+
         }
     }
 
@@ -99,10 +87,12 @@ public class DraggableBlock : MonoBehaviour
         foreach (var checker in blockPartsChecks)
         {
             if (!checker.CellIsFull()) {
-                Debug.Log("false");
+                Debug.Log("false+ All");
                 return false;
             }
         }
+        Debug.Log("true+ All");
+
         return true;
     }
     public bool AllPartsOverValidGrids()
@@ -114,4 +104,5 @@ public class DraggableBlock : MonoBehaviour
         }
         return true;
     }
+
 }

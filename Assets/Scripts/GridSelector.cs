@@ -52,7 +52,7 @@ public class GridSelector : MonoBehaviour
         if (Physics.Raycast(ray, out RaycastHit hit, 100f))
         {
             currentCell = hit.collider.GetComponent<GridCell>();
-            if (currentCell != null)
+            if (currentCell != null&&draggableBlock.AllCellTouchCell())
             {
                 Debug.Log("DontMove");
 

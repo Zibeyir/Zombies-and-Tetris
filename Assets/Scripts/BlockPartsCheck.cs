@@ -10,7 +10,7 @@ public class BlockPartsCheck : MonoBehaviour
     public Vector3 boxOffset = Vector3.zero;
     private void OnEnable()
     {
-        boxHalfExtents = new Vector3(0.3f, 0.3f, 0.3f);
+        boxHalfExtents = new Vector3(0.2f, 0.2f, 0.2f);
     }
     //public bool IsOverValidGrid()
     //{
