@@ -1,0 +1,217 @@
+{
+  "weapons": [
+    {
+      "Id": 1,
+      "Name": "Tapança",
+      "BaseDamage": 30,
+      "Level2": 35,
+      "Level3": 42,
+      "Level4": 52,
+      "Level5": 68,
+      "UnlockCondition": "Başlanğıc",
+      "UnlockCost": 0
+    },
+    {
+      "Id": 2,
+      "Name": "Qumbara",
+      "BaseDamage": 35,
+      "Level2": 41,
+      "Level3": 49,
+      "Level4": 61,
+      "Level5": 79,
+      "UnlockCondition": "Başlanğıc",
+      "UnlockCost": 0
+    },
+    {
+      "Id": 3,
+      "Name": "Odlu top (Fireball)",
+      "BaseDamage": 40,
+      "Level2": 46,
+      "Level3": 55,
+      "Level4": 69,
+      "Level5": 90,
+      "UnlockCondition": "Oyunçu Level 3",
+      "UnlockCost": 500
+    },
+    {
+      "Id": 4,
+      "Name": "Buz silah",
+      "BaseDamage": 45,
+      "Level2": 52,
+      "Level3": 62,
+      "Level4": 77,
+      "Level5": 100,
+      "UnlockCondition": "Oyunçu Level 5",
+      "UnlockCost": 1000
+    },
+    {
+      "Id": 5,
+      "Name": "Zəhərli güllə",
+      "BaseDamage": 50,
+      "Level2": 58,
+      "Level3": 69,
+      "Level4": 86,
+      "Level5": 112,
+      "UnlockCondition": "Oyunçu Level 7",
+      "UnlockCost": 1500
+    },
+    {
+      "Id": 6,
+      "Name": "Partlayıcı bomba",
+      "BaseDamage": 55,
+      "Level2": 64,
+      "Level3": 76,
+      "Level4": 96,
+      "Level5": 123,
+      "UnlockCondition": "Oyunçu Level 9",
+      "UnlockCost": 2000
+    },
+    {
+      "Id": 7,
+      "Name": "Lazer silah",
+      "BaseDamage": 60,
+      "Level2": 70,
+      "Level3": 83,
+      "Level4": 104,
+      "Level5": 135,
+      "UnlockCondition": "Oyunçu Level 11",
+      "UnlockCost": 2500
+    }
+  ],
+  "enemies": [
+    {
+      "Type": "Zəif",
+      "Damage": 5,
+      "HP": 100,
+      "CoinReward": 2
+    },
+    {
+      "Type": "Orta",
+      "Damage": 10,
+      "HP": 200,
+      "CoinReward": 4
+    },
+    {
+      "Type": "Güclü",
+      "Damage": 15,
+      "HP": 400,
+      "CoinReward": 8
+    }
+  ],
+  "waves": [
+    {
+      "WaveNumber": 1,
+      "EnemyCount": 30
+    },
+    {
+      "WaveNumber": 2,
+      "EnemyCount": 35
+    },
+    {
+      "WaveNumber": 3,
+      "EnemyCount": 40
+    },
+    {
+      "WaveNumber": 4,
+      "EnemyCount": 50
+    }
+  ],
+  "gamestages": [
+    {
+      "StageName": "Başlanğıc",
+      "HP": 150
+    },
+    {
+      "StageName": "Silah Level 3+",
+      "HP": 200
+    },
+    {
+      "StageName": "Bütün silahlar açıldıqdan sonra",
+      "HP": 250
+    }
+  ],
+  "upgradecosts": [
+    {
+      "Level": "1 → 2",
+      "Cost": 100,
+      "PowerIncreasePercent": "+15%",
+      "SpeedIncreasePercent": "+10%"
+    },
+    {
+      "Level": "2 → 3",
+      "Cost": 200,
+      "PowerIncreasePercent": "+20%",
+      "SpeedIncreasePercent": "+15%"
+    },
+    {
+      "Level": "3 → 4",
+      "Cost": 400,
+      "PowerIncreasePercent": "+25%",
+      "SpeedIncreasePercent": "+20%"
+    },
+    {
+      "Level": "4 → 5",
+      "Cost": 600,
+      "PowerIncreasePercent": "+30%",
+      "SpeedIncreasePercent": "+25%"
+    }
+  ],
+  "maps": [
+    {
+      "MapNumber": 1,
+      "EnemyStrength": "Zəif + Orta",
+      "WaveCount": 4,
+      "EstimatedCoins": 372,
+      "HPStart": 150,
+      "HPMax": 200
+    },
+    {
+      "MapNumber": 2,
+      "EnemyStrength": "Orta + Zəif",
+      "WaveCount": 4,
+      "EstimatedCoins": "500–600",
+      "HPStart": 200,
+      "HPMax": 250
+    },
+    {
+      "MapNumber": 3,
+      "EnemyStrength": "Orta + Güclü",
+      "WaveCount": 4,
+      "EstimatedCoins": "600–700",
+      "HPStart": 250,
+      "HPMax": 300
+    },
+    {
+      "MapNumber": 4,
+      "EnemyStrength": "Güclü + Orta",
+      "WaveCount": 4,
+      "EstimatedCoins": 800,
+      "HPStart": 300,
+      "HPMax": 350
+    },
+    {
+      "MapNumber": 5,
+      "EnemyStrength": "Güclü",
+      "WaveCount": 4,
+      "EstimatedCoins": 900,
+      "HPStart": 350,
+      "HPMax": 400
+    },
+    {
+      "MapNumber": 6,
+      "EnemyStrength": "Güclü + Mini-Boss",
+      "WaveCount": 4,
+      "EstimatedCoins": "1000+",
+      "HPStart": 400,
+      "HPMax": 500
+    },
+    {
+      "MapNumber": 7,
+      "EnemyStrength": "Güclü + Boss",
+      "WaveCount": 4,
+      "EstimatedCoins": "1200+",
+      "HPStart": 500,
+      "HPMax": 600
+    }
+  ]
+}

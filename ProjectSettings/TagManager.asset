@@ -8,6 +8,8 @@ TagManager:
   - Selectedblock
   - Cell
   - Walls
+  - Fence
+  - Zombie
   layers:
   - Default
   - TransparentFX
@@ -18,7 +20,7 @@ TagManager:
   - Wall
   - Ball
   - Block
-  - 
+  - Zombie
   - 
   - 
   - 
