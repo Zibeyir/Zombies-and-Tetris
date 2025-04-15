@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class ObjectPool : MonoBehaviour
@@ -10,40 +10,68 @@ public class ObjectPool : MonoBehaviour
     {
         public BulletType Type;
         public GameObject Prefab;
-        public float Size = 10;
+        public int Size = 10;
     }
 
     public List<PoolItem> Items;
     private Dictionary<BulletType, Queue<GameObject>> poolDict;
+    private Dictionary<BulletType, GameObject> prefabLookup;
 
     private void Awake()
     {
         Instance = this;
-
         poolDict = new Dictionary<BulletType, Queue<GameObject>>();
+        prefabLookup = new Dictionary<BulletType, GameObject>();
 
         foreach (var item in Items)
         {
             Queue<GameObject> objectQueue = new Queue<GameObject>();
+
             for (int i = 0; i < item.Size; i++)
             {
                 GameObject obj = Instantiate(item.Prefab);
                 obj.SetActive(false);
+                obj.transform.SetParent(this.transform);
                 objectQueue.Enqueue(obj);
             }
+
             poolDict[item.Type] = objectQueue;
+            prefabLookup[item.Type] = item.Prefab;
         }
     }
 
     public GameObject SpawnFromPool(BulletType type, Vector3 position, Quaternion rotation)
     {
-        if (!poolDict.ContainsKey(type)) return null;
+        if (!poolDict.ContainsKey(type))
+        {
+            Debug.LogWarning($"No pool found for bullet type: {type}");
+            return null;
+        }
 
-        GameObject obj = poolDict[type].Dequeue();
+        GameObject obj = null;
+
+        // Birini tapana qədər baxırıq
+        foreach (var pooledObj in poolDict[type])
+        {
+            if (!pooledObj.activeInHierarchy)
+            {
+                obj = pooledObj;
+                break;
+            }
+        }
+
+        // Əgər boş yoxdursa — yenisini yarat
+        if (obj == null)
+        {
+            obj = Instantiate(prefabLookup[type]);
+            obj.SetActive(false);
+            obj.transform.SetParent(this.transform);
+            poolDict[type].Enqueue(obj); // yeni yaradılanı sıraya əlavə et
+        }
+
         obj.transform.position = position;
         obj.transform.rotation = rotation;
         obj.SetActive(true);
-        poolDict[type].Enqueue(obj);
         return obj;
     }
 }

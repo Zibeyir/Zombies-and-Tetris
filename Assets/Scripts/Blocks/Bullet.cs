@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
@@ -6,9 +6,24 @@ public class Bullet : MonoBehaviour
     public float Speed = 10f;
     public int Damage = 20;
 
+    private Transform targetZombie;
+
+    private void OnEnable()
+    {
+        FindClosestZombie();
+    }
+
     private void Update()
     {
-        transform.Translate(Vector3.up * Speed * Time.deltaTime);
+        if (targetZombie != null)
+        {
+            Vector3 dir = (targetZombie.position - transform.position).normalized;
+            transform.Translate(dir * Speed * Time.deltaTime , Space.World);
+        }
+        else
+        {
+            transform.Translate(Vector3.up * Speed * Time.deltaTime); // əgər zombi yoxdursa yuxarı getsin
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -20,9 +35,30 @@ public class Bullet : MonoBehaviour
             {
                 zombie.TakeDamage(Damage, Type);
             }
-            Debug.Log("BulletFired");
-            gameObject.SetActive(false); // Pool-a geri qaytar
+            gameObject.SetActive(false);
         }
+    }
+
+    private void FindClosestZombie()
+    {
+        float minDist = float.MaxValue;
+        GameObject closest = null;
+
+        foreach (var zombie in WaveManager.Instance.GetActiveZombies())
+        {
+            if (zombie != null)
+            {
+                float dist = Vector3.Distance(transform.position, zombie.transform.position);
+                if (dist < minDist)
+                {
+                    minDist = dist;
+                    closest = zombie;
+                }
+            }
+        }
+
+        if (closest != null)
+            targetZombie = closest.transform;
     }
 }
 public enum BulletType

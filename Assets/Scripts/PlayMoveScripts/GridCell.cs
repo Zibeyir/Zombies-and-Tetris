@@ -10,14 +10,13 @@ public class GridCell : MonoBehaviour
     {
         if (draggableBlock != null) return;
 
-        Debug.Log("draggable Cell");
         draggableBlock = _draggableBlock;
         BlockBool = true;
         draggableBlock.SetGridCell(this);
     }
     public void GetDraggableBlockfromParts(DraggableBlock _draggableBlock)
     {
-        Debug.Log(_draggableBlock.gameObject.name+" Name");
+        
         draggableBlock = _draggableBlock;
         BlockBool = true;
     }

@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 297810225999174208}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.757, z: 0}
+  m_LocalPosition: {x: 0, y: 0.757, z: 0.6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -615,7 +615,7 @@ MonoBehaviour:
   moveSpeed: 25
   targetBool: 0
   LastBool: 0
-  offset: {x: 0, y: 0.3, z: 0}
+  offset: {x: 0, y: 0, z: 0.3}
   blockPartsChecks: []
 --- !u!65 &1157576751639326231
 BoxCollider:
@@ -675,43 +675,43 @@ MonoBehaviour:
   - Type: 0
     Prefab: {fileID: 6105206121851020212, guid: 002a06b2dc4f54c4591492eb04d95376,
       type: 3}
-    Size: 0.1
+    Size: 0
   - Type: 0
     Prefab: {fileID: 6105206121851020212, guid: 002a06b2dc4f54c4591492eb04d95376,
       type: 3}
-    Size: 0.1
+    Size: 0
   - Type: 0
     Prefab: {fileID: 6105206121851020212, guid: 002a06b2dc4f54c4591492eb04d95376,
       type: 3}
-    Size: 0.1
+    Size: 0
   - Type: 0
     Prefab: {fileID: 6105206121851020212, guid: 002a06b2dc4f54c4591492eb04d95376,
       type: 3}
-    Size: 0.1
+    Size: 0
   - Type: 0
     Prefab: {fileID: 6105206121851020212, guid: 002a06b2dc4f54c4591492eb04d95376,
       type: 3}
-    Size: 0.1
+    Size: 0
   - Type: 0
     Prefab: {fileID: 6105206121851020212, guid: 002a06b2dc4f54c4591492eb04d95376,
       type: 3}
-    Size: 0.1
+    Size: 0
   - Type: 0
     Prefab: {fileID: 6105206121851020212, guid: 002a06b2dc4f54c4591492eb04d95376,
       type: 3}
-    Size: 0.1
+    Size: 0
   - Type: 0
     Prefab: {fileID: 6105206121851020212, guid: 002a06b2dc4f54c4591492eb04d95376,
       type: 3}
-    Size: 0.1
+    Size: 0
   - Type: 0
     Prefab: {fileID: 6105206121851020212, guid: 002a06b2dc4f54c4591492eb04d95376,
       type: 3}
-    Size: 0.1
+    Size: 0
   - Type: 0
     Prefab: {fileID: 6105206121851020212, guid: 002a06b2dc4f54c4591492eb04d95376,
       type: 3}
-    Size: 0.1
+    Size: 0
 --- !u!114 &2790802144519472613
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -726,6 +726,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BulletType: 0
   FirePoint: {fileID: 8709676507010614155}
+  followObject: {fileID: 208450575516518030}
 --- !u!1 &8939412910395372579
 GameObject:
   m_ObjectHideFlags: 0

@@ -24,7 +24,7 @@ public class DraggableBlock : MonoBehaviour
          blockPartsChecks = GetComponentsInChildren<BlockPartsCheck>();
         foreach (var part in blockPartsChecks)
             part.draggableBlock = this;
-        fixedZ = transform.position.z;
+        fixedZ = transform.position.y;
         targetPosition = transform.position;
         targetBase = targetPosition;
     }
@@ -35,7 +35,6 @@ public class DraggableBlock : MonoBehaviour
             currentGridCell.RemoveDraggableBlock();
         if (newCell.draggableBlock == this)
         {
-            Debug.Log("Remove all cells");
            
             currentGridCell = newCell;
             targetPosition = currentGridCell.GetComponent<Renderer>().bounds.center;
@@ -59,7 +58,7 @@ public class DraggableBlock : MonoBehaviour
     {
         if (!isInGrid ) return;
 
-        target = new Vector3(targetPosition.x, targetPosition.y, fixedZ) + offset;
+        target = new Vector3(targetPosition.x, fixedZ , targetPosition.z) + offset;
         transform.position = target;
 
         if (Vector3.Distance(transform.position, target) < 0.01f && targetBool)
@@ -75,7 +74,6 @@ public class DraggableBlock : MonoBehaviour
         if (AllPartsOverValidGrids())
         {
             targetBase = targetPosition;
-            Debug.Log("AllCheck");
            
         }
         else
@@ -88,7 +86,6 @@ public class DraggableBlock : MonoBehaviour
 
     public void LastCheckforCells()
     {
-        Debug.Log("LastCheckforCells");
         if (currentGridCell!=null)
         {
             
@@ -100,11 +97,9 @@ public class DraggableBlock : MonoBehaviour
                 {
                     allCells.Add(checker.ownCcell);
                     checker.ownCcell.GetDraggableBlockfromParts(this);
-                    Debug.Log("LastCheckforCells 3");
 
                 }
             }
-            Debug.Log(allCells.Count+ " LastCheckforCells");
         }
     }
     public bool AllCellTouchCell()
@@ -112,11 +107,9 @@ public class DraggableBlock : MonoBehaviour
         foreach (var checker in blockPartsChecks)
         {
             if (!checker.CellIsFull()) {
-                Debug.Log("false+ All");
                 return false;
             }
         }
-        Debug.Log("true+ All");
 
         return true;
     }

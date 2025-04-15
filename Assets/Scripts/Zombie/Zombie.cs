@@ -1,7 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
+using DG.Tweening;
+using UnityEngine.AI;
 
 [RequireComponent(typeof(Animator))]
+//[RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(NavMeshAgent))] // Add NavMeshAgent component
 public class Zombie : MonoBehaviour
 {
     private EnemyData enemyData;
@@ -12,17 +16,26 @@ public class Zombie : MonoBehaviour
     public int Damage = 10;
 
     private bool isAttacking = false;
+    private bool dieBool = false;
+
     private Animator animator;
     private Fence targetFence;
     private float checkDistance = 1f;
 
     public string EnemyId;
-    private void Start()
-    {
-        animator = GetComponent<Animator>();
-        targetFence = GameObject.FindGameObjectWithTag("Fence")?.GetComponent<Fence>();
 
-        // Load data from JSON (via GameDataService)
+    private Tween hitTween;
+    private Rigidbody rb;
+    private NavMeshAgent navAgent; // Reference to the NavMeshAgent
+    
+    private void OnEnable()
+    {
+        dieBool = true;
+        animator = GetComponent<Animator>();
+        //rb = GetComponent<Rigidbody>();
+        navAgent = GetComponent<NavMeshAgent>(); // Initialize NavMeshAgent
+        targetFence = GameObject.FindGameObjectWithTag("Fence")?.GetComponent<Fence>();
+        navAgent.avoidancePriority = Random.Range(40, 80);
         enemyData = GameDataService.Instance.GetEnemyById(EnemyId);
         if (enemyData == null)
         {
@@ -31,26 +44,30 @@ public class Zombie : MonoBehaviour
         }
 
         currentHealth = enemyData.HP;
+        //rb.isKinematic = false; // Enable physics
+
+        navAgent.speed = MoveSpeed; // Set the move speed for NavMeshAgent
+        navAgent.stoppingDistance = checkDistance; // Set distance when the agent stops moving towards the target
+        navAgent.updateRotation = false; // Disable rotation, so the zombie doesn't spin
+        navAgent.updatePosition = true; // Allow position updates via NavMeshAgent
     }
 
     private void Update()
     {
-        if (!isAttacking && targetFence != null)
+        if (dieBool&&!isAttacking && targetFence != null)
         {
-
-            if (!IsBlockedAhead())
-            {
-                transform.Translate(Vector3.forward * MoveSpeed * Time.deltaTime);
-
-            }
+            MoveTowardsTarget();
         }
     }
-    private bool IsBlockedAhead()
+
+    private void MoveTowardsTarget()
     {
-        // Önünde başka bir zombi var mı diye kontrol eder
-        Ray ray = new Ray(transform.position + Vector3.forward * 0.5f, transform.forward);
-        return Physics.Raycast(ray, checkDistance, LayerMask.GetMask("Zombie"));
+        if (targetFence != null)
+        {
+            navAgent.SetDestination(targetFence.transform.position); // Set the destination to the target (the fence)
+        }
     }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Fence"))
@@ -76,18 +93,29 @@ public class Zombie : MonoBehaviour
             damage *= 2;
 
         currentHealth -= damage;
+
+        if (!dieBool && (hitTween == null || !hitTween.IsActive() || !hitTween.IsPlaying()))
+        {
+            Debug.Log("TakeDamage");
+            hitTween = transform.DOScale(Vector3.one * 0.6f, 0.15f)
+            .SetLoops(2, LoopType.Yoyo)
+            .SetEase(Ease.OutBack)
+            .OnComplete(() => transform.localScale = Vector3.one * 0.5f);
+        }
+
         if (currentHealth <= 0)
         {
+            dieBool = true;
             Die();
         }
     }
 
     public void Die()
     {
+        navAgent.enabled = false;
         StopAllCoroutines();
         animator.SetTrigger("Die");
-        //isAttacking = false;
+        isAttacking = true;
         Destroy(gameObject, 5f);
-        //WaveManager.Instance.OnZombieKilled();
     }
 }

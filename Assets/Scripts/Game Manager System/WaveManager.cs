@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -6,18 +6,28 @@ public class WaveManager : MonoBehaviour
 {
     public static WaveManager Instance { get; private set; }
 
-    public Transform SpawnPoint;
-    public GameObject ZombiePrefab;
+    public Transform SpawnPointMin;
+    public Transform SpawnPointMax;
+
+    public List<GameObject> ZombiePrefabs;
 
     private List<WaveData> waves;
     private int currentWave = 0;
     private int zombiesAlive = 0;
-    [SerializeField] float enemyAttackDuration = 2f;
-    [SerializeField] float waweDuration = 7f;
 
+    [SerializeField] float enemyAttackDuration = 2f;
+    [SerializeField] float waveDuration = 7f;
+
+    private List<GameObject> activeZombies = new List<GameObject>();
 
     private void Awake()
     {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
         Instance = this;
     }
 
@@ -31,7 +41,7 @@ public class WaveManager : MonoBehaviour
     private IEnumerator StartNextWave()
     {
         yield return new WaitForSeconds(2f);
-        for (currentWave = 0; currentWave <= waves.Count; currentWave++)
+        for (currentWave = 0; currentWave < waves.Count; currentWave++)
         {
             WaveData wave = waves[currentWave];
             GameEvents.OnWaveStarted?.Invoke(currentWave + 1);
@@ -40,18 +50,52 @@ public class WaveManager : MonoBehaviour
             for (int i = 0; i < wave.EnemyCount; i++)
             {
                 SpawnZombie();
-                yield return new WaitForSeconds(enemyAttackDuration); // delay between spawns
+                yield return new WaitForSeconds(enemyAttackDuration);
             }
 
-            yield return new WaitForSeconds(waweDuration);
+            yield return new WaitForSeconds(waveDuration);
         }
-       
     }
 
     private void SpawnZombie()
     {
-        GameObject zombie = Instantiate(ZombiePrefab, new Vector3(Random.Range(6,10), SpawnPoint.position.y, SpawnPoint.position.z), SpawnPoint.rotation);
-        // You could configure zombie stats here using EnemyData
+        if (ZombiePrefabs.Count == 0)
+        {
+            Debug.LogWarning("No zombie prefabs assigned!");
+            return;
+        }
+
+        GameObject selectedZombiePrefab = ZombiePrefabs[Random.Range(0, ZombiePrefabs.Count)];
+
+        Vector3 spawnPos = GenerateValidSpawnPosition();
+
+        GameObject zombie = Instantiate(selectedZombiePrefab, spawnPos, SpawnPointMax.rotation);
+        activeZombies.Add(zombie);
+    }
+
+    private Vector3 GenerateValidSpawnPosition()
+    {
+        Vector3 spawnPos = Vector3.zero;
+        bool isValidPosition = false;
+
+        // Try to find a valid position with minimum 0.2 distance from other zombies
+        while (!isValidPosition)
+        {
+            spawnPos = new Vector3(Random.Range(SpawnPointMin.position.x, SpawnPointMax.position.x), SpawnPointMax.position.y , Random.Range(SpawnPointMin.position.z, SpawnPointMax.position.z));
+
+            // Check distance against all active zombies
+            isValidPosition = true;
+            foreach (var activeZombie in activeZombies)
+            {
+                if (activeZombie != null && Vector3.Distance(spawnPos, activeZombie.transform.position) < 0.2f)
+                {
+                    isValidPosition = false;
+                    break;
+                }
+            }
+        }
+
+        return spawnPos;
     }
 
     public void OnZombieKilled()
@@ -62,5 +106,22 @@ public class WaveManager : MonoBehaviour
             GameEvents.OnWaveCompleted?.Invoke(currentWave);
             StartCoroutine(StartNextWave());
         }
+    }
+
+    public void DestroyAllZombies()
+    {
+        foreach (var zombie in activeZombies)
+        {
+            if (zombie != null)
+            {
+                Destroy(zombie);
+            }
+        }
+        activeZombies.Clear();
+    }
+
+    public List<GameObject> GetActiveZombies()
+    {
+        return activeZombies;
     }
 }

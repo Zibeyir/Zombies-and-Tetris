@@ -243,7 +243,7 @@ Transform:
   m_GameObject: {fileID: 3218688768559257475}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.323, z: 0}
+  m_LocalPosition: {x: 0, y: 0.323, z: 0.6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -522,43 +522,43 @@ MonoBehaviour:
   - Type: 0
     Prefab: {fileID: 6105206121851020212, guid: 002a06b2dc4f54c4591492eb04d95376,
       type: 3}
-    Size: 0.1
+    Size: 0
   - Type: 0
     Prefab: {fileID: 6105206121851020212, guid: 002a06b2dc4f54c4591492eb04d95376,
       type: 3}
-    Size: 0.1
+    Size: 0
   - Type: 0
     Prefab: {fileID: 6105206121851020212, guid: 002a06b2dc4f54c4591492eb04d95376,
       type: 3}
-    Size: 0.1
+    Size: 0
   - Type: 0
     Prefab: {fileID: 6105206121851020212, guid: 002a06b2dc4f54c4591492eb04d95376,
       type: 3}
-    Size: 0.1
+    Size: 0
   - Type: 0
     Prefab: {fileID: 6105206121851020212, guid: 002a06b2dc4f54c4591492eb04d95376,
       type: 3}
-    Size: 0.1
+    Size: 0
   - Type: 0
     Prefab: {fileID: 6105206121851020212, guid: 002a06b2dc4f54c4591492eb04d95376,
       type: 3}
-    Size: 0.1
+    Size: 0
   - Type: 0
     Prefab: {fileID: 6105206121851020212, guid: 002a06b2dc4f54c4591492eb04d95376,
       type: 3}
-    Size: 0.1
+    Size: 0
   - Type: 0
     Prefab: {fileID: 6105206121851020212, guid: 002a06b2dc4f54c4591492eb04d95376,
       type: 3}
-    Size: 0.1
+    Size: 0
   - Type: 0
     Prefab: {fileID: 6105206121851020212, guid: 002a06b2dc4f54c4591492eb04d95376,
       type: 3}
-    Size: 0.1
+    Size: 0
   - Type: 0
     Prefab: {fileID: 6105206121851020212, guid: 002a06b2dc4f54c4591492eb04d95376,
       type: 3}
-    Size: 0.1
+    Size: 0
 --- !u!114 &-3697556126036547581
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -573,3 +573,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BulletType: 0
   FirePoint: {fileID: 6634953289539042839}
+  followObject: {fileID: 8077644698448514573}

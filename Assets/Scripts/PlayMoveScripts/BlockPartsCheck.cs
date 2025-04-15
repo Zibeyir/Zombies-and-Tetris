@@ -18,7 +18,6 @@ public class BlockPartsCheck : MonoBehaviour
     {
         layerMask = ~(1 << LayerMask.NameToLayer("Wall"));
 
-        //print(ownCcell==PastCcell?true:false);
         sizeBoxCollider = 0.2f;
         boxHalfExtents = new Vector3(sizeBoxCollider, sizeBoxCollider, sizeBoxCollider);
     }
@@ -32,7 +31,6 @@ public class BlockPartsCheck : MonoBehaviour
         {
             GridCell cell = hitz.GetComponent<GridCell>();
             checkCellBool = (cell != null && (cell.draggableBlock == null || cell.draggableBlock == draggableBlock));
-            //Debug.Log(checkCellBool + "CheckParts");
             if (checkCellBool)
             {
                 if (ownCcell != null) ownCcell.RemoveDraggableBlock();
@@ -61,17 +59,6 @@ public class BlockPartsCheck : MonoBehaviour
         return false;
     }
 
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.red;
-        Vector3 boxCenter = transform.position + boxOffset;
-        Gizmos.DrawWireCube(boxCenter, boxHalfExtents * 2f); 
-    }
 
-    private void Update()
-    {
-        //Debug.DrawRay(transform.position, -Vector3.forward*4 , Color.red);
-
-    }
 
 }

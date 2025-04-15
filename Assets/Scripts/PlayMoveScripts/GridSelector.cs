@@ -4,17 +4,19 @@ public class GridSelector : MonoBehaviour
 {
     [SerializeField] private string selectableTag = "SelectedBlock";
     [SerializeField] private float yTouchOffset = 0.5f;
-
-    public static float TimeSpeed { get; private set; } = 1;
+  
+    public static float TimeSpeed = 1;
     private Camera mainCam;
     private GameObject selectedObject;
     private DraggableBlock draggableBlock;
     private GridCell currentCell;
-    private GridCell pastCell;
     private bool isDragging = false;
     public LayerMask layerMask;
 
-  
+    private void Awake()
+    {
+        
+    }
     private void Start()
     {
         layerMask = ~(1 << LayerMask.NameToLayer("Wall"));
@@ -35,11 +37,11 @@ public class GridSelector : MonoBehaviour
             Ray ray = GetPointerRay(0);
             if (Physics.Raycast(ray, out RaycastHit hit,100,layerMask) && hit.collider.CompareTag(selectableTag))
             {
-
-                TimeSpeed = .2f;
+                Time.timeScale = .2f;
+                //TimeSpeed = .2f;
                 selectedObject = hit.collider.gameObject;
                 draggableBlock = selectedObject.GetComponent<DraggableBlock>();
-                yTouchOffset = selectedObject.GetComponent<BoxCollider>().size.y;
+                yTouchOffset = selectedObject.GetComponent<BoxCollider>().size.z;
                 selectedObject.GetComponent<Collider>().enabled = false;
 
                 isDragging = true;
@@ -68,16 +70,17 @@ public class GridSelector : MonoBehaviour
             {
                 Debug.Log("Move");
                 draggableBlock.SetGridStatus(false);
-                selectedObject.transform.position = new Vector3(hit.point.x, hit.point.y, selectedObject.transform.position.z);
+                selectedObject.transform.position = new Vector3(hit.point.x, selectedObject.transform.position.y, hit.point.z);
             }
         }
     }
 
     private void HandleRelease()
     {
+
         if (!isDragging || !(Input.GetMouseButtonUp(0) || (Input.touchCount == 0 && Input.touchSupported)))
             return;
-        TimeSpeed = 1f;
+        Time.timeScale = 1;
 
         draggableBlock.SetGridStatus(true);
 
@@ -96,8 +99,8 @@ public class GridSelector : MonoBehaviour
             ? mainCam.ScreenPointToRay(Input.GetTouch(0).position)
             : mainCam.ScreenPointToRay(Input.mousePosition);
 
-        Vector3 offsetOrigin = baseRay.origin + mainCam.transform.up * yOffset;
-        Debug.DrawRay(offsetOrigin, baseRay.direction * 100f, Color.green); 
+        Vector3 offsetOrigin = baseRay.origin + mainCam.transform.forward * yOffset;
+       
 
         return new Ray(offsetOrigin, baseRay.direction);
     }

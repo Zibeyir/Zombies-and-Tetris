@@ -1,4 +1,5 @@
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.UIElements;
 
 public class Ball : MonoBehaviour
 {
@@ -8,14 +9,17 @@ public class Ball : MonoBehaviour
     [SerializeField] private float minSpeed = 3f;
     [SerializeField] private float bounceForce = 5f;
     [SerializeField] private float rotationSpeed = 360f;
-    [SerializeField] private float ZPosition = -1.257f;
+    [SerializeField] private float ZPosition;
 
+    [Header("Speed Control")]
+    [SerializeField] private float xSpeedFactor = 1f; 
 
     private Rigidbody rb;
     private Vector3 lastVelocity;
 
     private void Start()
     {
+        ZPosition = transform.position.y;
         rb = GetComponent<Rigidbody>();
         if (rb == null)
         {
@@ -23,7 +27,7 @@ public class Ball : MonoBehaviour
         }
 
         rb.useGravity = false;
-        rb.constraints = RigidbodyConstraints.FreezePositionZ; 
+       // rb.constraints = RigidbodyConstraints.FreezePositionZ;
         rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
         rb.interpolation = RigidbodyInterpolation.Interpolate;
 
@@ -34,8 +38,8 @@ public class Ball : MonoBehaviour
     {
         Vector3 randomDirection = new Vector3(
             Random.Range(-1f, 1f),
-            Random.Range(-1f, 1f),
-            0
+            ZPosition,
+            Random.Range(-1f, 1f)
         ).normalized;
 
         rb.velocity = randomDirection * initialSpeed * GridSelector.TimeSpeed;
@@ -43,13 +47,16 @@ public class Ball : MonoBehaviour
 
     private void FixedUpdate()
     {
-        lastVelocity = rb.velocity*GridSelector.TimeSpeed;
+        lastVelocity = rb.velocity * GridSelector.TimeSpeed;
 
-        if (transform.position.z != 0)
+        if (transform.position.y != 0)
         {
-            transform.position = new Vector3(transform.position.x, transform.position.y, ZPosition);
+            transform.position = new Vector3(transform.position.x, ZPosition, transform.position.z);
         }
 
+       
+
+       
         if (rb.velocity.magnitude < minSpeed)
         {
             rb.velocity = rb.velocity.normalized * minSpeed;
@@ -60,6 +67,7 @@ public class Ball : MonoBehaviour
             rb.velocity = rb.velocity.normalized * maxSpeed;
         }
 
+        // Rotation
         transform.Rotate(Vector3.right * rotationSpeed * Time.fixedDeltaTime * rb.velocity.magnitude);
     }
 
@@ -72,8 +80,8 @@ public class Ball : MonoBehaviour
 
         rb.AddForce(new Vector3(
             Random.Range(-0.5f, 0.5f),
-            Random.Range(-0.5f, 0.5f),
-            0
+            0,
+            Random.Range(-0.5f, 0.5f)
         ) * bounceForce, ForceMode.Impulse);
     }
 }
