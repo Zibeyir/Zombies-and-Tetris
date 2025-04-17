@@ -23,6 +23,10 @@ public class ObjectPool : MonoBehaviour
         poolDict = new Dictionary<BulletType, Queue<GameObject>>();
         prefabLookup = new Dictionary<BulletType, GameObject>();
 
+        
+    }
+    private void Start()
+    {
         foreach (var item in Items)
         {
             Queue<GameObject> objectQueue = new Queue<GameObject>();
@@ -39,7 +43,6 @@ public class ObjectPool : MonoBehaviour
             prefabLookup[item.Type] = item.Prefab;
         }
     }
-
     public GameObject SpawnFromPool(BulletType type, Vector3 position, Quaternion rotation)
     {
         if (!poolDict.ContainsKey(type))
@@ -63,10 +66,10 @@ public class ObjectPool : MonoBehaviour
         // Əgər boş yoxdursa — yenisini yarat
         if (obj == null)
         {
-            obj = Instantiate(prefabLookup[type]);
+            obj = Instantiate(prefabLookup[type], position,rotation);
             obj.SetActive(false);
             obj.transform.SetParent(this.transform);
-            poolDict[type].Enqueue(obj); // yeni yaradılanı sıraya əlavə et
+            poolDict[type].Enqueue(obj); 
         }
 
         obj.transform.position = position;

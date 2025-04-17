@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections;
 
 public class Bullet : MonoBehaviour
 {
@@ -6,24 +7,27 @@ public class Bullet : MonoBehaviour
     public float Speed = 10f;
     public int Damage = 20;
 
-    private Transform targetZombie;
+    private Vector3 moveDirection;
+    private Coroutine disableRoutine;
+    [SerializeField] private TrailRenderer trailRenderer;
 
     private void OnEnable()
     {
-        FindClosestZombie();
+        FindDirectionToClosestZombie();
+        transform.forward = -moveDirection; 
+
+        trailRenderer.enabled = true;
+
+        if (disableRoutine != null)
+            StopCoroutine(disableRoutine);
+
+        disableRoutine = StartCoroutine(DisableAfterSeconds(3f));
     }
+
 
     private void Update()
     {
-        if (targetZombie != null)
-        {
-            Vector3 dir = (targetZombie.position - transform.position).normalized;
-            transform.Translate(dir * Speed * Time.deltaTime , Space.World);
-        }
-        else
-        {
-            transform.Translate(Vector3.up * Speed * Time.deltaTime); // əgər zombi yoxdursa yuxarı getsin
-        }
+        transform.Translate(moveDirection * Speed * Time.deltaTime, Space.World);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -33,13 +37,22 @@ public class Bullet : MonoBehaviour
             Zombie zombie = other.GetComponent<Zombie>();
             if (zombie != null)
             {
-                zombie.TakeDamage(Damage, Type);
+                Vector3 direction = (other.transform.position - transform.position).normalized;
+
+                // Collider üzərindəki ən yaxın nöqtəni tap
+                Vector3 surfacePoint = other.ClosestPoint(transform.position);
+
+                // Daxilə doğru azca irəli get (mesh tərəfə)
+                Vector3 adjustedPoint = surfacePoint + direction * 0.2f; // istəsən 0.1f-0.3f dəyiş
+
+                zombie.TakeDamage(Damage, Type, adjustedPoint);
             }
-            gameObject.SetActive(false);
+
+            DisableSelf();
         }
     }
 
-    private void FindClosestZombie()
+    private void FindDirectionToClosestZombie()
     {
         float minDist = float.MaxValue;
         GameObject closest = null;
@@ -57,14 +70,29 @@ public class Bullet : MonoBehaviour
             }
         }
 
-        if (closest != null)
-            targetZombie = closest.transform;
+        moveDirection = (closest != null)
+            ? (closest.transform.position - transform.position).normalized
+            : Vector3.up;
+    }
+
+    private IEnumerator DisableAfterSeconds(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+        DisableSelf();
+    }
+
+    private void DisableSelf()
+    {
+        trailRenderer.Clear();
+        trailRenderer.enabled = false;
+        if (disableRoutine != null)
+        {
+            StopCoroutine(disableRoutine);
+            disableRoutine = null;
+        }
+        
+
+        gameObject.SetActive(false);
     }
 }
-public enum BulletType
-{
-    Pistol,
-    Grenade,
-    Shotgun,
-    Rocket
-}
+

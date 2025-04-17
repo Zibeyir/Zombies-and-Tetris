@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 297810225999174208}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.757, z: 0.6}
+  m_LocalPosition: {x: 0, y: 0.68, z: 0.7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -469,7 +469,6 @@ GameObject:
   - component: {fileID: 1066614860948064894}
   - component: {fileID: 1157576751639326231}
   - component: {fileID: 5483768413624423446}
-  - component: {fileID: -3175574953849026259}
   - component: {fileID: 2790802144519472613}
   m_Layer: 8
   m_Name: box03
@@ -659,59 +658,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.65356827, y: 0.65094066, z: 0.658073}
   m_Center: {x: 0.6800623, y: -0.35463035, z: 0}
---- !u!114 &-3175574953849026259
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8483211169401578767}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f365159d1a900524b9a13a593fdbbc5c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Items:
-  - Type: 0
-    Prefab: {fileID: 6105206121851020212, guid: 002a06b2dc4f54c4591492eb04d95376,
-      type: 3}
-    Size: 0
-  - Type: 0
-    Prefab: {fileID: 6105206121851020212, guid: 002a06b2dc4f54c4591492eb04d95376,
-      type: 3}
-    Size: 0
-  - Type: 0
-    Prefab: {fileID: 6105206121851020212, guid: 002a06b2dc4f54c4591492eb04d95376,
-      type: 3}
-    Size: 0
-  - Type: 0
-    Prefab: {fileID: 6105206121851020212, guid: 002a06b2dc4f54c4591492eb04d95376,
-      type: 3}
-    Size: 0
-  - Type: 0
-    Prefab: {fileID: 6105206121851020212, guid: 002a06b2dc4f54c4591492eb04d95376,
-      type: 3}
-    Size: 0
-  - Type: 0
-    Prefab: {fileID: 6105206121851020212, guid: 002a06b2dc4f54c4591492eb04d95376,
-      type: 3}
-    Size: 0
-  - Type: 0
-    Prefab: {fileID: 6105206121851020212, guid: 002a06b2dc4f54c4591492eb04d95376,
-      type: 3}
-    Size: 0
-  - Type: 0
-    Prefab: {fileID: 6105206121851020212, guid: 002a06b2dc4f54c4591492eb04d95376,
-      type: 3}
-    Size: 0
-  - Type: 0
-    Prefab: {fileID: 6105206121851020212, guid: 002a06b2dc4f54c4591492eb04d95376,
-      type: 3}
-    Size: 0
-  - Type: 0
-    Prefab: {fileID: 6105206121851020212, guid: 002a06b2dc4f54c4591492eb04d95376,
-      type: 3}
-    Size: 0
 --- !u!114 &2790802144519472613
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -724,7 +670,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fab87d935bdc16846ab6f22226782441, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BulletType: 0
+  BulletType: 2
   FirePoint: {fileID: 8709676507010614155}
   followObject: {fileID: 208450575516518030}
 --- !u!1 &8939412910395372579

@@ -1,14 +1,16 @@
 using DG.Tweening;
 using UnityEngine;
-using DG.Tweening;
+
 
 public class Weapon : MonoBehaviour
 {
     public BulletType BulletType;
     public Transform FirePoint;
-    private Tween hitTween;
+    
     [SerializeField] FollowObject followObject;
-   
+    ObjectPool objectPool;
+
+  
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Ball")){
@@ -20,4 +22,12 @@ public class Weapon : MonoBehaviour
     {
         ObjectPool.Instance.SpawnFromPool(BulletType, FirePoint.position, FirePoint.rotation);
     }
+}
+public enum BulletType
+{
+    Pistol,
+    Grenade,
+    Shotgun,
+    Rocket,
+    ZombieBoold
 }

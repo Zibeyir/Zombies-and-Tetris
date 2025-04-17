@@ -247,7 +247,6 @@ GameObject:
   - component: {fileID: 6391924312241312246}
   - component: {fileID: 6716039514539893275}
   - component: {fileID: 288255191777475526}
-  - component: {fileID: 622456895887284021}
   - component: {fileID: -1607204687163926827}
   m_Layer: 8
   m_Name: box06
@@ -393,59 +392,6 @@ MonoBehaviour:
   LastBool: 0
   offset: {x: 0, y: 0, z: 0.3}
   blockPartsChecks: []
---- !u!114 &622456895887284021
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3248459105168012457}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f365159d1a900524b9a13a593fdbbc5c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Items:
-  - Type: 0
-    Prefab: {fileID: 6105206121851020212, guid: 002a06b2dc4f54c4591492eb04d95376,
-      type: 3}
-    Size: 0
-  - Type: 0
-    Prefab: {fileID: 6105206121851020212, guid: 002a06b2dc4f54c4591492eb04d95376,
-      type: 3}
-    Size: 0
-  - Type: 0
-    Prefab: {fileID: 6105206121851020212, guid: 002a06b2dc4f54c4591492eb04d95376,
-      type: 3}
-    Size: 0
-  - Type: 0
-    Prefab: {fileID: 6105206121851020212, guid: 002a06b2dc4f54c4591492eb04d95376,
-      type: 3}
-    Size: 0
-  - Type: 0
-    Prefab: {fileID: 6105206121851020212, guid: 002a06b2dc4f54c4591492eb04d95376,
-      type: 3}
-    Size: 0
-  - Type: 0
-    Prefab: {fileID: 6105206121851020212, guid: 002a06b2dc4f54c4591492eb04d95376,
-      type: 3}
-    Size: 0
-  - Type: 0
-    Prefab: {fileID: 6105206121851020212, guid: 002a06b2dc4f54c4591492eb04d95376,
-      type: 3}
-    Size: 0
-  - Type: 0
-    Prefab: {fileID: 6105206121851020212, guid: 002a06b2dc4f54c4591492eb04d95376,
-      type: 3}
-    Size: 0
-  - Type: 0
-    Prefab: {fileID: 6105206121851020212, guid: 002a06b2dc4f54c4591492eb04d95376,
-      type: 3}
-    Size: 0
-  - Type: 0
-    Prefab: {fileID: 6105206121851020212, guid: 002a06b2dc4f54c4591492eb04d95376,
-      type: 3}
-    Size: 0
 --- !u!114 &-1607204687163926827
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -458,9 +404,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fab87d935bdc16846ab6f22226782441, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BulletType: 0
+  BulletType: 3
   FirePoint: {fileID: 4520458931512156374}
   followObject: {fileID: 2277238477565634396}
+  objectPool: {fileID: 0}
 --- !u!1 &3724804038545900611
 GameObject:
   m_ObjectHideFlags: 0

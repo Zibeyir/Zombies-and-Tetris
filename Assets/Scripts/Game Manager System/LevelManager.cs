@@ -27,7 +27,7 @@ public class LevelManager : MonoBehaviour
         var waves = GameDataService.Instance.GetWaveData(); // You may filter waves per map
 
         GameObject fence = GameObject.FindGameObjectWithTag("Fence");
-        fence.GetComponent<Fence>().HP = map.HPStart;
+        fence.GetComponent<Fence>().GetHP(map.HPStart);
 
         WaveManager.Instance.StartWaves(waves);
     }
@@ -35,7 +35,7 @@ public class LevelManager : MonoBehaviour
     public void LevelComplete()
     {
         GameEvents.OnGameWon?.Invoke();
-        UIManager.Instance.ShowWinScreen();
+        UIManager.Instance.ShowWin();
 
         SaveData data = SaveDataService.Load();
         data.CurrentLevel++;
@@ -45,6 +45,6 @@ public class LevelManager : MonoBehaviour
 
     public void GameOver()
     {
-        //UIManager.Instance.ShowLoseScreen();
+        UIManager.Instance.ShowLose();
     }
 }

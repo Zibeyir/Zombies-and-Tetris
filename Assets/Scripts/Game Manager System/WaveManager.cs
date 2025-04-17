@@ -14,7 +14,9 @@ public class WaveManager : MonoBehaviour
     private List<WaveData> waves;
     private int currentWave = 0;
     private int zombiesAlive = 0;
+    private float zombiesWaveUI= 0;
 
+    WaveData wave;
     [SerializeField] float enemyAttackDuration = 2f;
     [SerializeField] float waveDuration = 7f;
 
@@ -41,20 +43,18 @@ public class WaveManager : MonoBehaviour
     private IEnumerator StartNextWave()
     {
         yield return new WaitForSeconds(2f);
-        for (currentWave = 0; currentWave < waves.Count; currentWave++)
+        //Debug.Log("Start new Wave");
+
+        wave = waves[currentWave];
+        //GameEvents.OnWaveStarted?.Invoke(currentWave + 1);
+        zombiesAlive = wave.EnemyCount;
+
+        for (int i = 0; i < wave.EnemyCount; i++)
         {
-            WaveData wave = waves[currentWave];
-            GameEvents.OnWaveStarted?.Invoke(currentWave + 1);
-            zombiesAlive = wave.EnemyCount;
-
-            for (int i = 0; i < wave.EnemyCount; i++)
-            {
-                SpawnZombie();
-                yield return new WaitForSeconds(enemyAttackDuration);
-            }
-
-            yield return new WaitForSeconds(waveDuration);
+            SpawnZombie();
+            yield return new WaitForSeconds(enemyAttackDuration);
         }
+        currentWave++;
     }
 
     private void SpawnZombie()
@@ -101,10 +101,15 @@ public class WaveManager : MonoBehaviour
     public void OnZombieKilled()
     {
         zombiesAlive--;
+        zombiesWaveUI = zombiesAlive;
+        //Debug.Log("Wave :"+ (wave.EnemyCount - zombiesWaveUI) / wave.EnemyCount + " Zombies "+zombiesAlive+" WaveMax "+wave.EnemyCount);
+        UIManager.Instance.SetWave((wave.EnemyCount - zombiesWaveUI) / wave.EnemyCount,wave.WaveNumber);
         if (zombiesAlive <= 0)
         {
+            DestroyAllZombies();
             GameEvents.OnWaveCompleted?.Invoke(currentWave);
             StartCoroutine(StartNextWave());
+            //Debug.Log("All Zombies dead");
         }
     }
 
@@ -118,6 +123,15 @@ public class WaveManager : MonoBehaviour
             }
         }
         activeZombies.Clear();
+    }
+    public void RemoveZombie(GameObject zombie)
+    {
+        if (activeZombies.Contains(zombie))
+        {
+            activeZombies.Remove(zombie);
+            OnZombieKilled();
+            //Destroy(zombie);
+        }
     }
 
     public List<GameObject> GetActiveZombies()

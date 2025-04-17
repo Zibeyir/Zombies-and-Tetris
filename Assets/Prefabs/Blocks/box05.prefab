@@ -45,7 +45,6 @@ GameObject:
   - component: {fileID: 6975871101196842457}
   - component: {fileID: 2252843922015486880}
   - component: {fileID: 8095882371368015664}
-  - component: {fileID: 2244263074482675822}
   - component: {fileID: 1146512704431161618}
   m_Layer: 8
   m_Name: box05
@@ -191,59 +190,6 @@ MonoBehaviour:
   LastBool: 0
   offset: {x: 0, y: 0, z: 0.3}
   blockPartsChecks: []
---- !u!114 &2244263074482675822
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2483318768922910333}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f365159d1a900524b9a13a593fdbbc5c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Items:
-  - Type: 0
-    Prefab: {fileID: 6105206121851020212, guid: 002a06b2dc4f54c4591492eb04d95376,
-      type: 3}
-    Size: 0
-  - Type: 0
-    Prefab: {fileID: 6105206121851020212, guid: 002a06b2dc4f54c4591492eb04d95376,
-      type: 3}
-    Size: 0
-  - Type: 0
-    Prefab: {fileID: 6105206121851020212, guid: 002a06b2dc4f54c4591492eb04d95376,
-      type: 3}
-    Size: 0
-  - Type: 0
-    Prefab: {fileID: 6105206121851020212, guid: 002a06b2dc4f54c4591492eb04d95376,
-      type: 3}
-    Size: 0
-  - Type: 0
-    Prefab: {fileID: 6105206121851020212, guid: 002a06b2dc4f54c4591492eb04d95376,
-      type: 3}
-    Size: 0
-  - Type: 0
-    Prefab: {fileID: 6105206121851020212, guid: 002a06b2dc4f54c4591492eb04d95376,
-      type: 3}
-    Size: 0
-  - Type: 0
-    Prefab: {fileID: 6105206121851020212, guid: 002a06b2dc4f54c4591492eb04d95376,
-      type: 3}
-    Size: 0
-  - Type: 0
-    Prefab: {fileID: 6105206121851020212, guid: 002a06b2dc4f54c4591492eb04d95376,
-      type: 3}
-    Size: 0
-  - Type: 0
-    Prefab: {fileID: 6105206121851020212, guid: 002a06b2dc4f54c4591492eb04d95376,
-      type: 3}
-    Size: 0
-  - Type: 0
-    Prefab: {fileID: 6105206121851020212, guid: 002a06b2dc4f54c4591492eb04d95376,
-      type: 3}
-    Size: 0
 --- !u!114 &1146512704431161618
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -259,6 +205,7 @@ MonoBehaviour:
   BulletType: 0
   FirePoint: {fileID: 935375845936834152}
   followObject: {fileID: 4513767872078372221}
+  objectPool: {fileID: 0}
 --- !u!1 &4564959790560992180
 GameObject:
   m_ObjectHideFlags: 0

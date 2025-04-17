@@ -2,9 +2,10 @@ using System;
 
 public static class GameEvents
 {
-    public static Action<int> OnWaveStarted;
-    public static Action<int> OnWaveCompleted;
-    public static Action<int> OnFenceHPChanged;
+    public static Action<float,int> OnWaveStarted;
+    public static Action<float> OnWaveCompleted;
+    public static Action<float> OnFenceHPChanged;
+    public static Action<int> OnCoinChanged;
     public static Action OnGameWon;
     public static Action OnGameLost;
 }

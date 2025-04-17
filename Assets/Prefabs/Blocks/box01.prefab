@@ -361,7 +361,6 @@ GameObject:
   - component: {fileID: 930849348364925345}
   - component: {fileID: 6680856050064761802}
   - component: {fileID: 2254895318960533985}
-  - component: {fileID: 1276602284140650556}
   - component: {fileID: -3697556126036547581}
   m_Layer: 8
   m_Name: box01
@@ -506,59 +505,6 @@ MonoBehaviour:
   LastBool: 0
   offset: {x: 0, y: 0, z: 0}
   blockPartsChecks: []
---- !u!114 &1276602284140650556
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8862608693372777130}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f365159d1a900524b9a13a593fdbbc5c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Items:
-  - Type: 0
-    Prefab: {fileID: 6105206121851020212, guid: 002a06b2dc4f54c4591492eb04d95376,
-      type: 3}
-    Size: 0
-  - Type: 0
-    Prefab: {fileID: 6105206121851020212, guid: 002a06b2dc4f54c4591492eb04d95376,
-      type: 3}
-    Size: 0
-  - Type: 0
-    Prefab: {fileID: 6105206121851020212, guid: 002a06b2dc4f54c4591492eb04d95376,
-      type: 3}
-    Size: 0
-  - Type: 0
-    Prefab: {fileID: 6105206121851020212, guid: 002a06b2dc4f54c4591492eb04d95376,
-      type: 3}
-    Size: 0
-  - Type: 0
-    Prefab: {fileID: 6105206121851020212, guid: 002a06b2dc4f54c4591492eb04d95376,
-      type: 3}
-    Size: 0
-  - Type: 0
-    Prefab: {fileID: 6105206121851020212, guid: 002a06b2dc4f54c4591492eb04d95376,
-      type: 3}
-    Size: 0
-  - Type: 0
-    Prefab: {fileID: 6105206121851020212, guid: 002a06b2dc4f54c4591492eb04d95376,
-      type: 3}
-    Size: 0
-  - Type: 0
-    Prefab: {fileID: 6105206121851020212, guid: 002a06b2dc4f54c4591492eb04d95376,
-      type: 3}
-    Size: 0
-  - Type: 0
-    Prefab: {fileID: 6105206121851020212, guid: 002a06b2dc4f54c4591492eb04d95376,
-      type: 3}
-    Size: 0
-  - Type: 0
-    Prefab: {fileID: 6105206121851020212, guid: 002a06b2dc4f54c4591492eb04d95376,
-      type: 3}
-    Size: 0
 --- !u!114 &-3697556126036547581
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -571,6 +517,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fab87d935bdc16846ab6f22226782441, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BulletType: 0
+  BulletType: 1
   FirePoint: {fileID: 6634953289539042839}
   followObject: {fileID: 8077644698448514573}
+  objectPool: {fileID: 0}

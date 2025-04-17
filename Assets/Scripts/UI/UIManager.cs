@@ -1,53 +1,48 @@
 using UnityEngine;
-using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
     public static UIManager Instance { get; private set; }
 
-    public Text WaveText;
-    public Slider FenceHPSlider;
-    public GameObject WinScreen;
-    public GameObject LoseScreen;
+    [Header("Modules")]
+    [SerializeField] private WaveUI waveUI;
+    [SerializeField] private HealthUI healthUI;
+    [SerializeField] private CoinUI coinUI;
+    [SerializeField] private GameOverUI gameOverUI;
+
+    public WaveUI Wave => waveUI;
+    public HealthUI Health => healthUI;
+    public CoinUI Coin => coinUI;
+    public GameOverUI GameOver => gameOverUI;
 
     private void Awake()
     {
-        Instance = this;
+        if (Instance == null) Instance = this;
+        else Destroy(gameObject);
     }
 
     private void OnEnable()
     {
-        GameEvents.OnWaveStarted += ShowWave;
-        GameEvents.OnFenceHPChanged += UpdateFenceHP;
-        GameEvents.OnGameWon += ShowWinScreen;
-        GameEvents.OnGameLost += ShowLoseScreen;
+        GameEvents.OnWaveStarted += waveUI.ShowWave;
+        GameEvents.OnFenceHPChanged += healthUI.UpdateHP;
+        GameEvents.OnCoinChanged += coinUI.UpdateCoins;
+        GameEvents.OnGameWon += gameOverUI.ShowWin;
+        GameEvents.OnGameLost += gameOverUI.ShowLose;
     }
 
     private void OnDisable()
     {
-        GameEvents.OnWaveStarted -= ShowWave;
-        GameEvents.OnFenceHPChanged -= UpdateFenceHP;
-        GameEvents.OnGameWon -= ShowWinScreen;
-        GameEvents.OnGameLost -= ShowLoseScreen;
+        GameEvents.OnWaveStarted -= waveUI.ShowWave;
+        GameEvents.OnFenceHPChanged -= healthUI.UpdateHP;
+        GameEvents.OnCoinChanged -= coinUI.UpdateCoins;
+        GameEvents.OnGameWon -= gameOverUI.ShowWin;
+        GameEvents.OnGameLost -= gameOverUI.ShowLose;
     }
 
-    public void ShowWave(int waveNumber)
-    {
-        WaveText.text = "Wave " + waveNumber;
-    }
-
-    public void UpdateFenceHP(int hp)
-    {
-        FenceHPSlider.value = hp;
-    }
-
-    public void ShowWinScreen()
-    {
-        WinScreen.SetActive(true);
-    }
-
-    public void ShowLoseScreen()
-    {
-        LoseScreen.SetActive(true);
-    }
+    // Optional wrapper methods
+    public void SetWave(float wave, int waveNumber) => waveUI.ShowWave(wave,waveNumber);
+    public void SetHP(float hp) => healthUI.UpdateHP(hp);
+    public void SetCoins(int coins) => coinUI.UpdateCoins(coins);
+    public void ShowWin() => gameOverUI.ShowWin();
+    public void ShowLose() => gameOverUI.ShowLose();
 }
