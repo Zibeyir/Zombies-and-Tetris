@@ -40,6 +40,7 @@ public class GridSelector : MonoBehaviour
                 Time.timeScale = .2f;
                 //TimeSpeed = .2f;
                 selectedObject = hit.collider.gameObject;
+                selectedObject.transform.parent = null;
                 draggableBlock = selectedObject.GetComponent<DraggableBlock>();
                 yTouchOffset = selectedObject.GetComponent<BoxCollider>().size.z;
                 selectedObject.GetComponent<Collider>().enabled = false;

@@ -9,6 +9,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private HealthUI healthUI;
     [SerializeField] private CoinUI coinUI;
     [SerializeField] private GameOverUI gameOverUI;
+    [SerializeField] private UIFader uiFader;
 
     public WaveUI Wave => waveUI;
     public HealthUI Health => healthUI;
@@ -28,6 +29,7 @@ public class UIManager : MonoBehaviour
         GameEvents.OnCoinChanged += coinUI.UpdateCoins;
         GameEvents.OnGameWon += gameOverUI.ShowWin;
         GameEvents.OnGameLost += gameOverUI.ShowLose;
+        //GameEvents.UIFader += uiFader.FadeInAll(bool s);
     }
 
     private void OnDisable()
@@ -45,4 +47,5 @@ public class UIManager : MonoBehaviour
     public void SetCoins(int coins) => coinUI.UpdateCoins(coins);
     public void ShowWin() => gameOverUI.ShowWin();
     public void ShowLose() => gameOverUI.ShowLose();
+    //public void FadeINOutAll(bool )
 }

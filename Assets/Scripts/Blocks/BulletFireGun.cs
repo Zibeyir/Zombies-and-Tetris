@@ -16,7 +16,7 @@ public class BulletFireGun : MonoBehaviour
         FindDirectionToClosestZombie();
         transform.forward = -moveDirection; 
 
-        trailRenderer.enabled = true;
+        //trailRenderer.enabled = true;
 
         if (disableRoutine != null)
             StopCoroutine(disableRoutine);
@@ -44,6 +44,8 @@ public class BulletFireGun : MonoBehaviour
 
                 // Daxilə doğru azca irəli get (mesh tərəfə)
                 Vector3 adjustedPoint = surfacePoint + direction * 0.2f; // istəsən 0.1f-0.3f dəyiş
+                ObjectPool.Instance.SpawnFromPool(BulletType.ShortGunTouchExpole, transform.position, Quaternion.identity);
+                ObjectPool.Instance.SpawnFromPool(BulletType.ShortGunTouchExpoleFire, transform.position, Quaternion.identity);
 
                 zombie.TakeDamage(Damage, Type, adjustedPoint);
             }
@@ -72,7 +74,7 @@ public class BulletFireGun : MonoBehaviour
 
         moveDirection = (closest != null)
             ? (closest.transform.position - transform.position).normalized
-            : Vector3.up;
+            : -Vector3.forward;
     }
 
     private IEnumerator DisableAfterSeconds(float seconds)
@@ -83,8 +85,8 @@ public class BulletFireGun : MonoBehaviour
 
     private void DisableSelf()
     {
-        trailRenderer.Clear();
-        trailRenderer.enabled = false;
+        //trailRenderer.Clear();
+        //trailRenderer.enabled = false;
         if (disableRoutine != null)
         {
             StopCoroutine(disableRoutine);

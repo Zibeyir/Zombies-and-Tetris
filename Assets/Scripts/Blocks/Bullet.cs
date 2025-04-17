@@ -16,7 +16,7 @@ public class Bullet : MonoBehaviour
         FindDirectionToClosestZombie();
         transform.forward = -moveDirection; 
 
-        trailRenderer.enabled = true;
+        //trailRenderer.enabled = true;
 
         if (disableRoutine != null)
             StopCoroutine(disableRoutine);
@@ -72,7 +72,7 @@ public class Bullet : MonoBehaviour
 
         moveDirection = (closest != null)
             ? (closest.transform.position - transform.position).normalized
-            : Vector3.up;
+            : -Vector3.forward;
     }
 
     private IEnumerator DisableAfterSeconds(float seconds)
@@ -83,8 +83,8 @@ public class Bullet : MonoBehaviour
 
     private void DisableSelf()
     {
-        trailRenderer.Clear();
-        trailRenderer.enabled = false;
+        //trailRenderer.Clear();
+        //trailRenderer.enabled = false;
         if (disableRoutine != null)
         {
             StopCoroutine(disableRoutine);

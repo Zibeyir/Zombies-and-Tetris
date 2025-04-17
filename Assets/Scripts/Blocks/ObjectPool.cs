@@ -78,3 +78,14 @@ public class ObjectPool : MonoBehaviour
         return obj;
     }
 }
+public enum BulletType
+{
+    Pistol,
+    Grenade,
+    Shotgun,
+    Rocket,
+    ZombieBoold,
+    ShortGunTouchExpole,
+    ShortGunTouchExpoleFire,
+    GrenadeExplode
+}

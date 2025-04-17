@@ -8,26 +8,28 @@ public class Weapon : MonoBehaviour
     public Transform FirePoint;
     
     [SerializeField] FollowObject followObject;
-    ObjectPool objectPool;
+    [SerializeField] private ParticleSystem? particleSystemFire;
 
-  
+
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Ball")){
             Fire();
             followObject.TouchBallScale();
+            if (particleSystemFire != null&&!particleSystemFire.isPlaying) particleSystemFire.Play();
         }
     }
     private void Fire()
     {
-        ObjectPool.Instance.SpawnFromPool(BulletType, FirePoint.position, FirePoint.rotation);
+        if (BulletType==BulletType.Shotgun)
+        {
+            ObjectPool.Instance.SpawnFromPool(BulletType, FirePoint.position, FirePoint.rotation);
+
+        }
+        else
+        {
+            ObjectPool.Instance.SpawnFromPool(BulletType, FirePoint.position, FirePoint.rotation);
+
+        }
     }
-}
-public enum BulletType
-{
-    Pistol,
-    Grenade,
-    Shotgun,
-    Rocket,
-    ZombieBoold
 }

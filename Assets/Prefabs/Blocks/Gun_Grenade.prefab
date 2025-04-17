@@ -363,7 +363,7 @@ GameObject:
   - component: {fileID: 2254895318960533985}
   - component: {fileID: -3697556126036547581}
   m_Layer: 8
-  m_Name: box01
+  m_Name: Gun_Grenade
   m_TagString: Selectedblock
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -492,7 +492,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8862608693372777130}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bc786367ce1eeb140a1af78a608bf408, type: 3}
   m_Name: 
@@ -520,4 +520,4 @@ MonoBehaviour:
   BulletType: 1
   FirePoint: {fileID: 6634953289539042839}
   followObject: {fileID: 8077644698448514573}
-  objectPool: {fileID: 0}
+  particleSystemFire: {fileID: 0}

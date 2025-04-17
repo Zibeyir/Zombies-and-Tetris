@@ -17,7 +17,7 @@ public class DraggableBlock : MonoBehaviour
     private float fixedZ;
 
     public BlockPartsCheck[] blockPartsChecks;
-    private void Start()
+    private void OnEnable()
     {
         targetBool = true;
         allCells=new List<GridCell>();

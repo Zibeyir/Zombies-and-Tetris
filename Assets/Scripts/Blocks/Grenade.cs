@@ -72,7 +72,9 @@ public class Grenade : MonoBehaviour
         exploded = true;
         if (explosionEffect != null)
         {
-            Instantiate(explosionEffect, transform.position, Quaternion.identity);
+            ObjectPool.Instance.SpawnFromPool(BulletType.GrenadeExplode, transform.position, Quaternion.identity);
+
+            //Instantiate(explosionEffect, transform.position, Quaternion.identity);
         }
 
         Collider[] hits = Physics.OverlapSphere(transform.position, ExplosionRadius);

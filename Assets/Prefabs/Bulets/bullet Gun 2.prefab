@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 2636719087634245784}
   - component: {fileID: 4020899926492005429}
   m_Layer: 0
-  m_Name: ShurtGun Fire Bullet
+  m_Name: bullet Gun 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32,7 +32,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: -0, y: 0, z: 0.615}
-  m_LocalScale: {x: 110, y: 110, z: 110}
+  m_LocalScale: {x: 130, y: 130, z: 130}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3864387380374450564}
@@ -281,12 +281,7 @@ PrefabInstance:
     - target: {fileID: 4310875764681565177, guid: 87f7bfdb46f08624f8b009e53f582048,
         type: 3}
       propertyPath: InitialModule.startSize.scalar
-      value: 0.001
-      objectReference: {fileID: 0}
-    - target: {fileID: 4310875764681565177, guid: 87f7bfdb46f08624f8b009e53f582048,
-        type: 3}
-      propertyPath: InitialModule.startLifetime.scalar
-      value: 0.1
+      value: 0.002
       objectReference: {fileID: 0}
     - target: {fileID: 8689558409502734914, guid: 87f7bfdb46f08624f8b009e53f582048,
         type: 3}
