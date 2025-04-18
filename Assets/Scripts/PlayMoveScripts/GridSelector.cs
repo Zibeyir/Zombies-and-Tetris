@@ -3,10 +3,12 @@ using UnityEngine;
 
 public class GridSelector : MonoBehaviour
 {
-    [SerializeField] private string selectableTag = "SelectedBlock";
+    [SerializeField] private string selectableTag = "Selectedblock";
     [SerializeField] private float yTouchOffset = 0.5f;
-  
-    public static float TimeSpeed = 1;
+    [SerializeField] private float raycastDistance = 100f;
+    [SerializeField] private float mergeDistanceThreshold = 0.25f;
+
+    public static float TimeSpeed = 1; // Consider removing if unused
     private Camera mainCam;
     private GameObject selectedObject;
     private DraggableBlock draggableBlock;
@@ -14,20 +16,18 @@ public class GridSelector : MonoBehaviour
     private bool isDragging = false;
     public LayerMask layerMask;
 
-
     public List<Transform> blocks = new List<Transform>();
     public List<Weapon> weapons = new List<Weapon>();
-    Transform seledcetObjectTransform=null;
-    Weapon seledcetObjectWeapon = null;
-    Vector3 selectedPos;
-    WeaponType selectedType;
-    int selectedLevel;
-    float sqrDist;
-
+    private Transform selectedObjectTransform = null;
+    private Weapon selectedObjectWeapon = null;
+    private Vector3 selectedPos;
+    private WeaponType selectedType;
+    private int selectedLevel;
+    private float sqrDist;
 
     private void Start()
     {
-        int layerMask = ~1 << LayerMask.NameToLayer("Wall");
+        layerMask = ~(1 << LayerMask.NameToLayer("Wall")); // Fixed layerMask assignment
         mainCam = Camera.main;
     }
 
@@ -43,17 +43,16 @@ public class GridSelector : MonoBehaviour
         if ((Input.GetMouseButtonDown(0) || Input.touchCount > 0) && !isDragging)
         {
             Ray ray = GetPointerRay(0);
-            if (Physics.Raycast(ray, out RaycastHit hit,100,layerMask) && hit.collider.CompareTag(selectableTag))
+            if (Physics.Raycast(ray, out RaycastHit hit, raycastDistance, layerMask) && hit.collider.CompareTag(selectableTag))
             {
-                Time.timeScale = .2f;
-                //TimeSpeed = .2f;
+                Time.timeScale = 0.2f;
                 selectedObject = hit.collider.gameObject;
-                selectedObject.transform.parent = null;
+                selectedObject.transform.parent = null; // Consider if this is necessary
                 draggableBlock = selectedObject.GetComponent<DraggableBlock>();
                 yTouchOffset = selectedObject.GetComponent<BoxCollider>().size.z;
-                selectedObject.GetComponent<Collider>().enabled = false;
-                seledcetObjectTransform = selectedObject.transform;
-                seledcetObjectWeapon = selectedObject.GetComponent<Weapon>();
+                ToggleCollider(selectedObject, false);
+                selectedObjectTransform = selectedObject.transform;
+                selectedObjectWeapon = selectedObject.GetComponent<Weapon>();
                 isDragging = true;
                 currentCell = null;
             }
@@ -67,59 +66,52 @@ public class GridSelector : MonoBehaviour
 
         Ray ray = GetPointerRay(yTouchOffset);
 
-        if (Physics.Raycast(ray, out RaycastHit hit, 100, layerMask))
+        if (Physics.Raycast(ray, out RaycastHit hit, raycastDistance, layerMask))
         {
             currentCell = hit.collider.GetComponent<GridCell>();
-            if (currentCell != null&&draggableBlock.AllCellTouchCell())
+            if (currentCell != null && draggableBlock.AllCellTouchCell())
             {
-                //Debug.Log("DontMove");
-
                 currentCell.GetDraggableBlock(draggableBlock);
             }
             else
             {
-                //Debug.Log("Move");
                 draggableBlock.SetGridStatus(false);
                 selectedObject.transform.position = new Vector3(hit.point.x, selectedObject.transform.position.y, hit.point.z);
             }
             CheckMerge();
-
         }
     }
 
     private void HandleRelease()
     {
-
         if (!isDragging || !(Input.GetMouseButtonUp(0) || (Input.touchCount == 0 && Input.touchSupported)))
             return;
-        Time.timeScale = 1;
 
+        Time.timeScale = 1;
         draggableBlock.SetGridStatus(true);
 
         if (selectedObject != null)
-            selectedObject.GetComponent<Collider>().enabled = true;
+            ToggleCollider(selectedObject, true);
 
-        selectedObject = null;
-        draggableBlock = null;
-        isDragging = false;
-        currentCell = null;
+        ResetSelection();
     }
-    void CheckMerge()
+
+    private void CheckMerge()
     {
         blocks = _GameTimeData.Instance.CurrentBlocks;
         weapons = _GameTimeData.Instance.CurrentBlocksWeapons;
 
-        selectedPos = seledcetObjectTransform.position;
-        selectedType = seledcetObjectWeapon._WeaponType;
-        selectedLevel = seledcetObjectWeapon.WeaponLevel;
+        selectedPos = selectedObjectTransform.position;
+        selectedType = selectedObjectWeapon._WeaponType;
+        selectedLevel = selectedObjectWeapon.WeaponLevel;
 
         for (int i = 0; i < blocks.Count; i++)
         {
-            if (blocks[i] == seledcetObjectTransform)
+            if (blocks[i] == selectedObjectTransform)
                 continue;
 
             sqrDist = Vector3.SqrMagnitude(blocks[i].position - selectedPos);
-            if (sqrDist > 0.25f)
+            if (sqrDist > mergeDistanceThreshold)
                 continue;
 
             if (weapons[i]._WeaponType != selectedType || weapons[i].WeaponLevel != selectedLevel)
@@ -127,24 +119,19 @@ public class GridSelector : MonoBehaviour
 
             Debug.Log("MergeDistance");
 
-            seledcetObjectWeapon.MergeBlockAndDestroy();
+            selectedObjectWeapon.MergeBlockAndDestroy();
             weapons[i].MergeBlockAndLevelUp();
             isDragging = false;
 
-            weapons.Remove(seledcetObjectWeapon);
-            blocks.Remove(seledcetObjectTransform);
-            _GameTimeData.Instance.ActiveButtonBlocks.Remove(seledcetObjectTransform);
+            weapons.Remove(selectedObjectWeapon);
+            blocks.Remove(selectedObjectTransform);
+            _GameTimeData.Instance.ActiveButtonBlocks.Remove(selectedObjectTransform);
             Time.timeScale = 1;
 
             break;
         }
     }
 
-    public void AddBlocks(Transform transform, Weapon draggableBlock)
-    {
-        //transformsBlocks.Add(transform);
-        //WeaponBlocksforMerge.Add(draggableBlock);
-    }
     private Ray GetPointerRay(float yOffset)
     {
         Ray baseRay = Input.touchCount > 0
@@ -152,9 +139,22 @@ public class GridSelector : MonoBehaviour
             : mainCam.ScreenPointToRay(Input.mousePosition);
 
         Vector3 offsetOrigin = baseRay.origin + mainCam.transform.forward * yOffset;
-       
-
         return new Ray(offsetOrigin, baseRay.direction);
+    }
+
+    private void ToggleCollider(GameObject obj, bool isEnabled)
+    {
+        Collider collider = obj.GetComponent<Collider>();
+        if (collider != null)
+            collider.enabled = isEnabled;
+    }
+
+    private void ResetSelection()
+    {
+        selectedObject = null;
+        draggableBlock = null;
+        isDragging = false;
+        currentCell = null;
     }
 }
 

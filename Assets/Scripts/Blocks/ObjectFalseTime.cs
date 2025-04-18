@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class ObjectFalseTime : MonoBehaviour
 {
-    // Start is called before the first frame update
+    [SerializeField] private float time=2;
     void OnEnable()
     {
-        StartCoroutine(DisableAfterSeconds(2));
+        StartCoroutine(DisableAfterSeconds(time));
     }
     private IEnumerator DisableAfterSeconds(float seconds)
     {

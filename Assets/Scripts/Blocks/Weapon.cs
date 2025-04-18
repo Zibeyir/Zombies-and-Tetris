@@ -16,7 +16,7 @@ public class Weapon : MonoBehaviour
 
     private void Start()
     {
-        draggableBlock = new DraggableBlock();
+        draggableBlock = GetComponent<DraggableBlock>();
     }
     private void OnCollisionEnter(Collision collision)
     {
@@ -47,15 +47,21 @@ public class Weapon : MonoBehaviour
 
     public void MergeBlockAndLevelUp()
     {
+        followObject.MergeBallScale();
         WeaponLevel++;
     }
 
     public void MergeBlockAndDestroy()
     {
         followObject.gameObject.SetActive(false);
-        //foreach (GridCell g in draggableBlock.allCells) {
-        //    g.RemoveDraggableBlock();
-        //}
-        Destroy(gameObject);
+        if (draggableBlock.allCells != null)
+        {
+            foreach (GridCell g in draggableBlock.allCells)
+            {
+                g.RemoveDraggableBlock();
+            }
+        }
+       
+        Destroy(draggableBlock.gameObject);
     }
 }
