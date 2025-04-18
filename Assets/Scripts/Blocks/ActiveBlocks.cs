@@ -49,7 +49,7 @@ public class ActiveBlocks : MonoBehaviour
         _GameTimeData.Instance.ActiveButtonBlocks.Clear();
         for (int i = 0; i < MaxRandom; i++)
         {
-            GameObject instatedBlock = Instantiate(blocks[Random.Range(0,MaxRandom)], transformsPoints[i].position, transformsPoints[i].rotation);
+            GameObject instatedBlock = Instantiate(blocks[Random.Range(0,6)], transformsPoints[i].position, transformsPoints[i].rotation);
             instatedBlock.transform.SetParent(transform);
             _GameTimeData.Instance.CurrentBlocks.Add(instatedBlock.transform);
             _GameTimeData.Instance.CurrentBlocksWeapons.Add(instatedBlock.GetComponent<Weapon>());

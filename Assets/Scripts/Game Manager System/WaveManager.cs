@@ -17,7 +17,7 @@ public class WaveManager : MonoBehaviour
     private float zombiesWaveUI= 0;
 
     WaveData wave;
-    [SerializeField] float enemyAttackDuration = 2f;
+    [SerializeField] float enemyAttackDuration = 4f;
     [SerializeField] float waveDuration = 7f;
 
     private List<GameObject> activeZombies = new List<GameObject>();

@@ -4,7 +4,7 @@ public class LevelManager : MonoBehaviour
 {
     public static LevelManager Instance { get; private set; }
     public SaveData _SaveData { get; private set; }
-    public int BlockPrice = 200;
+    public int BlockPrice = 50;
     private void Awake()
     {
         if (Instance != null && Instance != this)

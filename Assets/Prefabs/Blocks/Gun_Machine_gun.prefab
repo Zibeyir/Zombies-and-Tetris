@@ -870,10 +870,20 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8709676507010614155}
     m_Modifications:
+    - target: {fileID: 608127935958127489, guid: 68b0b2a6f7c5cce4596df5447cac2f56,
+        type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3682187760335089088, guid: 68b0b2a6f7c5cce4596df5447cac2f56,
         type: 3}
       propertyPath: m_Name
       value: Machinegun_vfx
+      objectReference: {fileID: 0}
+    - target: {fileID: 7529595304442594867, guid: 68b0b2a6f7c5cce4596df5447cac2f56,
+        type: 3}
+      propertyPath: playOnAwake
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8493199434258466306, guid: 68b0b2a6f7c5cce4596df5447cac2f56,
         type: 3}
