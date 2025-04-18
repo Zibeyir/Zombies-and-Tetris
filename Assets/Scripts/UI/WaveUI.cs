@@ -17,8 +17,6 @@ public class WaveUI : MonoBehaviour
         if (wave == 1&& waveNumber != 4)
         {
             waveImages[waveNumber-1].sprite=waveActiveImage;
-
         }
-
     }
 }

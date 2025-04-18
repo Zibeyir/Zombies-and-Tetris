@@ -8,5 +8,7 @@ public static class GameEvents
     public static Action<int> OnCoinChanged;
     public static Action OnGameWon;
     public static Action OnGameLost;
-    public static Action UIFader;
+    public static Action ActiveBlockButton;
+
+    //public static Action UIFader;
 }

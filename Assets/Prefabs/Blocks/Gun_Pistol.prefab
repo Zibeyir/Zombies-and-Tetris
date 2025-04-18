@@ -153,6 +153,7 @@ MonoBehaviour:
   currentGridCell: {fileID: 0}
   allCells: []
   isInGrid: 0
+  isInGridFirstTime: 0
   moveSpeed: 25
   targetBool: 0
   LastBool: 0
@@ -172,8 +173,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BulletType: 0
   FirePoint: {fileID: 2240437520552811785}
+  _WeaponType: 1
   followObject: {fileID: 6842727205861366925}
   particleSystemFire: {fileID: 8781475841963869370}
+  WeaponLevel: 0
 --- !u!1 &1830553595677867821
 GameObject:
   m_ObjectHideFlags: 0

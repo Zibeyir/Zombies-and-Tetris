@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class GridSelector : MonoBehaviour
 {
@@ -13,13 +14,20 @@ public class GridSelector : MonoBehaviour
     private bool isDragging = false;
     public LayerMask layerMask;
 
-    private void Awake()
-    {
-        
-    }
+
+    public List<Transform> blocks = new List<Transform>();
+    public List<Weapon> weapons = new List<Weapon>();
+    Transform seledcetObjectTransform=null;
+    Weapon seledcetObjectWeapon = null;
+    Vector3 selectedPos;
+    WeaponType selectedType;
+    int selectedLevel;
+    float sqrDist;
+
+
     private void Start()
     {
-        layerMask = ~(1 << LayerMask.NameToLayer("Wall"));
+        int layerMask = ~1 << LayerMask.NameToLayer("Wall");
         mainCam = Camera.main;
     }
 
@@ -44,7 +52,8 @@ public class GridSelector : MonoBehaviour
                 draggableBlock = selectedObject.GetComponent<DraggableBlock>();
                 yTouchOffset = selectedObject.GetComponent<BoxCollider>().size.z;
                 selectedObject.GetComponent<Collider>().enabled = false;
-
+                seledcetObjectTransform = selectedObject.transform;
+                seledcetObjectWeapon = selectedObject.GetComponent<Weapon>();
                 isDragging = true;
                 currentCell = null;
             }
@@ -73,6 +82,8 @@ public class GridSelector : MonoBehaviour
                 draggableBlock.SetGridStatus(false);
                 selectedObject.transform.position = new Vector3(hit.point.x, selectedObject.transform.position.y, hit.point.z);
             }
+            CheckMerge();
+
         }
     }
 
@@ -93,7 +104,47 @@ public class GridSelector : MonoBehaviour
         isDragging = false;
         currentCell = null;
     }
+    void CheckMerge()
+    {
+        blocks = _GameTimeData.Instance.CurrentBlocks;
+        weapons = _GameTimeData.Instance.CurrentBlocksWeapons;
 
+        selectedPos = seledcetObjectTransform.position;
+        selectedType = seledcetObjectWeapon._WeaponType;
+        selectedLevel = seledcetObjectWeapon.WeaponLevel;
+
+        for (int i = 0; i < blocks.Count; i++)
+        {
+            if (blocks[i] == seledcetObjectTransform)
+                continue;
+
+            sqrDist = Vector3.SqrMagnitude(blocks[i].position - selectedPos);
+            if (sqrDist > 0.25f)
+                continue;
+
+            if (weapons[i]._WeaponType != selectedType || weapons[i].WeaponLevel != selectedLevel)
+                continue;
+
+            Debug.Log("MergeDistance");
+
+            seledcetObjectWeapon.MergeBlockAndDestroy();
+            weapons[i].MergeBlockAndLevelUp();
+            isDragging = false;
+
+            weapons.Remove(seledcetObjectWeapon);
+            blocks.Remove(seledcetObjectTransform);
+            _GameTimeData.Instance.ActiveButtonBlocks.Remove(seledcetObjectTransform);
+            Time.timeScale = 1;
+
+            break;
+        }
+    }
+
+    public void AddBlocks(Transform transform, Weapon draggableBlock)
+    {
+        //transformsBlocks.Add(transform);
+        //WeaponBlocksforMerge.Add(draggableBlock);
+    }
     private Ray GetPointerRay(float yOffset)
     {
         Ray baseRay = Input.touchCount > 0
@@ -105,4 +156,14 @@ public class GridSelector : MonoBehaviour
 
         return new Ray(offsetOrigin, baseRay.direction);
     }
+}
+
+public enum WeaponType
+{
+    Ak47,
+    Pistol,
+    Grenade,
+    Firegun,
+    Shotgun,
+    Snaper
 }

@@ -6,6 +6,8 @@ public class DraggableBlock : MonoBehaviour
     public GridCell currentGridCell;
     public List<GridCell> allCells;
     public bool isInGrid = false;
+    public bool isInGridFirstTime = false;
+
     public float moveSpeed = 25f;
 
     private Vector3 targetPosition;
@@ -38,6 +40,7 @@ public class DraggableBlock : MonoBehaviour
            
             currentGridCell = newCell;
             targetPosition = currentGridCell.GetComponent<Renderer>().bounds.center;
+            isInGridFirstTime = true;
             isInGrid = true;
             targetBool = true;
         }
@@ -100,6 +103,13 @@ public class DraggableBlock : MonoBehaviour
 
                 }
             }
+        }
+    }
+    private void OnDestroy()
+    {
+        if (allCells != null)
+        {
+            foreach (var checker in allCells) checker.RemoveDraggableBlock();
         }
     }
     public bool AllCellTouchCell()

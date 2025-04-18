@@ -10,17 +10,14 @@ public class UIFader : MonoBehaviour
     private Button button;
     private void Start()
     {
-        // Bütün Image və TextMeshProUGUI komponentlərini topla
+        button=GetComponent<Button>();
         graphics.AddRange(GetComponentsInChildren<Image>(includeInactive: true));
         graphics.AddRange(GetComponentsInChildren<TextMeshProUGUI>(includeInactive: true));
     }
     public void FadeINOutAll(bool boolButton, float duration = 0.5f)
     {
-        foreach (var g in graphics)
-        {
-            g.DOFade(0f, duration);
-        }
-        button.interactable = false;
+        if (boolButton) FadeInAll();
+        else FadeOutAll();
     }
     public void FadeOutAll(float duration = 0.5f)
     {

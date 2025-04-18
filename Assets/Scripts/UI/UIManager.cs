@@ -10,6 +10,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private CoinUI coinUI;
     [SerializeField] private GameOverUI gameOverUI;
     [SerializeField] private UIFader uiFader;
+    [SerializeField] private ActiveBlocks activeBlocks;
 
     public WaveUI Wave => waveUI;
     public HealthUI Health => healthUI;
@@ -47,5 +48,8 @@ public class UIManager : MonoBehaviour
     public void SetCoins(int coins) => coinUI.UpdateCoins(coins);
     public void ShowWin() => gameOverUI.ShowWin();
     public void ShowLose() => gameOverUI.ShowLose();
+
+    public void ActivatedBlockButton(bool ActiveBlockCase)=> uiFader.FadeINOutAll(ActiveBlockCase);
+    public void ActivateButtonForSpawnBlocks(int coinValue) => activeBlocks.ActivetedBlockButtonforSpawn(coinValue);
     //public void FadeINOutAll(bool )
 }
