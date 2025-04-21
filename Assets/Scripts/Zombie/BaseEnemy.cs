@@ -128,7 +128,7 @@ public abstract class BaseEnemy : MonoBehaviour
 
     protected virtual void SpawnBloodEffect(Vector3 hitPoint)
     {
-        ObjectPool.Instance.SpawnFromPool(BulletType.ZombieBoold, hitPoint, Quaternion.identity);
+        ObjectPool.Instance.SpawnEffect(EffectType.ZombieBlood, hitPoint, Quaternion.identity);
     }
 
     protected abstract void Die();

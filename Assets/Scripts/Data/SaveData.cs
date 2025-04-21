@@ -6,6 +6,8 @@ using System.Collections.Generic;
 public class SaveData
 {
     public int Coins;
+
+    public int Cristal;
     public List<int> UnlockedWeapons;
     public int CurrentLevel;
     public int PlayerHP;
@@ -28,6 +30,7 @@ public static class SaveDataService
         if (File.Exists(SaveFilePath))
         {
             string json = File.ReadAllText(SaveFilePath);
+            Debug.Log("SaveData loaded from: " + SaveFilePath);
             return JsonUtility.FromJson<SaveData>(json);
         }
         return new SaveData(); // default

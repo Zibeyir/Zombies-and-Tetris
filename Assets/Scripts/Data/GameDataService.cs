@@ -8,6 +8,11 @@ public class GameDataService : MonoBehaviour
 
     public ZombieGameData Data;
 
+    public List<WeaponData> Weapons;
+    public List<Material> WeaponMaterials;
+
+
+    public Dictionary<string, WeaponData> weaponDict;
     private void Awake()
     {
         if (Instance != null)
@@ -20,7 +25,11 @@ public class GameDataService : MonoBehaviour
         DontDestroyOnLoad(gameObject);
         LoadData();
     }
-
+    private void Start()
+    {
+        Weapons = Data.weapons;
+        Initialize();
+    }
     private void LoadData()
     {
         TextAsset json = Resources.Load<TextAsset>("GameData/ZombieGameData");
@@ -38,6 +47,35 @@ public class GameDataService : MonoBehaviour
     public EnemyData GetEnemyById(string id)
     {
         return Data.enemies.FirstOrDefault(e => e.Type == id);
+    }
+
+    public void Initialize()
+    {
+        weaponDict = new Dictionary<string, WeaponData>();
+
+        foreach (var weapon in Weapons)
+        {
+            if (!weaponDict.ContainsKey(weapon.Type.ToString()))
+            {
+                weaponDict.Add(weapon.Type.ToString(), weapon);
+            }
+        }
+    }
+
+    public WeaponData GetWeapon(WeaponType type)
+    {
+        if (weaponDict == null || weaponDict.Count == 0)
+        {
+            Initialize();
+        }
+
+        if (weaponDict.TryGetValue(type.ToString(), out var weapon))
+        {
+            return weapon;
+        }
+
+        Debug.LogWarning($"Weapon not found for type: {type}");
+        return null;
     }
 
     // Access methods

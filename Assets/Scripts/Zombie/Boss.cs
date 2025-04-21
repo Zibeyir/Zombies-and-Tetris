@@ -119,7 +119,7 @@ public class Boss : MonoBehaviour
     public void TakeDamage(int damage, BulletType type, Vector3 hitPoint)
     {
         TakeDamageBase(damage, type);
-        ObjectPool.Instance.SpawnFromPool(BulletType.ZombieBoold, hitPoint, Quaternion.identity);
+        ObjectPool.Instance.SpawnEffect(EffectType.ZombieBlood, hitPoint, Quaternion.identity);
     }
 
     public void TakeDamageBase(int damage, BulletType type)

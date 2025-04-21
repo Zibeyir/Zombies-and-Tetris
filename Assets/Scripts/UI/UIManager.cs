@@ -11,6 +11,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameOverUI gameOverUI;
     [SerializeField] private UIFader uiFader;
     [SerializeField] private ActiveBlocks activeBlocks;
+    [SerializeField] private UpgradeManager upgradeManager;
 
     public WaveUI Wave => waveUI;
     public HealthUI Health => healthUI;
@@ -46,9 +47,12 @@ public class UIManager : MonoBehaviour
     public void SetWave(float wave, int waveNumber) => waveUI.ShowWave(wave,waveNumber);
     public void SetHP(float hp) => healthUI.UpdateHP(hp);
     public void SetCoins(int coins) => coinUI.UpdateCoins(coins);
+    public void SetCyristals(int cyristal) => coinUI.UpdateCrystals(cyristal);
+
     public void ShowWin() => gameOverUI.ShowWin();
     public void ShowLose() => gameOverUI.ShowLose();
 
+    public void OnEnableUpgradeScene() => upgradeManager.OnEnableUpgradeScene();
     public void ActivatedBlockButton(bool ActiveBlockCase)=> uiFader.FadeINOutAll(ActiveBlockCase);
     public void ActivateButtonForSpawnBlocks(int coinValue) => activeBlocks.ActivetedBlockButtonforSpawn(coinValue);
     //public void FadeINOutAll(bool )

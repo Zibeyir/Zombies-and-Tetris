@@ -11,12 +11,15 @@ public class Weapon : MonoBehaviour
     [SerializeField] private ParticleSystem? particleSystemFire;
     DraggableBlock draggableBlock;
     public int WeaponLevel = 0;
-
-
+    int damage;
+    public string Name;
+    public int[] DamageByLevel = new int[5];
 
     private void Start()
     {
         draggableBlock = GetComponent<DraggableBlock>();
+        DamageByLevel = GameDataService.Instance.GetWeapon(_WeaponType).Damages;
+
     }
     private void OnCollisionEnter(Collision collision)
     {
@@ -35,12 +38,12 @@ public class Weapon : MonoBehaviour
     {
         if (BulletType==BulletType.Shotgun)
         {
-            ObjectPool.Instance.SpawnFromPool(BulletType, FirePoint.position, FirePoint.rotation);
+            ObjectPool.Instance.SpawnBullet(BulletType, FirePoint.position, FirePoint.rotation, DamageByLevel[WeaponLevel]);
 
         }
         else
         {
-            ObjectPool.Instance.SpawnFromPool(BulletType, FirePoint.position, FirePoint.rotation);
+            ObjectPool.Instance.SpawnBullet(BulletType, FirePoint.position, FirePoint.rotation, DamageByLevel[WeaponLevel]);
 
         }
     }
@@ -48,7 +51,8 @@ public class Weapon : MonoBehaviour
     public void MergeBlockAndLevelUp()
     {
         followObject.MergeBallScale();
-        WeaponLevel++;
+        ++WeaponLevel;
+        followObject.GetMaterialWeapon(WeaponLevel);
     }
 
     public void MergeBlockAndDestroy()
@@ -63,5 +67,15 @@ public class Weapon : MonoBehaviour
         }
        
         Destroy(draggableBlock.gameObject);
+    }
+    public int GetDamageByLevel(int level)
+    {
+        if (level <= 0 || level > DamageByLevel.Length)
+        {
+            Debug.LogWarning($"Invalid weapon level: {level} for {Name}");
+            return DamageByLevel[0]; // default Level 1 damage
+        }
+
+        return DamageByLevel[level - 1]; // level 1 = index 0
     }
 }

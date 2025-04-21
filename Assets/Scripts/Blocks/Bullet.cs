@@ -1,36 +1,17 @@
 ﻿using UnityEngine;
-using System.Collections;
 
-public class Bullet : MonoBehaviour
+public class Bullet : BulletBase
 {
-    public BulletType Type;
-    public float Speed = 10f;
-    public int Damage = 20;
-
-    private Vector3 moveDirection;
-    private Coroutine disableRoutine;
-    [SerializeField] private TrailRenderer trailRenderer;
-
     private void OnEnable()
     {
-        FindDirectionToClosestZombie();
-        transform.forward = -moveDirection; 
+        base.OnEnable();
 
-        //trailRenderer.enabled = true;
+        GameObject closest = FindClosestZombie();
+        moveDirection = (closest != null)
+            ? (closest.transform.position - transform.position).normalized
+            : -Vector3.forward;
 
-        if (disableRoutine != null)
-            StopCoroutine(disableRoutine);
-
-        disableRoutine = StartCoroutine(DisableAfterSeconds(3f));
-    }
-    public void GetSkillsBullet()
-    {
-
-    }
-
-    private void Update()
-    {
-        transform.Translate(moveDirection * Speed * Time.deltaTime, Space.World);
+        transform.forward = -moveDirection;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -40,82 +21,24 @@ public class Bullet : MonoBehaviour
             Zombie zombie = other.GetComponent<Zombie>();
             if (zombie != null)
             {
-                Vector3 direction = (other.transform.position - transform.position).normalized;
-
-                // Collider üzərindəki ən yaxın nöqtəni tap
-                Vector3 surfacePoint = other.ClosestPoint(transform.position);
-
-                // Daxilə doğru azca irəli get (mesh tərəfə)
-                Vector3 adjustedPoint = surfacePoint + direction * 0.2f; // istəsən 0.1f-0.3f dəyiş
-
-                zombie.TakeDamage(Damage, Type, adjustedPoint);
+                zombie.TakeDamage(Damage, Type, GetAdjustedHitPoint(other));
             }
 
             DisableSelf();
         }
         else if (other.CompareTag("Boss"))
         {
-            Boss zombie = other.GetComponent<Boss>();
-            if (zombie != null)
+            Boss boss = other.GetComponent<Boss>();
+            if (boss != null)
             {
-                Vector3 direction = (other.transform.position - transform.position).normalized;
-
-                // Collider üzərindəki ən yaxın nöqtəni tap
-                Vector3 surfacePoint = other.ClosestPoint(transform.position);
-
-                // Daxilə doğru azca irəli get (mesh tərəfə)
-                Vector3 adjustedPoint = surfacePoint + direction * 0.2f; // istəsən 0.1f-0.3f dəyiş
-                ObjectPool.Instance.SpawnFromPool(BulletType.ShortGunTouchExpole, transform.position, Quaternion.identity);
-                ObjectPool.Instance.SpawnFromPool(BulletType.ShortGunTouchExpoleFire, transform.position, Quaternion.identity);
-
-                zombie.TakeDamage(Damage, Type, adjustedPoint);
+                boss.TakeDamage(Damage, Type, GetAdjustedHitPoint(other));
+                //ObjectPool.Instance.SpawnEffect(EffectType.ShotgunTouchExplode, transform.position, Quaternion.identity);
+                //ObjectPool.Instance.SpawnEffect(EffectType.ShotgunTouchExplodeFire, transform.position, Quaternion.identity);
             }
 
             DisableSelf();
         }
     }
 
-    private void FindDirectionToClosestZombie()
-    {
-        float minDist = float.MaxValue;
-        GameObject closest = null;
-
-        foreach (var zombie in WaveManager.Instance.GetActiveZombies())
-        {
-            if (zombie != null)
-            {
-                float dist = Vector3.Distance(transform.position, zombie.transform.position);
-                if (dist < minDist)
-                {
-                    minDist = dist;
-                    closest = zombie;
-                }
-            }
-        }
-
-        moveDirection = (closest != null)
-            ? (closest.transform.position - transform.position).normalized
-            : -Vector3.forward;
-    }
-
-    private IEnumerator DisableAfterSeconds(float seconds)
-    {
-        yield return new WaitForSeconds(seconds);
-        DisableSelf();
-    }
-
-    private void DisableSelf()
-    {
-        //trailRenderer.Clear();
-        //trailRenderer.enabled = false;
-        if (disableRoutine != null)
-        {
-            StopCoroutine(disableRoutine);
-            disableRoutine = null;
-        }
-        
-
-        gameObject.SetActive(false);
-    }
+    public void GetSkillsBullet() { } // Hələki boş
 }
-

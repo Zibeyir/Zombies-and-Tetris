@@ -6,28 +6,43 @@ public class ObjectPool : MonoBehaviour
     public static ObjectPool Instance;
 
     [System.Serializable]
-    public class PoolItem
+    public class BulletPoolItem
     {
         public BulletType Type;
         public GameObject Prefab;
         public int Size = 10;
     }
 
-    public List<PoolItem> Items;
-    private Dictionary<BulletType, Queue<GameObject>> poolDict;
-    private Dictionary<BulletType, GameObject> prefabLookup;
+    [System.Serializable]
+    public class EffectPoolItem
+    {
+        public EffectType Type;
+        public GameObject Prefab;
+        public int Size = 10;
+    }
+
+    public List<BulletPoolItem> BulletItems;
+    public List<EffectPoolItem> EffectItems;
+
+    private Dictionary<BulletType, Queue<GameObject>> bulletPoolDict;
+    private Dictionary<BulletType, GameObject> bulletPrefabLookup;
+
+    private Dictionary<EffectType, Queue<GameObject>> effectPoolDict;
+    private Dictionary<EffectType, GameObject> effectPrefabLookup;
 
     private void Awake()
     {
         Instance = this;
-        poolDict = new Dictionary<BulletType, Queue<GameObject>>();
-        prefabLookup = new Dictionary<BulletType, GameObject>();
+        bulletPoolDict = new Dictionary<BulletType, Queue<GameObject>>();
+        bulletPrefabLookup = new Dictionary<BulletType, GameObject>();
 
-        
+        effectPoolDict = new Dictionary<EffectType, Queue<GameObject>>();
+        effectPrefabLookup = new Dictionary<EffectType, GameObject>();
     }
+
     private void Start()
     {
-        foreach (var item in Items)
+        foreach (var item in BulletItems)
         {
             Queue<GameObject> objectQueue = new Queue<GameObject>();
 
@@ -39,37 +54,73 @@ public class ObjectPool : MonoBehaviour
                 objectQueue.Enqueue(obj);
             }
 
-            poolDict[item.Type] = objectQueue;
-            prefabLookup[item.Type] = item.Prefab;
+            bulletPoolDict[item.Type] = objectQueue;
+            bulletPrefabLookup[item.Type] = item.Prefab;
+        }
+
+        foreach (var item in EffectItems)
+        {
+            Queue<GameObject> objectQueue = new Queue<GameObject>();
+
+            for (int i = 0; i < item.Size; i++)
+            {
+                GameObject obj = Instantiate(item.Prefab);
+                obj.SetActive(false);
+                obj.transform.SetParent(this.transform);
+                objectQueue.Enqueue(obj);
+            }
+
+            effectPoolDict[item.Type] = objectQueue;
+            effectPrefabLookup[item.Type] = item.Prefab;
         }
     }
-    public GameObject SpawnFromPool(BulletType type, Vector3 position, Quaternion rotation)
+
+    // BULLET spawn (damage ilə)
+    public GameObject SpawnBullet(BulletType type, Vector3 position, Quaternion rotation, int damage = 0)
     {
-        if (!poolDict.ContainsKey(type))
+       // Debug.Log($"Spawning bullet of type: {type} at position: {position} with rotation: {rotation} and damage: {damage}");
+        if (!bulletPoolDict.ContainsKey(type))
         {
-            Debug.LogWarning($"No pool found for bullet type: {type}");
+            Debug.LogWarning($"No bullet pool found for type: {type}");
             return null;
         }
 
-        GameObject obj = null;
+        GameObject obj = GetInactiveFromPool(bulletPoolDict[type]);
 
-        // Birini tapana qədər baxırıq
-        foreach (var pooledObj in poolDict[type])
-        {
-            if (!pooledObj.activeInHierarchy)
-            {
-                obj = pooledObj;
-                break;
-            }
-        }
-
-        // Əgər boş yoxdursa — yenisini yarat
         if (obj == null)
         {
-            obj = Instantiate(prefabLookup[type], position,rotation);
+            obj = Instantiate(bulletPrefabLookup[type], position, rotation);
             obj.SetActive(false);
             obj.transform.SetParent(this.transform);
-            poolDict[type].Enqueue(obj); 
+            bulletPoolDict[type].Enqueue(obj);
+        }
+
+        obj.transform.position = position;
+        obj.transform.rotation = rotation;
+        if (damage != 0)
+            obj.GetComponent<BulletBase>().Initiliaze(damage);
+
+        obj.SetActive(true);
+        return obj;
+    }
+
+    // EFFECT spawn (damage-siz)
+    public GameObject SpawnEffect(EffectType type, Vector3 position, Quaternion rotation)
+    {
+        if (!effectPoolDict.ContainsKey(type))
+        {
+            Debug.LogWarning($"No effect pool found for type: {type}");
+            return null;
+        }
+
+        GameObject obj = GetInactiveFromPool(effectPoolDict[type]);
+
+        if (obj == null)
+        {
+            obj = Instantiate(effectPrefabLookup[type], position, rotation);
+            obj.SetActive(false);
+            obj.transform.SetParent(this.transform);
+            effectPoolDict[type].Enqueue(obj);
         }
 
         obj.transform.position = position;
@@ -77,15 +128,33 @@ public class ObjectPool : MonoBehaviour
         obj.SetActive(true);
         return obj;
     }
+
+    private GameObject GetInactiveFromPool(Queue<GameObject> pool)
+    {
+        foreach (var pooledObj in pool)
+        {
+            if (!pooledObj.activeInHierarchy)
+            {
+                return pooledObj;
+            }
+        }
+        return null;
+    }
 }
 public enum BulletType
 {
+    Ak47,
     Pistol,
     Grenade,
+    Firegun,
     Shotgun,
-    Rocket,
-    ZombieBoold,
-    ShortGunTouchExpole,
-    ShortGunTouchExpoleFire,
+    Snaper
+}
+
+public enum EffectType
+{
+    ZombieBlood,
+    ShotgunTouchExplode,
+    ShotgunTouchExplodeFire,
     GrenadeExplode
 }

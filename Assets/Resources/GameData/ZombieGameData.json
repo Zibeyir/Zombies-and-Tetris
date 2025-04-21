@@ -1,81 +1,46 @@
 {
-  "weapons": [
+"weapons": [
     {
-      "Id": 1,
+      "Type": "Ak",
+      "Name": "AK-47",
+      "Damages": [28, 33, 40, 50, 65],
+      "UnlockCondition": "Başlanğıc",
+      "UnlockCost": 0
+    },
+    {
+      "Type": "Pistol",
       "Name": "Tapança",
-      "BaseDamage": 30,
-      "Level2": 35,
-      "Level3": 42,
-      "Level4": 52,
-      "Level5": 68,
+      "Damages": [30, 35, 42, 52, 68],
       "UnlockCondition": "Başlanğıc",
       "UnlockCost": 0
     },
     {
-      "Id": 2,
+      "Type": "Grenade",
       "Name": "Qumbara",
-      "BaseDamage": 35,
-      "Level2": 41,
-      "Level3": 49,
-      "Level4": 61,
-      "Level5": 79,
+      "Damages": [35, 41, 49, 61, 79],
       "UnlockCondition": "Başlanğıc",
       "UnlockCost": 0
     },
     {
-      "Id": 3,
+      "Type": "Firegun",
       "Name": "Odlu top (Fireball)",
-      "BaseDamage": 40,
-      "Level2": 46,
-      "Level3": 55,
-      "Level4": 69,
-      "Level5": 90,
+      "Damages": [40, 46, 55, 69, 90],
       "UnlockCondition": "Oyunçu Level 3",
       "UnlockCost": 500
     },
     {
-      "Id": 4,
-      "Name": "Buz silah",
-      "BaseDamage": 45,
-      "Level2": 52,
-      "Level3": 62,
-      "Level4": 77,
-      "Level5": 100,
+      "Type": "Shotgun",
+      "Name": "Barel silahı (Shotgun)",
+      "Damages": [45, 52, 62, 77, 100],
       "UnlockCondition": "Oyunçu Level 5",
       "UnlockCost": 1000
     },
     {
-      "Id": 5,
-      "Name": "Zəhərli güllə",
-      "BaseDamage": 50,
-      "Level2": 58,
-      "Level3": 69,
-      "Level4": 86,
-      "Level5": 112,
+      "Type": "Snaper",
+      "Name": "Snayper",
+      "Damages": [50, 58, 69, 86, 112],
       "UnlockCondition": "Oyunçu Level 7",
       "UnlockCost": 1500
-    },
-    {
-      "Id": 6,
-      "Name": "Partlayıcı bomba",
-      "BaseDamage": 55,
-      "Level2": 64,
-      "Level3": 76,
-      "Level4": 96,
-      "Level5": 123,
-      "UnlockCondition": "Oyunçu Level 9",
-      "UnlockCost": 2000
-    },
-    {
-      "Id": 7,
-      "Name": "Lazer silah",
-      "BaseDamage": 60,
-      "Level2": 70,
-      "Level3": 83,
-      "Level4": 104,
-      "Level5": 135,
-      "UnlockCondition": "Oyunçu Level 11",
-      "UnlockCost": 2500
     }
   ],
   "enemies": [
@@ -162,7 +127,7 @@
       "EnemyStrength": "Zəif + Orta",
       "WaveCount": 4,
       "EstimatedCoins": 372,
-      "HPStart": 150,
+      "HPStart": 500,
       "HPMax": 200
     },
     {
@@ -170,7 +135,7 @@
       "EnemyStrength": "Orta + Zəif",
       "WaveCount": 4,
       "EstimatedCoins": "500–600",
-      "HPStart": 200,
+      "HPStart": 600,
       "HPMax": 250
     },
     {
@@ -178,7 +143,7 @@
       "EnemyStrength": "Orta + Güclü",
       "WaveCount": 4,
       "EstimatedCoins": "600–700",
-      "HPStart": 250,
+      "HPStart": 700,
       "HPMax": 300
     },
     {
@@ -186,7 +151,7 @@
       "EnemyStrength": "Güclü + Orta",
       "WaveCount": 4,
       "EstimatedCoins": 800,
-      "HPStart": 300,
+      "HPStart": 700,
       "HPMax": 350
     },
     {
@@ -194,7 +159,7 @@
       "EnemyStrength": "Güclü",
       "WaveCount": 4,
       "EstimatedCoins": 900,
-      "HPStart": 350,
+      "HPStart": 700,
       "HPMax": 400
     },
     {
@@ -202,7 +167,7 @@
       "EnemyStrength": "Güclü + Mini-Boss",
       "WaveCount": 4,
       "EstimatedCoins": "1000+",
-      "HPStart": 400,
+      "HPStart": 700,
       "HPMax": 500
     },
     {
@@ -210,7 +175,7 @@
       "EnemyStrength": "Güclü + Boss",
       "WaveCount": 4,
       "EstimatedCoins": "1200+",
-      "HPStart": 500,
+      "HPStart": 700,
       "HPMax": 600
     }
   ]

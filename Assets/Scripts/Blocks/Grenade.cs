@@ -1,12 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
-using System.Collections.Generic;
 
-public class Grenade : MonoBehaviour
+public class Grenade : BulletBase
 {
-    public BulletType Type;
-    public float Speed = 10f;
-    public int Damage = 50;
     public float ExplosionRadius = 3f;
     public float ArcHeight = 5f;
     public float MaxDistance = 5f;
@@ -17,14 +13,14 @@ public class Grenade : MonoBehaviour
     private float timer;
     private Coroutine travelRoutine;
     private bool exploded = false;
-    [SerializeField] private TrailRenderer trailRenderer;
 
     [SerializeField] private GameObject explosionEffect;
 
-    private void OnEnable()
+    protected override void OnEnable()
     {
-        trailRenderer.enabled = true;
+        base.OnEnable();
         exploded = false;
+
         GameObject closestZombie = FindClosestZombie();
         if (closestZombie != null)
         {
@@ -42,13 +38,7 @@ public class Grenade : MonoBehaviour
             gameObject.SetActive(false);
         }
     }
-    private void OnTriggerEnter(Collider other)
-    {
-        if (!exploded && (other.CompareTag("Zombie") || other.CompareTag("Place")))
-        {
-            Explode();
-        }
-    }
+
     private IEnumerator TravelArc()
     {
         while (timer < travelTime)
@@ -57,25 +47,21 @@ public class Grenade : MonoBehaviour
             float progress = timer / travelTime;
 
             Vector3 flatDirection = Vector3.Lerp(startPos, targetPos, progress);
-            float heightOffset = ArcHeight * Mathf.Sin(Mathf.PI * progress); // yarım dairəvi trayektoriya
+            float heightOffset = ArcHeight * Mathf.Sin(Mathf.PI * progress);
             transform.position = flatDirection + Vector3.up * heightOffset;
 
             yield return null;
         }
 
-        //Explode();
+        Explode();
     }
 
     private void Explode()
     {
         if (exploded) return;
         exploded = true;
-        if (explosionEffect != null)
-        {
-            ObjectPool.Instance.SpawnFromPool(BulletType.GrenadeExplode, transform.position, Quaternion.identity);
 
-            //Instantiate(explosionEffect, transform.position, Quaternion.identity);
-        }
+        ObjectPool.Instance.SpawnEffect(EffectType.GrenadeExplode, transform.position, Quaternion.identity);
 
         Collider[] hits = Physics.OverlapSphere(transform.position, ExplosionRadius);
         foreach (var hit in hits)
@@ -85,35 +71,21 @@ public class Grenade : MonoBehaviour
                 Zombie zombie = hit.GetComponent<Zombie>();
                 if (zombie != null)
                 {
-                   
                     zombie.TakeDamageBase(Damage, Type);
                 }
             }
         }
-        trailRenderer.Clear();
 
+        //trailRenderer.Clear();
         gameObject.SetActive(false);
     }
 
-    private GameObject FindClosestZombie()
+    private void OnTriggerEnter(Collider other)
     {
-        float minDist = float.MaxValue;
-        GameObject closest = null;
-
-        foreach (var zombie in WaveManager.Instance.GetActiveZombies())
+        if (!exploded && (other.CompareTag("Zombie") || other.CompareTag("Place")))
         {
-            if (zombie != null)
-            {
-                float dist = Vector3.Distance(transform.position, zombie.transform.position);
-                if (dist < minDist)
-                {
-                    minDist = dist;
-                    closest = zombie;
-                }
-            }
+            Explode();
         }
-
-        return closest;
     }
 
     private void OnDrawGizmosSelected()

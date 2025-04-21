@@ -160,7 +160,7 @@ public class GridSelector : MonoBehaviour
 
 public enum WeaponType
 {
-    Ak47,
+    Ak,
     Pistol,
     Grenade,
     Firegun,

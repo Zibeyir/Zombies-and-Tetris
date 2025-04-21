@@ -169,6 +169,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentHealth: 0
+  enemyName: Trump
   MoveSpeed: 0.1
   AttackInterval: 1
   Damage: 10

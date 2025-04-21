@@ -9,7 +9,7 @@ public class Zombie : MonoBehaviour
 {
     private EnemyData enemyData;
     public float currentHealth;
-
+    [SerializeField] string enemyName;
     public float MoveSpeed = 1.5f;
     public float AttackInterval = 3.0f;
     public int Damage = 10;
@@ -59,6 +59,7 @@ public class Zombie : MonoBehaviour
         }
 
         currentHealth = enemyData.HP;
+        Damage = enemyData.Damage;
     }
 
     private void SetupNavAgent()
@@ -119,7 +120,7 @@ public class Zombie : MonoBehaviour
     public void TakeDamage(int damage, BulletType type,Vector3 hitPoint)
     {
         TakeDamageBase(damage, type);
-        ObjectPool.Instance.SpawnFromPool(BulletType.ZombieBoold, hitPoint,Quaternion.identity);
+        ObjectPool.Instance.SpawnEffect(EffectType.ZombieBlood, hitPoint,Quaternion.identity);
     }
     
     public void TakeDamageBase(int damage,BulletType type)
@@ -149,9 +150,13 @@ public class Zombie : MonoBehaviour
         StartCoroutine(DeathCourtineZombie());
         animator.SetTrigger("Die");
         isAttacking = true;
+        if (enemyName == "Trump")
+        {
+            UIManager.Instance.SetCyristals(5);
+        }
         WaveManager.Instance.RemoveZombie(gameObject);
         //Destroy(gameObject, 5f);
-        UIManager.Instance.SetCoins(5);
+        UIManager.Instance.SetCoins(enemyData.CoinReward);
     }
     private IEnumerator DeathCourtineZombie()
     {

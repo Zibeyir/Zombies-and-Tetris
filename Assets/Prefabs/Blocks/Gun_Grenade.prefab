@@ -524,12 +524,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fab87d935bdc16846ab6f22226782441, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BulletType: 1
+  BulletType: 2
   FirePoint: {fileID: 6634953289539042839}
   _WeaponType: 2
   followObject: {fileID: 8077644698448514573}
   particleSystemFire: {fileID: 0}
   WeaponLevel: 0
+  Name: 
+  DamageByLevel: 
 --- !u!1001 &3107455211658482455
 PrefabInstance:
   m_ObjectHideFlags: 0

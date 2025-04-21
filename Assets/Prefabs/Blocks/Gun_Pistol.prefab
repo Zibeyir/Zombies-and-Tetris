@@ -171,12 +171,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fab87d935bdc16846ab6f22226782441, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BulletType: 0
+  BulletType: 1
   FirePoint: {fileID: 2240437520552811785}
   _WeaponType: 1
   followObject: {fileID: 6842727205861366925}
   particleSystemFire: {fileID: 8571986010662229031}
   WeaponLevel: 0
+  Name: 
+  DamageByLevel: 0000000000000000000000000000000000000000
 --- !u!1 &1830553595677867821
 GameObject:
   m_ObjectHideFlags: 0

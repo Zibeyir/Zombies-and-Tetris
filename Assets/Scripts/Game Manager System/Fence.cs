@@ -13,13 +13,17 @@ public class Fence : MonoBehaviour
     }
     public void TakeDamage(int amount)
     {
-        HP -= amount;
-        //Debug.Log(HP / HPMax);
-        GameEvents.OnFenceHPChanged?.Invoke(HP / HPMax);
+        
         if (HP <= 0)
         {
-            //GameEvents.OnGameLost?.Invoke();
-            //LevelManager.Instance.GameOver();
+            GameEvents.OnGameLost?.Invoke();
+            LevelManager.Instance.GameOver();
+        }
+        else
+        {
+            HP -= amount;
+            //Debug.Log(HP / HPMax);
+            GameEvents.OnFenceHPChanged?.Invoke(HP / HPMax);
         }
     }
 

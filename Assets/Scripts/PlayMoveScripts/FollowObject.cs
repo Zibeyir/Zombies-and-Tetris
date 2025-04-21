@@ -12,14 +12,30 @@ public class FollowObject : MonoBehaviour
 
     private Transform targetParent;
     private Tween hitTween;
+    private MeshRenderer materialWeapon;
+    private void OnEnable()
+    {
+        materialWeapon = GetComponent<MeshRenderer>();
 
+    }
     private void Start()
     {
-
         targetParent = transform.parent;
         transform.parent = null;
+        materialWeapon.material = GameDataService.Instance.WeaponMaterials[0];
     }
 
+    public void GetMaterialWeapon(int index)
+    {
+        if (index < GameDataService.Instance.WeaponMaterials.Count)
+        {
+            materialWeapon.material = GameDataService.Instance.WeaponMaterials[index];
+        }
+        else
+        {
+            Debug.Log("Index out of range for WeaponMaterials.");
+        }
+    }
     public void TouchBallScale()
     {
         PlayScaleTween(touchScaleFactor, touchScaleDuration);

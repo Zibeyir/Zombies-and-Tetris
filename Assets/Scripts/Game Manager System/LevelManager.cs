@@ -15,13 +15,18 @@ public class LevelManager : MonoBehaviour
         }
 
         Instance = this;
-        _SaveData = new SaveData();
+        _SaveData = SaveDataService.Load();
     }
 
     private void Start()
     {
-        SaveDataService.DeleteSave();
+        //SaveDataService.DeleteSave();
         int currentLevel = SaveDataService.Load().CurrentLevel;
+        if (currentLevel == 5)
+        {
+            SaveDataService.DeleteSave();
+            currentLevel = 0;
+        }
         LoadLevel(currentLevel);
     }
 
@@ -43,6 +48,7 @@ public class LevelManager : MonoBehaviour
 
         SaveData data = SaveDataService.Load();
         data.CurrentLevel++;
+        data.Coins = _SaveData.Coins;
         SaveDataService.Save(data);
     }
 
@@ -54,8 +60,16 @@ public class LevelManager : MonoBehaviour
     {
         SceneManager.LoadScene(0);
     }
+    void SaveFinalData()
+    {
+
+    }
     public void GameOver()
     {
+        SaveData data = SaveDataService.Load();
+        data.Coins = _SaveData.Coins;
+
+        SaveDataService.Save(data);
         UIManager.Instance.ShowLose();
     }
 }

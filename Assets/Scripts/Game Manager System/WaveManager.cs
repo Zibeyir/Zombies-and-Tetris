@@ -20,8 +20,8 @@ public class WaveManager : MonoBehaviour
     private float zombiesWaveUI= 0;
 
     WaveData wave;
-    [SerializeField] float enemyAttackDuration = 4f;
-    [SerializeField] float waveDuration = 7f;
+    [SerializeField] float enemyAttackDuration = 7f;
+    [SerializeField] float waveDuration = 10f;
 
     private List<GameObject> activeZombies = new List<GameObject>();
 
@@ -130,12 +130,25 @@ public class WaveManager : MonoBehaviour
         if (zombiesAlive <= 0)
         {
             DestroyAllZombies();
-            GameEvents.OnWaveCompleted?.Invoke(currentWave);
-            StartCoroutine(StartNextWave());
+            GameEvents.OnWaveCompleted?.Invoke();
+            UIManager.Instance.OnEnableUpgradeScene();
             //Debug.Log("All Zombies dead");
         }
     }
+    public void StartWavesAfterUpgrade()
+    {
+        if (waves[currentWave].WaveNumber >= 4)
+        {
+            SpawnBoss();
+            Debug.Log("All waves completed!");
 
+        }
+        else
+        {
+            StartCoroutine(StartNextWave());
+
+        }
+    }
     public void DestroyAllZombies()
     {
         foreach (var zombie in activeZombies)
