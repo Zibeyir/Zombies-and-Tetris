@@ -11,6 +11,9 @@ public class WaveManager : MonoBehaviour
 
     public List<GameObject> ZombiePrefabs;
 
+    public GameObject BossZombie;
+
+
     private List<WaveData> waves;
     private int currentWave = 0;
     private int zombiesAlive = 0;
@@ -43,20 +46,40 @@ public class WaveManager : MonoBehaviour
     private IEnumerator StartNextWave()
     {
         yield return new WaitForSeconds(2f);
-        //Debug.Log("Start new Wave");
-
-        wave = waves[currentWave];
-        //GameEvents.OnWaveStarted?.Invoke(currentWave + 1);
-        zombiesAlive = wave.EnemyCount;
-
-        for (int i = 0; i < wave.EnemyCount; i++)
+        if(waves[currentWave].WaveNumber >= 4)
         {
-            SpawnZombie();
-            yield return new WaitForSeconds(enemyAttackDuration);
+            SpawnBoss();
+            Debug.Log("All waves completed!");
+            yield break;
         }
-        currentWave++;
-    }
+        else
+        {
+            Debug.Log(currentWave + " Start new Wave" + waves[currentWave].WaveNumber);
 
+            wave = waves[currentWave];
+            //GameEvents.OnWaveStarted?.Invoke(currentWave + 1);
+            //zombiesAlive = wave.EnemyCount;
+            zombiesAlive = wave.EnemyCount;
+
+            for (int i = 0; i < wave.EnemyCount; i++)
+            {
+                SpawnZombie();
+                yield return new WaitForSeconds(enemyAttackDuration);
+            }
+            ++currentWave;
+        }
+          
+    }
+    private void SpawnBoss()
+    {
+        
+        GameObject selectedZombiePrefab = BossZombie;
+
+        Vector3 spawnPos = GenerateValidSpawnPosition();
+
+        GameObject zombie = Instantiate(selectedZombiePrefab, spawnPos, SpawnPointMax.rotation);
+        activeZombies.Add(zombie);
+    }
     private void SpawnZombie()
     {
         if (ZombiePrefabs.Count == 0)

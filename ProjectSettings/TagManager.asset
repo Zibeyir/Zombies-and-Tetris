@@ -11,6 +11,7 @@ TagManager:
   - Fence
   - Zombie
   - Place
+  - Boss
   layers:
   - Default
   - TransparentFX

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
 {
@@ -19,6 +20,7 @@ public class LevelManager : MonoBehaviour
 
     private void Start()
     {
+        SaveDataService.DeleteSave();
         int currentLevel = SaveDataService.Load().CurrentLevel;
         LoadLevel(currentLevel);
     }
@@ -44,7 +46,14 @@ public class LevelManager : MonoBehaviour
         SaveDataService.Save(data);
     }
 
-
+    public void NextLevel()
+    {
+        SceneManager.LoadScene(0);
+    }
+    public void NextLevelDefeat()
+    {
+        SceneManager.LoadScene(0);
+    }
     public void GameOver()
     {
         UIManager.Instance.ShowLose();

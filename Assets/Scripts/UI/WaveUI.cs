@@ -14,7 +14,7 @@ public class WaveUI : MonoBehaviour
         //waveText.text = "Wave " + wave;
         
         waveSlider[waveNumber-1].value = wave;
-        if (wave == 1&& waveNumber != 4)
+        if (wave == 1&& waveNumber < 3)
         {
             waveImages[waveNumber-1].sprite=waveActiveImage;
         }

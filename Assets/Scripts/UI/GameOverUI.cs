@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class GameOverUI : MonoBehaviour
@@ -10,6 +11,15 @@ public class GameOverUI : MonoBehaviour
         winScreen.SetActive(true);
     }
 
+    public void NextLevel() {
+        winScreen.SetActive(false);
+        LevelManager.Instance.NextLevel();
+    }
+    public void LoseLevel()
+    {
+        loseScreen.SetActive(false);
+        LevelManager.Instance.NextLevel();
+    }
     public void ShowLose()
     {
         loseScreen.SetActive(true);

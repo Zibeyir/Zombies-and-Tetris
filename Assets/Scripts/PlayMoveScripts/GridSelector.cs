@@ -64,7 +64,7 @@ public class GridSelector : MonoBehaviour
         if (!isDragging || !(Input.GetMouseButton(0) || Input.touchCount > 0))
             return;
 
-        Ray ray = GetPointerRay(yTouchOffset);
+        Ray ray = GetPointerRay(1);
 
         if (Physics.Raycast(ray, out RaycastHit hit, raycastDistance, layerMask))
         {
@@ -138,7 +138,7 @@ public class GridSelector : MonoBehaviour
             ? mainCam.ScreenPointToRay(Input.GetTouch(0).position)
             : mainCam.ScreenPointToRay(Input.mousePosition);
 
-        Vector3 offsetOrigin = baseRay.origin + mainCam.transform.forward * yOffset;
+        Vector3 offsetOrigin = baseRay.origin + mainCam.transform.up * yOffset;
         return new Ray(offsetOrigin, baseRay.direction);
     }
 

@@ -52,6 +52,26 @@ public class BulletFireGun : MonoBehaviour
 
             DisableSelf();
         }
+        else if (other.CompareTag("Boss"))
+        {
+            Boss zombie = other.GetComponent<Boss>();
+            if (zombie != null)
+            {
+                Vector3 direction = (other.transform.position - transform.position).normalized;
+
+                // Collider üzərindəki ən yaxın nöqtəni tap
+                Vector3 surfacePoint = other.ClosestPoint(transform.position);
+
+                // Daxilə doğru azca irəli get (mesh tərəfə)
+                Vector3 adjustedPoint = surfacePoint + direction * 0.2f; // istəsən 0.1f-0.3f dəyiş
+                ObjectPool.Instance.SpawnFromPool(BulletType.ShortGunTouchExpole, transform.position, Quaternion.identity);
+                ObjectPool.Instance.SpawnFromPool(BulletType.ShortGunTouchExpoleFire, transform.position, Quaternion.identity);
+
+                zombie.TakeDamage(Damage, Type, adjustedPoint);
+            }
+
+            DisableSelf();
+        }
     }
 
     private void FindDirectionToClosestZombie()
