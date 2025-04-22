@@ -1360,7 +1360,7 @@ GameObject:
   - component: {fileID: 3851209390567197820}
   - component: {fileID: 3697867535415365367}
   m_Layer: 9
-  m_Name: zombies
+  m_Name: zombie fast
   m_TagString: Zombie
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1417,10 +1417,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentHealth: 0
-  MoveSpeed: 1.1
-  AttackInterval: 1
+  enemyName: 
+  MoveSpeed: 1.2
+  AttackInterval: 3
   Damage: 10
-  EnemyId: "Z\u0259if"
+  EnemyId: fast
 --- !u!65 &7618843561541060386
 BoxCollider:
   m_ObjectHideFlags: 0

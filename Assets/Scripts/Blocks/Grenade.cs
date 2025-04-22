@@ -61,7 +61,7 @@ public class Grenade : BulletBase
         if (exploded) return;
         exploded = true;
 
-        ObjectPool.Instance.SpawnEffect(EffectType.GrenadeExplode, transform.position, Quaternion.identity);
+        ObjectPool.Instance.SpawnEffect(EffectType.GrenadeExplode, transform.position - new Vector3(0, 0.02f, 0), Quaternion.identity);
 
         Collider[] hits = Physics.OverlapSphere(transform.position, ExplosionRadius);
         foreach (var hit in hits)

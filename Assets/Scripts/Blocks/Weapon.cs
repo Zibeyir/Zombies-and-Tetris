@@ -1,4 +1,5 @@
 using DG.Tweening;
+using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -14,9 +15,13 @@ public class Weapon : MonoBehaviour
     int damage;
     public string Name;
     public int[] DamageByLevel = new int[5];
+    float healthBlock;
+    float healthBlockMax;
 
     private void Start()
     {
+        healthBlock = 30;
+        healthBlockMax = 30;
         draggableBlock = GetComponent<DraggableBlock>();
         DamageByLevel = GameDataService.Instance.GetWeapon(_WeaponType).Damages;
 
@@ -25,12 +30,22 @@ public class Weapon : MonoBehaviour
     {
         
         if (collision.gameObject.CompareTag("Ball")){
+            --healthBlock;
+            if (healthBlock<=0)
+            {
+                followObject.gameObject.SetActive(false);
+                MergeBlockAndDestroy();
+                _GameTimeData.Instance.CurrentBlocks.Remove(this.gameObject.transform);
+                _GameTimeData.Instance.CurrentBlocksWeapons.Remove(this);
+                _GameTimeData.Instance.ActiveButtonBlocks.Remove(this.gameObject.transform);
 
+            }
             Fire();
-            followObject.TouchBallScale();
+            //Debug.Log("BallDamege "+ healthBlock);
+            followObject.TouchBallScale(healthBlock, healthBlockMax);
             if (particleSystemFire != null&&!particleSystemFire.isPlaying) particleSystemFire.Play();
         }
-        
+     
     }
 
 

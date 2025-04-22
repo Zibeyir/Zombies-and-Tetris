@@ -170,10 +170,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentHealth: 0
   enemyName: Trump
-  MoveSpeed: 0.1
-  AttackInterval: 1
+  MoveSpeed: 0.4
+  AttackInterval: 3
   Damage: 10
-  EnemyId: "Z\u0259if"
+  EnemyId: easy
 --- !u!65 &5708122990938447118
 BoxCollider:
   m_ObjectHideFlags: 0

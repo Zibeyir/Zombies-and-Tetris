@@ -587,10 +587,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentHealth: 0
-  MoveSpeed: 0.7
-  AttackInterval: 1
+  enemyName: 
+  MoveSpeed: 0.2
+  AttackInterval: 3
   Damage: 10
-  EnemyId: "Z\u0259if"
+  EnemyId: strong
 --- !u!65 &1401482639310170053
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -147,6 +147,8 @@ public class Zombie : MonoBehaviour
     public void Die()
     {
         navAgent.enabled = false;
+        WaveManager.Instance.RemoveZombie(gameObject);
+
         StartCoroutine(DeathCourtineZombie());
         animator.SetTrigger("Die");
         isAttacking = true;
@@ -154,7 +156,6 @@ public class Zombie : MonoBehaviour
         {
             UIManager.Instance.SetCyristals(5);
         }
-        WaveManager.Instance.RemoveZombie(gameObject);
         //Destroy(gameObject, 5f);
         UIManager.Instance.SetCoins(enemyData.CoinReward);
     }

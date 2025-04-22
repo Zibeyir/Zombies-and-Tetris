@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -5,7 +6,7 @@ public class LevelManager : MonoBehaviour
 {
     public static LevelManager Instance { get; private set; }
     public SaveData _SaveData { get; private set; }
-    public int BlockPrice = 50;
+    [NonSerialized]public int BlockPrice;
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -13,7 +14,7 @@ public class LevelManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-
+        BlockPrice = 50;
         Instance = this;
         _SaveData = SaveDataService.Load();
     }
@@ -49,6 +50,7 @@ public class LevelManager : MonoBehaviour
         SaveData data = SaveDataService.Load();
         data.CurrentLevel++;
         data.Coins = _SaveData.Coins;
+        data.Cristal = _SaveData.Cristal+50;
         SaveDataService.Save(data);
     }
 

@@ -10,14 +10,15 @@ public class CoinUI : MonoBehaviour
     public int cyrstalValue;
     private void Start()
     {
-        coinValue = LevelManager.Instance._SaveData.Coins;
+        coinValue = 50;
         coinText.text = coinValue.ToString();
-
+        cyrstalValue = LevelManager.Instance._SaveData.Cristal;
+        cyrstalText.text = cyrstalValue.ToString();
         Debug.Log("Coin Value: " + coinValue);
     }
     public void UpdateCoins(int amount)
     {
-        coinValue = (LevelManager.Instance._SaveData.Coins += amount);
+        coinValue += amount;
         coinText.text = coinValue.ToString();
         UIManager.Instance.ActivateButtonForSpawnBlocks(coinValue);
 
@@ -26,7 +27,7 @@ public class CoinUI : MonoBehaviour
     {
         cyrstalValue = (LevelManager.Instance._SaveData.Cristal += amount);
         cyrstalText.text = cyrstalValue.ToString();
-        UIManager.Instance.ActivateButtonForSpawnBlocks(cyrstalValue);
+        //UIManager.Instance.ActivateButtonForSpawnBlocks(cyrstalValue);
 
     }
 }

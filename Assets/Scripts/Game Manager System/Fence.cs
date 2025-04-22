@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class Fence : MonoBehaviour
 {
-    public float HP = 100;
-    public float HPMax = 100;
+    public static float HP = 100;
+    public static float HPMax = 100;
 
     public void GetHP(int hp)
     {

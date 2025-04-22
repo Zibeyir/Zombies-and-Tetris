@@ -8,7 +8,7 @@ public class GridSelector : MonoBehaviour
     [SerializeField] private float raycastDistance = 100f;
     [SerializeField] private float mergeDistanceThreshold = 0.25f;
 
-    public static float TimeSpeed = 1; // Consider removing if unused
+    public static float TimeSpeed = 1;
     private Camera mainCam;
     private GameObject selectedObject;
     private DraggableBlock draggableBlock;
@@ -27,7 +27,7 @@ public class GridSelector : MonoBehaviour
 
     private void Start()
     {
-        layerMask = ~(1 << LayerMask.NameToLayer("Wall")); // Fixed layerMask assignment
+        layerMask = ~(1 << LayerMask.NameToLayer("Wall"));
         mainCam = Camera.main;
     }
 
@@ -40,54 +40,69 @@ public class GridSelector : MonoBehaviour
 
     private void HandleSelection()
     {
-        if ((Input.GetMouseButtonDown(0) || Input.touchCount > 0) && !isDragging)
+        if (!isDragging && IsPointerDown())
         {
-            Ray ray = GetPointerRay(0);
-            if (Physics.Raycast(ray, out RaycastHit hit, raycastDistance, layerMask) && hit.collider.CompareTag(selectableTag))
+            if (TryGetPointerPosition(out Vector3 screenPos))
             {
-                Time.timeScale = 0.2f;
-                selectedObject = hit.collider.gameObject;
-                selectedObject.transform.parent = null; // Consider if this is necessary
-                draggableBlock = selectedObject.GetComponent<DraggableBlock>();
-                yTouchOffset = selectedObject.GetComponent<BoxCollider>().size.z;
-                ToggleCollider(selectedObject, false);
-                selectedObjectTransform = selectedObject.transform;
-                selectedObjectWeapon = selectedObject.GetComponent<Weapon>();
-                isDragging = true;
-                currentCell = null;
+                Ray ray = GetPointerRay(screenPos, 0f);
+
+                if (Physics.Raycast(ray, out RaycastHit hit, raycastDistance, layerMask) &&
+                    hit.collider.CompareTag(selectableTag))
+                {
+                    Time.timeScale = 0.3f;
+
+                    selectedObject = hit.collider.gameObject;
+                    selectedObject.transform.parent = null;
+
+                    draggableBlock = selectedObject.GetComponent<DraggableBlock>();
+                    yTouchOffset = selectedObject.GetComponent<BoxCollider>().size.z;
+
+                    ToggleCollider(selectedObject, false);
+
+                    selectedObjectTransform = selectedObject.transform;
+                    selectedObjectWeapon = selectedObject.GetComponent<Weapon>();
+                    isDragging = true;
+                    currentCell = null;
+                }
             }
         }
     }
 
     private void HandleDragging()
     {
-        if (!isDragging || !(Input.GetMouseButton(0) || Input.touchCount > 0))
+        if (!isDragging || !IsPointerHeld())
             return;
 
-        Ray ray = GetPointerRay(1);
-
-        if (Physics.Raycast(ray, out RaycastHit hit, raycastDistance, layerMask))
+        if (TryGetPointerPosition(out Vector3 screenPos))
         {
-            currentCell = hit.collider.GetComponent<GridCell>();
-            if (currentCell != null && draggableBlock.AllCellTouchCell())
+            Ray ray = GetPointerRay(screenPos, yTouchOffset);
+
+            if (Physics.Raycast(ray, out RaycastHit hit, raycastDistance, layerMask))
             {
-                currentCell.GetDraggableBlock(draggableBlock);
+                currentCell = hit.collider.GetComponent<GridCell>();
+
+                if (currentCell != null && draggableBlock.AllCellTouchCell())
+                {
+                    currentCell.GetDraggableBlock(draggableBlock);
+                }
+                else
+                {
+                    draggableBlock.SetGridStatus(false);
+                    selectedObject.transform.position = new Vector3(hit.point.x, selectedObject.transform.position.y, hit.point.z);
+                }
+
+                CheckMerge();
             }
-            else
-            {
-                draggableBlock.SetGridStatus(false);
-                selectedObject.transform.position = new Vector3(hit.point.x, selectedObject.transform.position.y, hit.point.z);
-            }
-            CheckMerge();
         }
     }
 
     private void HandleRelease()
     {
-        if (!isDragging || !(Input.GetMouseButtonUp(0) || (Input.touchCount == 0 && Input.touchSupported)))
+        if (!isDragging || !IsPointerReleased())
             return;
 
         Time.timeScale = 1;
+
         draggableBlock.SetGridStatus(true);
 
         if (selectedObject != null)
@@ -117,29 +132,18 @@ public class GridSelector : MonoBehaviour
             if (weapons[i]._WeaponType != selectedType || weapons[i].WeaponLevel != selectedLevel)
                 continue;
 
-            Debug.Log("MergeDistance");
-
             selectedObjectWeapon.MergeBlockAndDestroy();
             weapons[i].MergeBlockAndLevelUp();
+
             isDragging = false;
 
             weapons.Remove(selectedObjectWeapon);
             blocks.Remove(selectedObjectTransform);
             _GameTimeData.Instance.ActiveButtonBlocks.Remove(selectedObjectTransform);
-            Time.timeScale = 1;
 
+            Time.timeScale = 1;
             break;
         }
-    }
-
-    private Ray GetPointerRay(float yOffset)
-    {
-        Ray baseRay = Input.touchCount > 0
-            ? mainCam.ScreenPointToRay(Input.GetTouch(0).position)
-            : mainCam.ScreenPointToRay(Input.mousePosition);
-
-        Vector3 offsetOrigin = baseRay.origin + mainCam.transform.up * yOffset;
-        return new Ray(offsetOrigin, baseRay.direction);
     }
 
     private void ToggleCollider(GameObject obj, bool isEnabled)
@@ -155,6 +159,45 @@ public class GridSelector : MonoBehaviour
         draggableBlock = null;
         isDragging = false;
         currentCell = null;
+    }
+
+    private bool TryGetPointerPosition(out Vector3 screenPosition)
+    {
+        if (Input.touchCount > 0)
+        {
+            screenPosition = Input.GetTouch(0).position;
+            return true;
+        }
+        else if (Input.GetMouseButton(0))
+        {
+            screenPosition = Input.mousePosition;
+            return true;
+        }
+
+        screenPosition = Vector3.zero;
+        return false;
+    }
+
+    private Ray GetPointerRay(Vector3 screenPosition, float yOffset)
+    {
+        Ray baseRay = mainCam.ScreenPointToRay(screenPosition);
+        Vector3 offsetOrigin = baseRay.origin + mainCam.transform.up * yOffset;
+        return new Ray(offsetOrigin, baseRay.direction);
+    }
+
+    private bool IsPointerDown()
+    {
+        return Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began || Input.GetMouseButtonDown(0);
+    }
+
+    private bool IsPointerHeld()
+    {
+        return Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Moved || Input.GetMouseButton(0);
+    }
+
+    private bool IsPointerReleased()
+    {
+        return Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended || Input.GetMouseButtonUp(0);
     }
 }
 

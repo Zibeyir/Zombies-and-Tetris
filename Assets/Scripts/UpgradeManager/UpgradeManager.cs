@@ -116,7 +116,17 @@ public class UpgradeManager : MonoBehaviour
     }
 
     private void ApplyHealthPlus20() {
-        Debug.Log("1 func");
+        float UpgradeValue = Fence.HP * 20 / 100;
+
+        if (Fence.HPMax > UpgradeValue)
+        {
+            Fence.HP += UpgradeValue;
+        }
+        else
+        {
+            Fence.HP = Fence.HPMax;
+            Debug.Log("1 func");
+        }
     }
     private void ApplyBallSpeedPlus20()
     {
@@ -128,6 +138,7 @@ public class UpgradeManager : MonoBehaviour
     }
     private void ApplyCoinPlus50()
     {
+        UIManager.Instance.SetCoins(50);
         Debug.Log("4 func");
     }
     private void ApplyBallAccelerationPlus10()

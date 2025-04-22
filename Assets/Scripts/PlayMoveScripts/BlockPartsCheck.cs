@@ -5,7 +5,7 @@ using UnityEngine;
 public class BlockPartsCheck : MonoBehaviour
 {
 
-    public DraggableBlock draggableBlock;
+    public DraggableBlock draggableBlock=null;
     public Vector3 boxHalfExtents;
     public Vector3 boxOffset = Vector3.zero;
     public GridCell ownCcell=null;

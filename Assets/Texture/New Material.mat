@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: assets
+  m_Name: New Material
   m_Shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -120,15 +120,14 @@ Material:
     - _EnvironmentReflections: 1
     - _FresnelMax: 1.5
     - _FresnelMin: 0
-    - _GlossMapScale: 1
-    - _Glossiness: 0.5
-    - _GlossyReflections: 1
+    - _GlossMapScale: 0
+    - _Glossiness: 0
+    - _GlossyReflections: 0
     - _IndirectIntensity: 1
     - _IndirectIntensityOutline: 0
     - _MatCapMaskChannel: 0
     - _MatCapType: 0
-    - _Metallic: 0.69
-    - _Mode: 0
+    - _Metallic: 0.304
     - _NormalsSource: 0
     - _NormalsUVType: 0
     - _OcclusionChannel: 0
@@ -141,14 +140,14 @@ Material:
     - _OutlineTextureLOD: 5
     - _OutlineTextureType: 0
     - _OutlineWidth: 1
-    - _Parallax: 0.02
+    - _Parallax: 0.005
     - _QueueOffset: 0
     - _RampBands: 4
     - _RampBandsSmoothing: 0.1
     - _RampOffset: 0
     - _RampScale: 1
-    - _RampSmoothing: 1
-    - _RampThreshold: 0.94
+    - _RampSmoothing: 0.435
+    - _RampThreshold: 0.722
     - _RampType: 0
     - _ReceiveShadows: 1
     - _ReceiveShadowsOff: 1
@@ -157,9 +156,9 @@ Material:
     - _RenderingMode: 0
     - _RimMax: 1
     - _RimMin: 0.5
-    - _ShadowColorLightAtten: 0
+    - _ShadowColorLightAtten: 1
     - _SingleIndirectColor: 0
-    - _Smoothness: 0.54
+    - _Smoothness: 0.201
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SpecularMapType: 0
@@ -170,7 +169,6 @@ Material:
     - _SrcBlend: 1
     - _SrcBlendAlpha: 1
     - _Surface: 0
-    - _UVSec: 0
     - _UseAlphaTest: 0
     - _UseEmission: 0
     - _UseFresnelReflections: 1
@@ -196,11 +194,11 @@ Material:
     - _OutlineColor: {r: 0, g: 0, b: 0, a: 1}
     - _ReflectionColor: {r: 1, g: 1, b: 1, a: 1}
     - _RimColor: {r: 0.8, g: 0.8, b: 0.8, a: 0.5}
-    - _SColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
+    - _SColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
     - _SpecColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
     - _SpecularColor: {r: 0.75, g: 0.75, b: 0.75, a: 1}
   m_BuildTextureStacks: []
---- !u!114 &6712288512523057107
+--- !u!114 &6166918695718632167
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}

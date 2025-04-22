@@ -16,15 +16,26 @@ public class FollowObject : MonoBehaviour
     private void OnEnable()
     {
         materialWeapon = GetComponent<MeshRenderer>();
+        materialWeapon.material = GameDataService.Instance.WeaponMaterials[0];
 
     }
     private void Start()
     {
         targetParent = transform.parent;
         transform.parent = null;
-        materialWeapon.material = GameDataService.Instance.WeaponMaterials[0];
     }
+    public void SetTransparency(float level, float max)
+    {
+        // Sərhəd: 0 (tam şəffaf) ilə 1 (tam görünən) arasında xətti azalma
+        float alpha = Mathf.Clamp01(level / max); // 0-10 arası səviyyəni 0.0 - 1.0 aralığına çevirir
 
+        MeshRenderer renderer = GetComponent<MeshRenderer>();
+        Material mat = renderer.material;
+
+        Color baseColor = mat.GetColor("_BaseColor");
+        baseColor.a = alpha;
+        mat.SetColor("_BaseColor", baseColor);
+    }
     public void GetMaterialWeapon(int index)
     {
         if (index < GameDataService.Instance.WeaponMaterials.Count)
@@ -36,8 +47,9 @@ public class FollowObject : MonoBehaviour
             Debug.Log("Index out of range for WeaponMaterials.");
         }
     }
-    public void TouchBallScale()
+    public void TouchBallScale(float breakLevel, float max)
     {
+        SetTransparency(breakLevel,max);
         PlayScaleTween(touchScaleFactor, touchScaleDuration);
     }
 

@@ -42,6 +42,8 @@ public class ActiveBlocks : MonoBehaviour
     {
         ActivedButtonOpened = false;
         SpawnNewBlocks(3);
+        UIManager.Instance.SetCoins(-50);
+
         transform.DOMove(target.position, duration).OnComplete(() => ActiveBlocksScript()); 
     }
     public void SpawnNewBlocks(int MaxRandom)

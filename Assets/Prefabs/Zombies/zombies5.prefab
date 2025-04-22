@@ -667,10 +667,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentHealth: 0
-  MoveSpeed: 0.1
-  AttackInterval: 1
+  enemyName: 
+  MoveSpeed: 0.4
+  AttackInterval: 3
   Damage: 10
-  EnemyId: "Z\u0259if"
+  EnemyId: strong
 --- !u!65 &4969954433902105670
 BoxCollider:
   m_ObjectHideFlags: 0

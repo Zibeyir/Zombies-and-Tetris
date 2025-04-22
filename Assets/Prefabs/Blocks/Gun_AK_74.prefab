@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 1074224958719808962}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.35, z: -0.011}
+  m_LocalPosition: {x: 0, y: -0.35, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -147,6 +147,7 @@ GameObject:
   - component: {fileID: 5291760698498650870}
   - component: {fileID: 2740205130411291548}
   - component: {fileID: 577935619957386166}
+  - component: {fileID: 5946907344717475581}
   m_Layer: 8
   m_Name: box02 (1)
   m_TagString: Selectedblock
@@ -239,6 +240,21 @@ MonoBehaviour:
   touchScaleDuration: 0.1
   mergeScaleDuration: 0.2
   mergeParticleSystem: {fileID: 7704739483323762560}
+--- !u!114 &5946907344717475581
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2770888883296070331}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
+  m_EffectDistance: {x: 1.12, y: -1}
+  m_UseGraphicAlpha: 1
 --- !u!1 &5733289211820608607
 GameObject:
   m_ObjectHideFlags: 0
@@ -265,7 +281,7 @@ Transform:
   m_GameObject: {fileID: 5733289211820608607}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.35000002, z: 0.026000187}
+  m_LocalPosition: {x: 0, y: 0.35000002, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -574,6 +590,8 @@ MonoBehaviour:
   followObject: {fileID: 577935619957386166}
   particleSystemFire: {fileID: 1641882241740886331}
   WeaponLevel: 0
+  Name: 
+  DamageByLevel: 0000000000000000000000000000000000000000
 --- !u!1 &7803821316632795344
 GameObject:
   m_ObjectHideFlags: 0

@@ -45,21 +45,21 @@
   ],
   "enemies": [
     {
-      "Type": "Zəif",
+      "Type": "fast",
       "Damage": 5,
-      "HP": 100,
+      "HP": 60,
       "CoinReward": 2
     },
     {
-      "Type": "Orta",
+      "Type": "easy",
       "Damage": 10,
-      "HP": 200,
+      "HP": 80,
       "CoinReward": 4
     },
     {
-      "Type": "Güclü",
+      "Type": "strong",
       "Damage": 15,
-      "HP": 400,
+      "HP": 200,
       "CoinReward": 8
     }
   ],
