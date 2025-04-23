@@ -40,7 +40,11 @@ public class DraggableBlock : MonoBehaviour
            
             currentGridCell = newCell;
             targetPosition = currentGridCell.GetComponent<Renderer>().bounds.center;
-            isInGridFirstTime = true;
+            if (AllCellTouchCell())
+            {
+                isInGridFirstTime = true;
+
+            }
             isInGrid = true;
             targetBool = true;
         }
@@ -120,7 +124,7 @@ public class DraggableBlock : MonoBehaviour
                 return false;
             }
         }
-
+        Debug.Log("AllCellTouchCell True"+this.gameObject.name);
         return true;
     }
     public bool AllPartsOverValidGrids()

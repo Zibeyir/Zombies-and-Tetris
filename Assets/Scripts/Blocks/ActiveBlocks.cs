@@ -34,7 +34,7 @@ public class ActiveBlocks : MonoBehaviour
         currentBlocksA = _GameTimeData.Instance.ActiveButtonBlocks;
 
         foreach (var block in currentBlocksA) {
-            if (!block.GetComponent<DraggableBlock>().isInGridFirstTime) return false;
+            if (!block.GetComponent<DraggableBlock>().AllPartsOverValidGrids()) return false;
         }
         return true;
     }

@@ -33,7 +33,7 @@ public class UpgradeManager : MonoBehaviour
             { UpgradeType.WeaponDamagePlus15, new UpgradeData { Type = UpgradeType.WeaponDamagePlus15, Description = "+15% Weapon Damage", CrystalCost = 75 } },
             { UpgradeType.TetrisHealthPlus25, new UpgradeData { Type = UpgradeType.TetrisHealthPlus25, Description = "+25% Tetris Block Health", CrystalCost = 165 } },
             { UpgradeType.ZombieDamageMinus10, new UpgradeData { Type = UpgradeType.ZombieDamageMinus10, Description = "-10% Damage from Zombies", CrystalCost = 55 } },
-            { UpgradeType.DropRandomTetris, new UpgradeData { Type = UpgradeType.DropRandomTetris, Description = "Drop Random Tetris Block", CrystalCost = 40 } },
+            //{ UpgradeType.DropRandomTetris, new UpgradeData { Type = UpgradeType.DropRandomTetris, Description = "Drop Random Tetris Block", CrystalCost = 40 } },
             { UpgradeType.CoinPlus100, new UpgradeData { Type = UpgradeType.CoinPlus100, Description = "+100 Coins", CrystalCost = 35 } },
             { UpgradeType.ZombiesSlower5Percent, new UpgradeData { Type = UpgradeType.ZombiesSlower5Percent, Description = "Zombies 5% Slower", CrystalCost = 60 } },
             { UpgradeType.CoinGainPlus20Percent, new UpgradeData { Type = UpgradeType.CoinGainPlus20Percent, Description = "+20% Coin Gain", CrystalCost = 45 } },
@@ -100,7 +100,7 @@ public class UpgradeManager : MonoBehaviour
             case UpgradeType.WeaponDamagePlus15: ApplyWeaponDamagePlus15(); break;
             case UpgradeType.TetrisHealthPlus25: ApplyTetrisHealthPlus25(); break;
             case UpgradeType.ZombieDamageMinus10: ApplyZombieDamageMinus10(); break;
-            case UpgradeType.DropRandomTetris: ApplyDropRandomTetris(); break;
+            //case UpgradeType.DropRandomTetris: ApplyDropRandomTetris(); break;
             case UpgradeType.CoinPlus100: ApplyCoinPlus100(); break;
             case UpgradeType.ZombiesSlower5Percent: ApplyZombiesSlower5Percent(); break;
             case UpgradeType.CoinGainPlus20Percent: ApplyCoinGainPlus20Percent(); break;
@@ -165,10 +165,7 @@ public class UpgradeManager : MonoBehaviour
     {
         Debug.Log("10 func");
     }
-    private void ApplyDropRandomTetris()
-    {
-        Debug.Log("11 func");
-    }
+   
     private void ApplyCoinPlus100()
     {
         Debug.Log("12 func");

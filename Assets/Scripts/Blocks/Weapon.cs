@@ -65,6 +65,7 @@ public class Weapon : MonoBehaviour
 
     public void MergeBlockAndLevelUp()
     {
+        healthBlock = healthBlockMax;
         followObject.MergeBallScale();
         ++WeaponLevel;
         followObject.GetMaterialWeapon(WeaponLevel);
