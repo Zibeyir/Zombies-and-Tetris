@@ -120,11 +120,10 @@ public class DraggableBlock : MonoBehaviour
     {
         foreach (var checker in blockPartsChecks)
         {
-            if (!checker.CellIsFull()) {
+            if (!checker.IsOverValidGrid()) {
                 return false;
             }
         }
-        Debug.Log("AllCellTouchCell True"+this.gameObject.name);
         return true;
     }
     public bool AllPartsOverValidGrids()

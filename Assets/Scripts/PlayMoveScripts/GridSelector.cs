@@ -34,10 +34,13 @@ public class GridSelector : MonoBehaviour
     private void Update()
     {
         HandleSelection();
-        HandleDragging();
         HandleRelease();
     }
+    private void FixedUpdate()
+    {
+        HandleDragging();
 
+    }
     private void HandleSelection()
     {
         if (!isDragging && IsPointerDown())
@@ -67,6 +70,8 @@ public class GridSelector : MonoBehaviour
             }
         }
     }
+    [SerializeField] private float sphereRadius = 0.05f; // inspector'dan idarə oluna bilən radius
+    private Vector3 lastHitPoint; // overlap mərkəzini yadda saxlamaq üçün
 
     private void HandleDragging()
     {
@@ -79,10 +84,23 @@ public class GridSelector : MonoBehaviour
 
             if (Physics.Raycast(ray, out RaycastHit hit, raycastDistance, layerMask))
             {
-                currentCell = hit.collider.GetComponent<GridCell>();
+                lastHitPoint = hit.point; // gizmo çəkiliş nöqtəsini yadda saxla
 
-                if (currentCell != null && draggableBlock.AllCellTouchCell())
+                Collider[] colliders = Physics.OverlapSphere(hit.point, sphereRadius, layerMask);
+
+                GridCell foundCell = null;
+                foreach (var col in colliders)
                 {
+                    if (col.CompareTag("Cell"))
+                    {
+                        foundCell = col.GetComponent<GridCell>();
+                        break;
+                    }
+                }
+
+                if (foundCell != null && draggableBlock.AllCellTouchCell())
+                {
+                    currentCell = foundCell;
                     currentCell.GetDraggableBlock(draggableBlock);
                 }
                 else
@@ -95,6 +113,16 @@ public class GridSelector : MonoBehaviour
             }
         }
     }
+
+    private void OnDrawGizmos()
+    {
+        if (isDragging && selectedObject != null)
+        {
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawWireSphere(lastHitPoint, sphereRadius);
+        }
+    }
+
 
     private void HandleRelease()
     {

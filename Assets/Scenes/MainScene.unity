@@ -3425,6 +3425,7 @@ MonoBehaviour:
     m_Bits: 2039
   blocks: []
   weapons: []
+  sphereRadius: 0.05
 --- !u!1 &732830611046524729
 GameObject:
   m_ObjectHideFlags: 0

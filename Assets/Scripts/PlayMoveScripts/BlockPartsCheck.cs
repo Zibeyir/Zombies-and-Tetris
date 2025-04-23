@@ -33,7 +33,7 @@ public class BlockPartsCheck : MonoBehaviour
             checkCellBool = (cell != null && (cell.draggableBlock == null || cell.draggableBlock == draggableBlock));
             if (checkCellBool)
             {
-                if (ownCcell != null) ownCcell.RemoveDraggableBlock();
+                if (ownCcell != null && cell.draggableBlock != draggableBlock) ownCcell.RemoveDraggableBlock();
                 ownCcell = cell;
                  
             }
