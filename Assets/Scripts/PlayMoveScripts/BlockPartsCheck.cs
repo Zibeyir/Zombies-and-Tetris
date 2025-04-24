@@ -1,64 +1,76 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class BlockPartsCheck : MonoBehaviour
 {
-
-    public DraggableBlock draggableBlock=null;
-    public Vector3 boxHalfExtents;
-    public Vector3 boxOffset = Vector3.zero;
-    public GridCell ownCcell=null;
-    public GridCell PastCcell=null;
+    public DraggableBlock _draggableBlock = null;
+    public GridCell ownCcell = null;
+    public GridCell PastCcell = null;
     public LayerMask layerMask;
 
-    public bool checkCellBool=false;
-    float sizeBoxCollider;
+    public bool checkCellBool = false;
+
+    public float rayLength = 1f;
+    public Vector3 rayOffset = Vector3.zero;
+    public Vector3 rayDirection = Vector3.down;
+
     private void OnEnable()
     {
-        layerMask = ~(1 << LayerMask.NameToLayer("Wall"));
-
-        sizeBoxCollider = 0.2f;
-        boxHalfExtents = new Vector3(sizeBoxCollider, sizeBoxCollider, sizeBoxCollider);
+        layerMask = LayerMask.GetMask("Grid");
     }
-   
+
     public bool IsOverValidGrid()
     {
-        Vector3 boxCenter = transform.position + boxOffset;
-        Collider[] hits = Physics.OverlapBox(boxCenter, boxHalfExtents, Quaternion.identity, layerMask);
+        Vector3 rayOrigin = transform.position + rayOffset;
+        Ray ray = new Ray(rayOrigin, rayDirection);
 
-        foreach (var hitz in hits)
+        if (Physics.Raycast(ray, out RaycastHit hit, rayLength, layerMask))
         {
-            GridCell cell = hitz.GetComponent<GridCell>();
-            checkCellBool = (cell != null && (cell.draggableBlock == null || cell.draggableBlock == draggableBlock));
+            GridCell cell = hit.collider.GetComponent<GridCell>();
+            checkCellBool = (cell != null && cell.draggableBlock == _draggableBlock);
+            Debug.Log($" Cell tapıldı: {cell.name}, draggableBlock: {cell.draggableBlock}");
+
             if (checkCellBool)
             {
-                if (ownCcell != null && cell.draggableBlock != draggableBlock) ownCcell.RemoveDraggableBlock();
+                Debug.Log("IsOverValidGrid");
+                //if (ownCcell != null && cell.draggableBlock != draggableBlock)
+                //    ownCcell.RemoveDraggableBlock();
+
                 ownCcell = cell;
-                 
-            }
-            return checkCellBool;
+                    return true;
+                }
+                else
+                {
+                    Debug.Log("------IsOverValidGrid");
+                    return false;
+
+                }
 
         }
+        Debug.Log("IsOverValidGrid   false");
 
         return false;
-       
     }
 
     public bool CellIsFull()
     {
-        Vector3 boxCenter = transform.position + boxOffset;
-        Collider[] hits = Physics.OverlapBox(boxCenter, boxHalfExtents, Quaternion.identity, layerMask);
+        Vector3 rayOrigin = transform.position + rayOffset;
+        Ray ray = new Ray(rayOrigin, rayDirection);
 
-        foreach (var hit in hits)
+        if (Physics.Raycast(ray, out RaycastHit hit, rayLength, layerMask))
         {
-            if (hit.GetComponent<GridCell>() != null)
-                return true;
+            return hit.collider.GetComponent<GridCell>() != null;
         }
 
         return false;
     }
 
-
-
+    // ✅ Gizmos ilə rayı göstər
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.green;
+        Vector3 rayOrigin = transform.position + rayOffset;
+        Gizmos.DrawRay(rayOrigin, rayDirection.normalized * rayLength);
+    }
 }

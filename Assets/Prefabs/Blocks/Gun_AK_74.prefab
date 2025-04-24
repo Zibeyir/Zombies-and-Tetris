@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 1074224958719808962}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.35, z: 0}
+  m_LocalPosition: {x: 0, y: -0.35, z: 0.116}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -44,15 +44,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df5bd1e3a37db0144a27a298325b68ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  draggableBlock: {fileID: 0}
-  boxHalfExtents: {x: 0, y: 0, z: 0}
-  boxOffset: {x: 0, y: 0, z: 0}
+  _draggableBlock: {fileID: 0}
   ownCcell: {fileID: 0}
   PastCcell: {fileID: 0}
   layerMask:
     serializedVersion: 2
     m_Bits: 0
   checkCellBool: 0
+  rayLength: 1
+  rayOffset: {x: 0, y: 0, z: 0}
+  rayDirection: {x: 0, y: -1, z: 0}
 --- !u!1 &2138121113678123453
 GameObject:
   m_ObjectHideFlags: 0
@@ -64,7 +65,7 @@ GameObject:
   - component: {fileID: 8055886335891402243}
   - component: {fileID: 3883488668490273446}
   - component: {fileID: 4886433379253501387}
-  m_Layer: 8
+  m_Layer: 6
   m_Name: AK_74
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -148,7 +149,7 @@ GameObject:
   - component: {fileID: 2740205130411291548}
   - component: {fileID: 577935619957386166}
   - component: {fileID: 5946907344717475581}
-  m_Layer: 8
+  m_Layer: 6
   m_Name: box02 (1)
   m_TagString: Selectedblock
   m_Icon: {fileID: 0}
@@ -281,7 +282,7 @@ Transform:
   m_GameObject: {fileID: 5733289211820608607}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.35000002, z: 0}
+  m_LocalPosition: {x: 0, y: 0.35000002, z: 0.116}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -299,15 +300,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df5bd1e3a37db0144a27a298325b68ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  draggableBlock: {fileID: 0}
-  boxHalfExtents: {x: 0, y: 0, z: 0}
-  boxOffset: {x: 0, y: 0, z: 0}
+  _draggableBlock: {fileID: 0}
   ownCcell: {fileID: 0}
   PastCcell: {fileID: 0}
   layerMask:
     serializedVersion: 2
     m_Bits: 0
   checkCellBool: 0
+  rayLength: 1
+  rayOffset: {x: 0, y: 0, z: 0}
+  rayDirection: {x: 0, y: -1, z: 0}
 --- !u!1 &6761191681673058461
 GameObject:
   m_ObjectHideFlags: 0
@@ -426,6 +428,7 @@ GameObject:
   - component: {fileID: 4460394506777440167}
   - component: {fileID: 8036093493525232288}
   - component: {fileID: -9085351638663447663}
+  - component: {fileID: 3373689647997226412}
   m_Layer: 8
   m_Name: Gun_AK_74
   m_TagString: Selectedblock
@@ -564,10 +567,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentGridCell: {fileID: 0}
+  targetGridCell: {fileID: 0}
   allCells: []
   isInGrid: 0
   isInGridFirstTime: 0
   moveSpeed: 25
+  targetPosition: {x: 0, y: 0, z: 0}
+  target: {x: 0, y: 0, z: 0}
+  targetBase: {x: 0, y: 0, z: 0}
   targetBool: 0
   LastBool: 0
   offset: {x: 0, y: 0, z: 0.356}
@@ -592,6 +599,21 @@ MonoBehaviour:
   WeaponLevel: 0
   Name: 
   DamageByLevel: 0000000000000000000000000000000000000000
+--- !u!114 &3373689647997226412
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6771239383367922643}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37099f06263918b438eea6a4a64e5d03, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MainRenderer: {fileID: 0}
+  Size: {x: 1, y: 2}
+  ActiveCell: 0
 --- !u!1 &7803821316632795344
 GameObject:
   m_ObjectHideFlags: 0
@@ -635,7 +657,7 @@ GameObject:
   - component: {fileID: 7813673601111764957}
   - component: {fileID: 3742581175382442435}
   - component: {fileID: 7797932863854504707}
-  m_Layer: 8
+  m_Layer: 6
   m_Name: AK_74
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -715,6 +737,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4606314065774848867}
     m_Modifications:
+    - target: {fileID: 359823614572811099, guid: 6bab3cb6c123e8f49b20f3a8dadf2ffd,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 823890478534769007, guid: 6bab3cb6c123e8f49b20f3a8dadf2ffd,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2223197309046584592, guid: 6bab3cb6c123e8f49b20f3a8dadf2ffd,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 2458751751608289245, guid: 6bab3cb6c123e8f49b20f3a8dadf2ffd,
         type: 3}
       propertyPath: playOnAwake
@@ -727,6 +764,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4089400364381904492, guid: 6bab3cb6c123e8f49b20f3a8dadf2ffd,
         type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4089400364381904492, guid: 6bab3cb6c123e8f49b20f3a8dadf2ffd,
+        type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
@@ -734,6 +776,11 @@ PrefabInstance:
         type: 3}
       propertyPath: playOnAwake
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6514273301098792633, guid: 6bab3cb6c123e8f49b20f3a8dadf2ffd,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 6528254623095322366, guid: 6bab3cb6c123e8f49b20f3a8dadf2ffd,
         type: 3}

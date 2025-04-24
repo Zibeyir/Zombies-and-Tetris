@@ -25,22 +25,25 @@ public class GridSelector : MonoBehaviour
     private int selectedLevel;
     private float sqrDist;
 
+    public LayerMask wallLayer;
+    public LayerMask selectionMask;
+    [SerializeField] private float sphereRadius = 0.05f; // inspector'dan idarə oluna bilən radius
+    private Vector3 lastHitPoint; // overlap mərkəzini yadda saxlamaq üçün
     private void Start()
     {
-        layerMask = ~(1 << LayerMask.NameToLayer("Wall"));
         mainCam = Camera.main;
+        wallLayer = 1 << LayerMask.NameToLayer("Plane");
+        selectionMask = Physics.DefaultRaycastLayers; // Bütün layere atmaq üçün
     }
 
     private void Update()
     {
-        HandleSelection();
-        HandleRelease();
-    }
-    private void FixedUpdate()
-    {
-        HandleDragging();
+        //HandleSelection();
+        //HandleDragging();
 
+        //HandleRelease();
     }
+  
     private void HandleSelection()
     {
         if (!isDragging && IsPointerDown())
@@ -49,29 +52,54 @@ public class GridSelector : MonoBehaviour
             {
                 Ray ray = GetPointerRay(screenPos, 0f);
 
-                if (Physics.Raycast(ray, out RaycastHit hit, raycastDistance, layerMask) &&
-                    hit.collider.CompareTag(selectableTag))
+                // Yalnız Wall layer-ə baxırıq
+                if (Physics.Raycast(ray, out RaycastHit hit, raycastDistance, selectionMask))
                 {
-                    Time.timeScale = 0.3f;
+                    if (hit.collider.CompareTag(selectableTag))
+                    {
+                        SelectObject(hit.collider.gameObject);
+                        return;
+                    }
+                }
+                lastHitPoint = hit.point;
+                // Əgər ray heç nə tapmasa, dairə ilə yoxla (bütün layere)
+                //Vector3 origin;
+                //if (mainCam != null)
+                //    origin = mainCam.ScreenToWorldPoint(new Vector3(screenPos.x, screenPos.y, 1.0f));
+                //else
+                //    origin = screenPos;
 
-                    selectedObject = hit.collider.gameObject;
-                    selectedObject.transform.parent = null;
-
-                    draggableBlock = selectedObject.GetComponent<DraggableBlock>();
-                    yTouchOffset = selectedObject.GetComponent<BoxCollider>().size.z;
-
-                    ToggleCollider(selectedObject, false);
-
-                    selectedObjectTransform = selectedObject.transform;
-                    selectedObjectWeapon = selectedObject.GetComponent<Weapon>();
-                    isDragging = true;
-                    currentCell = null;
+                Collider[] colliders = Physics.OverlapSphere(hit.point, sphereRadius, layerMask);
+                foreach (var col in colliders)
+                {
+                    if (col.CompareTag(selectableTag))
+                    {
+                        SelectObject(col.gameObject);
+                        return;
+                    }
                 }
             }
         }
     }
-    [SerializeField] private float sphereRadius = 0.05f; // inspector'dan idarə oluna bilən radius
-    private Vector3 lastHitPoint; // overlap mərkəzini yadda saxlamaq üçün
+
+    private void SelectObject(GameObject obj)
+    {
+        Time.timeScale = 0.3f;
+
+        selectedObject = obj;
+        selectedObject.transform.parent = null;
+
+        draggableBlock = selectedObject.GetComponent<DraggableBlock>();
+        yTouchOffset = selectedObject.GetComponent<BoxCollider>().size.z;
+
+        ToggleCollider(selectedObject, false);
+
+        selectedObjectTransform = selectedObject.transform;
+        selectedObjectWeapon = selectedObject.GetComponent<Weapon>();
+        isDragging = true;
+        currentCell = null;
+    }
+   
 
     private void HandleDragging()
     {
@@ -82,11 +110,11 @@ public class GridSelector : MonoBehaviour
         {
             Ray ray = GetPointerRay(screenPos, yTouchOffset);
 
-            if (Physics.Raycast(ray, out RaycastHit hit, raycastDistance, layerMask))
+            if (Physics.Raycast(ray, out RaycastHit hit, raycastDistance, wallLayer))
             {
                 lastHitPoint = hit.point; // gizmo çəkiliş nöqtəsini yadda saxla
 
-                Collider[] colliders = Physics.OverlapSphere(hit.point, sphereRadius, layerMask);
+                Collider[] colliders = Physics.OverlapSphere(hit.point, sphereRadius, selectionMask);
 
                 GridCell foundCell = null;
                 foreach (var col in colliders)
@@ -98,15 +126,19 @@ public class GridSelector : MonoBehaviour
                     }
                 }
 
-                if (foundCell != null && draggableBlock.AllCellTouchCell())
+                if (foundCell != null  )
                 {
-                    currentCell = foundCell;
-                    currentCell.GetDraggableBlock(draggableBlock);
+                    //Debug.Log("foundCell != null");
+                    //currentCell = foundCell;
+                    //draggableBlock.SetGridCell(currentCell);
+                    //currentCell.GetDraggableBlock(draggableBlock);
                 }
                 else
                 {
-                    draggableBlock.SetGridStatus(false);
-                    selectedObject.transform.position = new Vector3(hit.point.x, selectedObject.transform.position.y, hit.point.z);
+                    //Debug.Log("foundCell != true");
+
+                    //draggableBlock.SetGridStatus(false);
+                    //selectedObject.transform.position = new Vector3(hit.point.x, selectedObject.transform.position.y, hit.point.z);
                 }
 
                 CheckMerge();
@@ -128,7 +160,7 @@ public class GridSelector : MonoBehaviour
     {
         if (!isDragging || !IsPointerReleased())
             return;
-
+        Debug.Log("HandleRelease");
         Time.timeScale = 1;
 
         draggableBlock.SetGridStatus(true);
@@ -176,9 +208,12 @@ public class GridSelector : MonoBehaviour
 
     private void ToggleCollider(GameObject obj, bool isEnabled)
     {
-        Collider collider = obj.GetComponent<Collider>();
-        if (collider != null)
-            collider.enabled = isEnabled;
+        Collider[] collider = obj.GetComponents<Collider>();
+        foreach (var col in collider)
+        {
+           // if (col != null)
+              //  col.isTrigger = !isEnabled;
+        }   
     }
 
     private void ResetSelection()

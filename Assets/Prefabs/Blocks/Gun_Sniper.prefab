@@ -47,6 +47,7 @@ GameObject:
   - component: {fileID: 2252843922015486880}
   - component: {fileID: 8095882371368015664}
   - component: {fileID: 1146512704431161618}
+  - component: {fileID: 5398462020990810928}
   m_Layer: 8
   m_Name: Gun_Sniper
   m_TagString: Selectedblock
@@ -184,10 +185,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentGridCell: {fileID: 0}
+  targetGridCell: {fileID: 0}
   allCells: []
   isInGrid: 0
   isInGridFirstTime: 0
   moveSpeed: 25
+  targetPosition: {x: 0, y: 0, z: 0}
+  target: {x: 0, y: 0, z: 0}
+  targetBase: {x: 0, y: 0, z: 0}
   targetBool: 0
   LastBool: 0
   offset: {x: 0, y: 0, z: 0.356}
@@ -212,6 +217,21 @@ MonoBehaviour:
   WeaponLevel: 0
   Name: 
   DamageByLevel: 0000000000000000000000000000000000000000
+--- !u!114 &5398462020990810928
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2483318768922910333}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37099f06263918b438eea6a4a64e5d03, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MainRenderer: {fileID: 0}
+  Size: {x: 1, y: 2}
+  ActiveCell: 0
 --- !u!1 &4564959790560992180
 GameObject:
   m_ObjectHideFlags: 0
@@ -425,7 +445,7 @@ Transform:
   m_GameObject: {fileID: 6500650567813793817}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.35000002, z: 0}
+  m_LocalPosition: {x: 0, y: -0.35000002, z: 0.116}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -443,15 +463,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df5bd1e3a37db0144a27a298325b68ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  draggableBlock: {fileID: 0}
-  boxHalfExtents: {x: 0, y: 0, z: 0}
-  boxOffset: {x: 0, y: 0, z: 0}
+  _draggableBlock: {fileID: 0}
   ownCcell: {fileID: 0}
   PastCcell: {fileID: 0}
   layerMask:
     serializedVersion: 2
     m_Bits: 0
   checkCellBool: 0
+  rayLength: 1
+  rayOffset: {x: 0, y: 0, z: 0}
+  rayDirection: {x: 0, y: -1, z: 0}
 --- !u!1 &8849963519727878807
 GameObject:
   m_ObjectHideFlags: 0
@@ -560,7 +581,7 @@ Transform:
   m_GameObject: {fileID: 9071087597554423267}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.35000002, z: 0}
+  m_LocalPosition: {x: 0, y: 0.35000002, z: 0.116}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -578,15 +599,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df5bd1e3a37db0144a27a298325b68ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  draggableBlock: {fileID: 0}
-  boxHalfExtents: {x: 0, y: 0, z: 0}
-  boxOffset: {x: 0, y: 0, z: 0}
+  _draggableBlock: {fileID: 0}
   ownCcell: {fileID: 0}
   PastCcell: {fileID: 0}
   layerMask:
     serializedVersion: 2
     m_Bits: 0
   checkCellBool: 0
+  rayLength: 1
+  rayOffset: {x: 0, y: 0, z: 0}
+  rayDirection: {x: 0, y: -1, z: 0}
 --- !u!1001 &3460532613881770706
 PrefabInstance:
   m_ObjectHideFlags: 0
