@@ -505,18 +505,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc786367ce1eeb140a1af78a608bf408, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buildingPrefab: {fileID: 0}
   currentGridCell: {fileID: 0}
   targetGridCell: {fileID: 0}
   allCells: []
   isInGrid: 0
   isInGridFirstTime: 0
   moveSpeed: 25
-  targetPosition: {x: 0, y: 0, z: 0}
-  target: {x: 0, y: 0, z: 0}
-  targetBase: {x: 0, y: 0, z: 0}
-  targetBool: 0
-  LastBool: 0
-  offset: {x: 0, y: 0, z: 0}
   blockPartsChecks: []
 --- !u!114 &-3697556126036547581
 MonoBehaviour:
@@ -550,9 +545,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37099f06263918b438eea6a4a64e5d03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MainRenderer: {fileID: 0}
-  Size: {x: 1, y: 1}
+  Cell00: 1
+  Cell01: 0
+  Cell02: 0
+  Cell10: 0
+  Cell11: 0
+  Cell12: 0
+  x: 1
+  y: 1
   ActiveCell: 0
+  Width: 0
+  Height: 0
+  Vector3offset: {x: 0, y: -0.3, z: -0.45}
 --- !u!1001 &3107455211658482455
 PrefabInstance:
   m_ObjectHideFlags: 0

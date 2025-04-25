@@ -34,7 +34,7 @@ public class ActiveBlocks : MonoBehaviour
         currentBlocksA = _GameTimeData.Instance.ActiveButtonBlocks;
 
         foreach (var block in currentBlocksA) {
-            if (!block.GetComponent<DraggableBlock>().AllPartsOverValidGrids()) return false;
+            if (!block.GetComponent<Building>().ActiveCell) return false;
         }
         return true;
     }
@@ -51,10 +51,10 @@ public class ActiveBlocks : MonoBehaviour
         _GameTimeData.Instance.ActiveButtonBlocks.Clear();
         for (int i = 0; i < MaxRandom; i++)
         {
-            GameObject instatedBlock = Instantiate(blocks[Random.Range(0,6)], transformsPoints[i].position, transformsPoints[i].rotation);
+            GameObject instatedBlock = Instantiate(blocks[Random.Range(0,6)], transformsPoints[i].position, Quaternion.identity);
             instatedBlock.transform.SetParent(transform);
             _GameTimeData.Instance.CurrentBlocks.Add(instatedBlock.transform);
-            _GameTimeData.Instance.CurrentBlocksWeapons.Add(instatedBlock.GetComponent<Weapon>());
+            _GameTimeData.Instance.CurrentBlocksWeapons.Add(instatedBlock.GetComponentInChildren<Weapon>());
             _GameTimeData.Instance.ActiveButtonBlocks.Add(instatedBlock.transform);
             //gridSelector.AddBlocks(instatedBlock.transform,instatedBlock.GetComponent<Weapon>());
         }
@@ -64,7 +64,7 @@ public class ActiveBlocks : MonoBehaviour
         currentBlocksA = _GameTimeData.Instance.ActiveButtonBlocks;
         foreach (var block in currentBlocksA) { 
             block.transform.SetParent(null);
-            block.GetComponent<DraggableBlock>().enabled = true;
+            block.GetComponentInChildren<DraggableBlock>().enabled = true;
         }
     }
 }

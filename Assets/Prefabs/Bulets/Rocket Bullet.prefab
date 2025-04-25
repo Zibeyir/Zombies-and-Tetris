@@ -95,10 +95,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 751abd70762a68c489c7f096da116ba0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 2
-  Speed: 10
+  Type: 3
+  Speed: 5
   Damage: 20
-  trailRenderer: {fileID: 0}
 --- !u!1001 &690111771514204733
 PrefabInstance:
   m_ObjectHideFlags: 0

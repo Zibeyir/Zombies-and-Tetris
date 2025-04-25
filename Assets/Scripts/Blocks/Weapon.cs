@@ -17,6 +17,7 @@ public class Weapon : MonoBehaviour
     public int[] DamageByLevel = new int[5];
     float healthBlock;
     float healthBlockMax;
+    public Building _building;
 
     private void Start()
     {
@@ -33,6 +34,9 @@ public class Weapon : MonoBehaviour
             --healthBlock;
             if (healthBlock<=0)
             {
+                _GameTimeData.Instance.ActiveButtonBlocks.Remove(_building.transform);
+                Destroy(_building.gameObject);
+
                 followObject.gameObject.SetActive(false);
                 MergeBlockAndDestroy();
                 _GameTimeData.Instance.CurrentBlocks.Remove(this.gameObject.transform);
@@ -62,7 +66,10 @@ public class Weapon : MonoBehaviour
 
         }
     }
-
+    public void SetBuilding(Building building)
+    {
+        _building = building;
+    }
     public void MergeBlockAndLevelUp()
     {
         healthBlock = healthBlockMax;
@@ -73,6 +80,9 @@ public class Weapon : MonoBehaviour
 
     public void MergeBlockAndDestroy()
     {
+        _GameTimeData.Instance.ActiveButtonBlocks.Remove(_building.transform);
+
+        Destroy(_building.gameObject);
         followObject.gameObject.SetActive(false);
         if (draggableBlock.allCells != null)
         {

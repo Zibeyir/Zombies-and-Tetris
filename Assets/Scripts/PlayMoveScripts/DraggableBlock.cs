@@ -16,6 +16,7 @@ public class DraggableBlock : MonoBehaviour
    
    
     public BlockPartsCheck[] blockPartsChecks;
+    public Building _building;
     private void OnEnable()
     {
         buildingPrefab = GetComponent<Building>();
@@ -50,7 +51,10 @@ public class DraggableBlock : MonoBehaviour
 
 
     }
-
+    public void SetBuilding(Building building)
+    {
+        _building=building;
+    }
 
     public void SetGridStatus(bool status)
     {

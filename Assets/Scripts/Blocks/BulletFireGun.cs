@@ -5,6 +5,7 @@ public class BulletFireGun : BulletBase
 
     private void OnEnable()
     {
+        Debug.Log("BulletFireGun OnEnable");
         base.OnEnable();
 
         GameObject closest = FindClosestZombie();
@@ -24,7 +25,7 @@ public class BulletFireGun : BulletBase
             {
                 Vector3 hitPoint = GetAdjustedHitPoint(other);
                 ObjectPool.Instance.SpawnEffect(EffectType.ShotgunTouchExplode, transform.position, Quaternion.identity);
-                ObjectPool.Instance.SpawnEffect(EffectType.ShotgunTouchExplodeFire, transform.position-new Vector3(0,0.04f,0), Quaternion.identity);
+                ObjectPool.Instance.SpawnEffect(EffectType.ShotgunTouchExplodeFire, transform.position, Quaternion.identity);
                 zombie.TakeDamage(Damage, Type, hitPoint);
             }
         }

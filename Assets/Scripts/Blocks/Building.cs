@@ -1,44 +1,98 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Building : MonoBehaviour
 {
-    public Renderer MainRenderer;
-    public Vector2Int Size = Vector2Int.one;
+    // Inspector'da göstəriləcək hüceyrə vəziyyətləri
+    public bool Cell00 = false;
+    public bool Cell01 = false;
+    public bool Cell02 = false;
+    public bool Cell10 = false;
+    public bool Cell11 = false;
+    public bool Cell12 = false;
+
+    public int x;
+    public int y;
+    public bool[,] Shape;
+
     public bool ActiveCell;
+
+    public int Width;
+    public int Height;
+    public Vector3 Vector3offset;
+
+    public DraggableBlock _DraggableBlock;
     private void OnEnable()
     {
-        //MainRenderer = GetComponent<Renderer>();
+        UpdateShape();
+        Height = Shape.GetLength(0); // Yəni satır sayını
+        Width = Shape.GetLength(1);  // Sütun sayını
         ActiveCell = false;
+        PrintShape();
+        Weapon weapon = gameObject.GetComponentInChildren<Weapon>(); // DraggableBlock'a Building'i təyin edirik
+        if (weapon != null)
+        {
+            weapon.SetBuilding(this); // Weapon'a Building'i təyin edirik
+        }
     }
+
+    private void UpdateShape()
+    {
+        // Dinamik olaraq Shape'ı yeniləyirik
+        Shape = new bool[2, 3] // [y, x]
+        {
+            { Cell00, Cell01 ,Cell11},
+            { Cell02, Cell10 ,Cell12}
+        };
+    }
+
+    public void PrintShape()
+    {
+        Debug.Log("Shape: " + gameObject.name); // Oyun obyekti adını çap edirik
+        // Hər bir elementini çap edirik
+        for (int y = 0; y < Height; y++)
+        {
+            string row = "";  // Satırı toplayırıq
+            for (int x = 0; x < Width; x++)
+            {
+                row += Shape[y, x] ? "1 " : "0 "; // True/False dəyərləri çap edirik
+            }
+            Debug.Log(row); // Hər satırı bir string kimi çap edirik
+        }
+    }
+
     public void SetTransparent(bool available)
     {
         if (available)
         {
-            //MainRenderer.material.color = Color.green;
             ActiveCell = true;
-
-        }
-        else
-        {
-            //MainRenderer.material.color = Color.red;
         }
     }
 
     public void SetNormal()
     {
-        //MainRenderer.material.color = Color.white;
+        // Use this to set visuals if needed
+    }
+
+    private void Update()
+    {
+        // Real-time updates: we update the shape whenever a change occurs
+        UpdateShape();  // Make sure to always have the latest shape
     }
 
     private void OnDrawGizmos()
     {
-        for (int x = 0; x < Size.x; x++)
-        {
-            for (int y = 0; y < Size.y; y++)
-            {
-                if ((x + y) % 2 == 0) Gizmos.color = new Color(0.88f, 0f, 1f, 0.3f);
-                else Gizmos.color = new Color(1f, 0.68f, 0f, 0.3f);
+        if (Shape == null) return;
 
-                Gizmos.DrawCube(transform.position + new Vector3(x, 0, y), new Vector3(1, .1f, 1));
+        // Gizmos üçün doğru indekləmə: [y, x] - [satır, sütun]
+        for (int y = 0; y < Height; y++) // Y istiqamətində (satır)
+        {
+            for (int x = 0; x < Width; x++) // X istiqamətində (sütun)
+            {
+                if (!Shape[y, x]) continue; // Yalnız true olan hüceyrələri göstəririk
+
+                // Gizmos ilə bu hüceyrə göstərilir
+                Gizmos.color = ((x + y) % 2 == 0) ? new Color(0.88f, 0f, 1f, 0.3f) : new Color(1f, 0.68f, 0f, 0.3f);
+                Gizmos.DrawCube(transform.position + new Vector3(x, 0, y), new Vector3(1, 0.1f, 1)); // Hüceyrəni göstərmək
             }
         }
     }

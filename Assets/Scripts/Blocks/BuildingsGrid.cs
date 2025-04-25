@@ -12,6 +12,7 @@ public class BuildingsGrid : MonoBehaviour
 
     int x;
     int y;
+    public LayerMask gridLayerMask; // Grid layer mask
 
     private void Awake()
     {
@@ -21,6 +22,8 @@ public class BuildingsGrid : MonoBehaviour
 
     private void Start()
     {
+        gridLayerMask = 1 << LayerMask.NameToLayer("Grid");
+
         // Başlanğıcda gridin x:2-4, y:4-5 aralığını blok kimi göstər
         for (int i = 2; i <= 5; i++)
         {
@@ -43,21 +46,7 @@ public class BuildingsGrid : MonoBehaviour
 
     private void Update()
     {
-        if (IsInputDown())
-        {
-            Ray ray = mainCamera.ScreenPointToRay(GetInputPosition());
-            if (Physics.Raycast(ray, out RaycastHit hit))
-            {
-                var building = hit.collider.GetComponent<Building>();
-                if (building != null)
-                {
-                    Debug.Log("Building clicked: " + building.name);
-                    RemoveBuildingFromGrid(building);
-                    flyingBuilding = building;
-                    return;
-                }
-            }
-        }
+        
 
         if (flyingBuilding != null)
         {
@@ -72,24 +61,47 @@ public class BuildingsGrid : MonoBehaviour
 
                 available = true;
 
-                if (x < 0 || x > GridSize.x - flyingBuilding.Size.x) available = false;
-                if (y < 0 || y > GridSize.y - flyingBuilding.Size.y) available = false;
+                int width = flyingBuilding.Width;
+                int height = flyingBuilding.Height;
+
+                available = true;
+                //if (x < 0 || x > GridSize.x - width) available = false;
+                //if (y < 0 || y > GridSize.y - height) available = false;
                 if (available && IsPlaceTaken(x, y)) available = false;
 
-                flyingBuilding.transform.position = transform.position + new Vector3(x * cellSize, 0, y * cellSize);
+                flyingBuilding.transform.position = transform.position + new Vector3(x * cellSize, 0, y * cellSize) ;
                 flyingBuilding.SetTransparent(available);
 
                 if (IsInputUp())
                 {
                     if (available)
                     {
-                        Debug.Log("Building placed at: " + x + ", " + y);
                         PlaceFlyingBuilding(x, y);
                     }
                 }
             }
         }
+        else
+        {
+            if (IsInputDown())
+            {
+                Ray ray = mainCamera.ScreenPointToRay(GetInputPosition());
+
+                // Raycast yalnız gridLayerMask ilə olan obyektlərə baxacaq
+                if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, gridLayerMask))
+                {
+                    var building = hit.collider.GetComponent<Building>();
+                    if (building != null)
+                    {
+                        RemoveBuildingFromGrid(building);
+                        flyingBuilding = building;
+                        return;
+                    }
+                }
+            }
+        }
     }
+
 
     private void RemoveBuildingFromGrid(Building building)
     {
@@ -107,11 +119,23 @@ public class BuildingsGrid : MonoBehaviour
 
     private bool IsPlaceTaken(int placeX, int placeY)
     {
-        for (int x = 0; x < flyingBuilding.Size.x; x++)
+        int width = flyingBuilding.Width;
+        int height = flyingBuilding.Height;
+        
+        for (int y = 0; y < height; y++)
         {
-            for (int y = 0; y < flyingBuilding.Size.y; y++)
+            for (int x = 0; x < width; x++)
             {
-                if (grid[placeX + x, placeY + y] != null) return true;
+                if (!flyingBuilding.Shape[y, x]) continue;
+
+                int gridX = placeX + x;
+                int gridY = placeY + y;
+
+                if (gridX < 0 || gridX >= GridSize.x || gridY < 0 || gridY >= GridSize.y)
+                    return true;
+
+                if (grid[gridX, gridY] != null)
+                    return true;
             }
         }
         return false;
@@ -119,10 +143,15 @@ public class BuildingsGrid : MonoBehaviour
 
     private void PlaceFlyingBuilding(int placeX, int placeY)
     {
-        for (int x = 0; x < flyingBuilding.Size.x; x++)
+        int width = flyingBuilding.Width;
+        int height = flyingBuilding.Height;
+
+        for (int y = 0; y < height; y++)
         {
-            for (int y = 0; y < flyingBuilding.Size.y; y++)
+            for (int x = 0; x < width; x++)
             {
+                if (!flyingBuilding.Shape[y, x]) continue;
+
                 grid[placeX + x, placeY + y] = flyingBuilding;
             }
         }
@@ -130,6 +159,8 @@ public class BuildingsGrid : MonoBehaviour
         flyingBuilding.SetNormal();
         flyingBuilding = null;
     }
+
+
 
     private bool IsInputDown()
     {
