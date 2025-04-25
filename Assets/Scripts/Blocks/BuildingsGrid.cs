@@ -9,15 +9,34 @@ public class BuildingsGrid : MonoBehaviour
     public Building flyingBuilding;
     private Camera mainCamera;
     public bool available;
+    public bool firstAvailable;
 
+    // Yeni dəyişənləri burada təyin edirik
     int x;
     int y;
+    Vector2Int offset;  // Bu dəyişəni təyin edirik
+    Vector3 touchOffset = new Vector3(0, 0.5f, 0); // Bu dəyişəni birbaşa təyin etdik
+    int width, height, gridX, gridY;
+
+    int xLast;
+    int yLast;
+    Vector2Int offsetLast;
+
     public LayerMask gridLayerMask; // Grid layer mask
+
+    private Ray dragRay;
+    private RaycastHit hit;
+    private Vector3 worldPosition;
+    private Plane groundPlane;
+
+    // Yeni dəyişən: son yerləşmə yeri
+    private Vector3 lastPosition;
 
     private void Awake()
     {
         grid = new Building[GridSize.x, GridSize.y];
         mainCamera = Camera.main;
+        groundPlane = new Plane(Vector3.up, transform.position); // Plane-ni bir dəfə təyin edirik
     }
 
     private void Start()
@@ -42,42 +61,81 @@ public class BuildingsGrid : MonoBehaviour
         }
 
         flyingBuilding = Instantiate(buildingPrefab);
+
+        // Başlanğıcda son yer təyin edilir
+        lastPosition = flyingBuilding.transform.position;
     }
 
     private void Update()
     {
-        
-
         if (flyingBuilding != null)
         {
-            var groundPlane = new Plane(Vector3.up, transform.position);
-            Ray dragRay = mainCamera.ScreenPointToRay(GetInputPosition());
+            // Drag ray-ini yalnız bir dəfə təyin edirik
+            dragRay = mainCamera.ScreenPointToRay(GetInputPosition());
 
             if (groundPlane.Raycast(dragRay, out float distance))
             {
-                Vector3 worldPosition = dragRay.GetPoint(distance);
+                worldPosition = dragRay.GetPoint(distance);
                 x = Mathf.RoundToInt((worldPosition.x - transform.position.x) / cellSize);
                 y = Mathf.RoundToInt((worldPosition.z - transform.position.z) / cellSize);
 
-                available = true;
+                // True hüceyrələrinin orta nöqtəsini tapırıq
+                offset = flyingBuilding.GetCenterOffset();
 
-                int width = flyingBuilding.Width;
-                int height = flyingBuilding.Height;
+                // Binanın ortasında yerləşməsini təmin edirik
+                available = !IsPlaceTaken(x - offset.x, y - offset.y);
 
-                available = true;
-                //if (x < 0 || x > GridSize.x - width) available = false;
-                //if (y < 0 || y > GridSize.y - height) available = false;
-                if (available && IsPlaceTaken(x, y)) available = false;
+                // Binanı ortalayıb yuxarıya yerləşdiririk
+                flyingBuilding.transform.position = transform.position + new Vector3(
+                    (x - offset.x) * cellSize,
+                    .8f,
+                    (y - offset.y) * cellSize
+                ) + touchOffset;
+                if(available)
+                {
+                    lastPosition = flyingBuilding.transform.position;
+                    xLast = x;
+                    yLast = y;
+                    offsetLast = offset;
+                }
 
-                flyingBuilding.transform.position = transform.position + new Vector3(x * cellSize, 0, y * cellSize) ;
+
+                // Binanın şəffaflıq vəziyyətini təyin edirik
                 flyingBuilding.SetTransparent(available);
 
+                // Əgər sağ klik edilmişsə və yer boşdursa, binanı yerləşdiririk
                 if (IsInputUp())
                 {
+                    Time.timeScale = 1;
+
+                    flyingBuilding._Weapon.MoveBool = false;
+
                     if (available)
                     {
-                        PlaceFlyingBuilding(x, y);
+                        flyingBuilding.transform.position = transform.position + new Vector3(
+                    (x - offset.x) * cellSize,
+                    0,
+                    (y - offset.y) * cellSize) + touchOffset;
+                        PlaceFlyingBuilding(x - offset.x, y - offset.y);
+
+                        // Yerləşdikdən sonra son yeri saxlayırıq
                     }
+                    else
+                    {
+                        flyingBuilding.transform.position = lastPosition - new Vector3(0, .8f, 0);
+
+                        if (firstAvailable)
+                        {
+                            // Əgər yer boş deyilsə, binanı geri qaytarırıq
+                            PlaceFlyingBuilding(xLast - offsetLast.x, yLast - offsetLast.y);
+
+                        }
+
+                        // Əgər yer boşdursa, binanı geri qaytarırıq
+                        flyingBuilding = null;
+                    }
+                    firstAvailable = false;
+
                 }
             }
         }
@@ -85,23 +143,25 @@ public class BuildingsGrid : MonoBehaviour
         {
             if (IsInputDown())
             {
-                Ray ray = mainCamera.ScreenPointToRay(GetInputPosition());
+                dragRay = mainCamera.ScreenPointToRay(GetInputPosition());
 
-                // Raycast yalnız gridLayerMask ilə olan obyektlərə baxacaq
-                if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, gridLayerMask))
+                if (Physics.Raycast(dragRay, out hit, Mathf.Infinity, gridLayerMask))
                 {
                     var building = hit.collider.GetComponent<Building>();
                     if (building != null)
                     {
+                        Time.timeScale = 0.4f;
+                        firstAvailable = true;
                         RemoveBuildingFromGrid(building);
                         flyingBuilding = building;
+                        flyingBuilding._Weapon.MoveBool = true;
+                        lastPosition = flyingBuilding.transform.position+ new Vector3(0, .8f, 0);
                         return;
                     }
                 }
             }
         }
     }
-
 
     private void RemoveBuildingFromGrid(Building building)
     {
@@ -119,17 +179,17 @@ public class BuildingsGrid : MonoBehaviour
 
     private bool IsPlaceTaken(int placeX, int placeY)
     {
-        int width = flyingBuilding.Width;
-        int height = flyingBuilding.Height;
-        
+        width = flyingBuilding.Width;
+        height = flyingBuilding.Height;
+
         for (int y = 0; y < height; y++)
         {
             for (int x = 0; x < width; x++)
             {
                 if (!flyingBuilding.Shape[y, x]) continue;
 
-                int gridX = placeX + x;
-                int gridY = placeY + y;
+                gridX = placeX + x;
+                gridY = placeY + y;
 
                 if (gridX < 0 || gridX >= GridSize.x || gridY < 0 || gridY >= GridSize.y)
                     return true;
@@ -143,8 +203,8 @@ public class BuildingsGrid : MonoBehaviour
 
     private void PlaceFlyingBuilding(int placeX, int placeY)
     {
-        int width = flyingBuilding.Width;
-        int height = flyingBuilding.Height;
+        width = flyingBuilding.Width;
+        height = flyingBuilding.Height;
 
         for (int y = 0; y < height; y++)
         {
@@ -155,12 +215,11 @@ public class BuildingsGrid : MonoBehaviour
                 grid[placeX + x, placeY + y] = flyingBuilding;
             }
         }
+        //flyingBuilding._Weapon.MoveBool = false;
 
         flyingBuilding.SetNormal();
         flyingBuilding = null;
     }
-
-
 
     private bool IsInputDown()
     {

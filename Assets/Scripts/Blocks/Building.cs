@@ -21,6 +21,7 @@ public class Building : MonoBehaviour
     public Vector3 Vector3offset;
 
     public DraggableBlock _DraggableBlock;
+    public Weapon _Weapon;
     private void OnEnable()
     {
         UpdateShape();
@@ -28,11 +29,11 @@ public class Building : MonoBehaviour
         Width = Shape.GetLength(1);  // Sütun sayını
         ActiveCell = false;
         PrintShape();
-        Weapon weapon = gameObject.GetComponentInChildren<Weapon>(); // DraggableBlock'a Building'i təyin edirik
-        if (weapon != null)
-        {
-            weapon.SetBuilding(this); // Weapon'a Building'i təyin edirik
-        }
+        //Weapon weapon = gameObject.GetComponentInChildren<Weapon>(); // DraggableBlock'a Building'i təyin edirik
+        //if (weapon != null)
+        //{
+        //    weapon.SetBuilding(this); // Weapon'a Building'i təyin edirik
+        //}
     }
 
     private void UpdateShape()
@@ -44,7 +45,33 @@ public class Building : MonoBehaviour
             { Cell02, Cell10 ,Cell12}
         };
     }
+    public Vector2Int GetCenterOffset()
+    {
+        int width = Shape.GetLength(1);
+        int height = Shape.GetLength(0);
 
+        Vector2 total = Vector2.zero;
+        int count = 0;
+
+        // "True" olan hüceyrələri tapırıq və orta nöqtəni hesablayırıq
+        for (int y = 0; y < height; y++)
+        {
+            for (int x = 0; x < width; x++)
+            {
+                if (Shape[y, x])
+                {
+                    total += new Vector2(x, y);
+                    count++;
+                }
+            }
+        }
+
+        if (count == 0)
+            return Vector2Int.zero;
+
+        Vector2 average = total / count;
+        return new Vector2Int(Mathf.RoundToInt(average.x), Mathf.RoundToInt(average.y));
+    }
     public void PrintShape()
     {
         Debug.Log("Shape: " + gameObject.name); // Oyun obyekti adını çap edirik
@@ -66,6 +93,7 @@ public class Building : MonoBehaviour
         {
             ActiveCell = true;
         }
+        _Weapon.MoveBoolGreen = available;
     }
 
     public void SetNormal()

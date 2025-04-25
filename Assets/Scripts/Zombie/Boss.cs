@@ -157,7 +157,7 @@ public class Boss : MonoBehaviour
     }
     private IEnumerator DeathCourtineZombie()
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(5f);
         LevelManager.Instance.LevelComplete();
         //Destroy(gameObject, 1);
         StopAllCoroutines();

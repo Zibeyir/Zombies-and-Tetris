@@ -6,6 +6,18 @@ public class GridCell : MonoBehaviour
 {
     public DraggableBlock draggableBlock=null;
     public bool BlockBool= false;
+
+    Material cellMaterial;
+    Renderer cellRenderer;
+    BlockPartsCheck blockPartsCheck;
+    BlockPartsCheck _blockPartsCheck;
+    Color cellColor;
+    private void Start()
+    {
+        cellRenderer = GetComponent<Renderer>();
+        cellMaterial = cellRenderer.material;
+        cellColor = cellMaterial.color;
+    }
     public void GetDraggableBlock(DraggableBlock _draggableBlock)
     {
        // if (draggableBlock != null) return;
@@ -16,28 +28,23 @@ public class GridCell : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Selectedblock"))
+        if (other.CompareTag("Blockpart"))
         {
-            DraggableBlock _draggableBlock = other.GetComponent<DraggableBlock>();
-            if (_draggableBlock != null)
-            {
-                if (draggableBlock != null) return;
-                draggableBlock = _draggableBlock;
-                BlockBool = true;
-               // draggableBlock.SetGridCell(this);
-                //GetDraggableBlock(_draggableBlock);
+            blockPartsCheck = other.GetComponent<BlockPartsCheck>();
+            if (blockPartsCheck != null)
+            {Debug.Log(this.name+" Blockpart: " + blockPartsCheck.weapon.name);
+                cellRenderer.material.color = blockPartsCheck.weapon.MoveBoolGreen ? Color.green : Color.red;
             }
         }
     }
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Selectedblock"))
+        if (other.CompareTag("Blockpart"))
         {
-            DraggableBlock _draggableBlock = other.GetComponent<DraggableBlock>();
-            if (_draggableBlock != null&&_draggableBlock== draggableBlock)
+            BlockPartsCheck _blockPartsCheck = other.GetComponent<BlockPartsCheck>();
+            if (_blockPartsCheck != null&& _blockPartsCheck==blockPartsCheck)
             {
-                draggableBlock = null;
-                BlockBool = false;
+                cellRenderer.material.color = cellColor;
             }
         }
     }

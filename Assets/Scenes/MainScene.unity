@@ -433,7 +433,7 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 2039
+    m_Bits: 8448
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 2048
@@ -612,7 +612,7 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 2039
+    m_Bits: 8448
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 2048
@@ -775,7 +775,7 @@ Transform:
   m_GameObject: {fileID: 824088933}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 7.75, y: 0.64, z: 9.36}
+  m_LocalPosition: {x: 7.75, y: 0.91, z: 9.36}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2455,7 +2455,7 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 2039
+    m_Bits: 8448
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 2048
@@ -2862,6 +2862,7 @@ MonoBehaviour:
   cellSize: 0.7
   flyingBuilding: {fileID: 0}
   available: 0
+  firstAvailable: 0
   gridLayerMask:
     serializedVersion: 2
     m_Bits: 0
@@ -3001,7 +3002,7 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 2039
+    m_Bits: 8448
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 2048
@@ -3211,7 +3212,7 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 2039
+    m_Bits: 8448
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 2048
@@ -3232,7 +3233,7 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 2039
+    m_Bits: 8448
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 2048
@@ -3253,7 +3254,7 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 2039
+    m_Bits: 8448
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 2048
@@ -3287,6 +3288,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 503442291044939899}
+  - component: {fileID: 503442291044939900}
   m_Layer: 0
   m_Name: Squaresmidsep
   m_TagString: Untagged
@@ -3312,7 +3314,7 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 2039
+    m_Bits: 8448
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 2048
@@ -3472,7 +3474,7 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 2039
+    m_Bits: 8448
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 2048
@@ -3558,6 +3560,60 @@ Transform:
   - {fileID: 8361555461620601959}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &503442291044939900
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 119746883014800847}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44d73e0a4c6155c4caaa6a209b3f9304, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  material: {fileID: 2100000, guid: 41df7f3632012134084f0dacd55f6b44, type: 2}
+  meshRenderer:
+  - {fileID: 2515664084848623883}
+  - {fileID: 3746176579767135941}
+  - {fileID: 5736468916283728632}
+  - {fileID: 906825828106732821}
+  - {fileID: 7405387910151831366}
+  - {fileID: 1209551887896336241}
+  - {fileID: 7004148095542521774}
+  - {fileID: 4355768070567227473}
+  - {fileID: 5084609944502470956}
+  - {fileID: 5658604882030074947}
+  - {fileID: 4347266848104314423}
+  - {fileID: 6985133958953775}
+  - {fileID: 4354282929082732157}
+  - {fileID: 8822270660693715716}
+  - {fileID: 2774633034864165147}
+  - {fileID: 3892603778258542621}
+  - {fileID: 4947667200720640245}
+  - {fileID: 2405788516255465547}
+  - {fileID: 4313790488071107685}
+  - {fileID: 2648191374084311861}
+  - {fileID: 4280057278173255905}
+  - {fileID: 5681399573778314058}
+  - {fileID: 4533202362558451585}
+  - {fileID: 16135406569428510}
+  - {fileID: 6083916569468938563}
+  - {fileID: 8231088463700500431}
+  - {fileID: 5954090341925026752}
+  - {fileID: 8060310744196243146}
+  - {fileID: 6728842978697915682}
+  - {fileID: 381603528320659454}
+  - {fileID: 8784963385360252237}
+  - {fileID: 7920879227479368488}
+  - {fileID: 6814306357386488395}
+  - {fileID: 5673101389704731867}
+  - {fileID: 4625372521141951382}
+  - {fileID: 481857811}
+  - {fileID: 1547125486}
+  - {fileID: 666259110}
+  - {fileID: 2061217293}
+  - {fileID: 4962858114533196037}
 --- !u!4 &558766726592646743
 Transform:
   m_ObjectHideFlags: 0
@@ -3867,7 +3923,7 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 2039
+    m_Bits: 8448
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 2048
@@ -3995,7 +4051,7 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 2039
+    m_Bits: 8448
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 2048
@@ -4045,7 +4101,7 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 2039
+    m_Bits: 8448
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 2048
@@ -4246,7 +4302,7 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 2039
+    m_Bits: 8448
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 2048
@@ -4424,7 +4480,7 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 2039
+    m_Bits: 8448
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 2048
@@ -4557,7 +4613,7 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 2039
+    m_Bits: 8448
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 2048
@@ -4578,7 +4634,7 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 2039
+    m_Bits: 8448
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 2048
@@ -4826,7 +4882,7 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 2039
+    m_Bits: 8448
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 2048
@@ -5016,7 +5072,7 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 2039
+    m_Bits: 8448
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 2048
@@ -5037,7 +5093,7 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 2039
+    m_Bits: 8448
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 2048
@@ -5113,7 +5169,7 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 2039
+    m_Bits: 8448
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 2048
@@ -5155,7 +5211,7 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 2039
+    m_Bits: 8448
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 2048
@@ -5377,7 +5433,7 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 2039
+    m_Bits: 8448
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 2048
@@ -5703,7 +5759,7 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 2039
+    m_Bits: 8448
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 2048
@@ -5724,7 +5780,7 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 2039
+    m_Bits: 8448
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 2048
@@ -6246,7 +6302,7 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 2039
+    m_Bits: 8448
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 2048
@@ -6726,7 +6782,7 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 2039
+    m_Bits: 8448
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 2048
@@ -7055,7 +7111,7 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 2039
+    m_Bits: 8448
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 2048
@@ -7516,7 +7572,7 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 2039
+    m_Bits: 8448
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 2048
@@ -7807,7 +7863,7 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 2039
+    m_Bits: 8448
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 2048
@@ -8029,7 +8085,7 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 2039
+    m_Bits: 8448
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 2048
@@ -8451,7 +8507,7 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 2039
+    m_Bits: 8448
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 2048
@@ -8486,7 +8542,7 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 2039
+    m_Bits: 8448
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 2048
@@ -8584,7 +8640,7 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 2039
+    m_Bits: 8448
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 2048
@@ -8972,7 +9028,7 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 2039
+    m_Bits: 8448
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 2048
@@ -9062,7 +9118,7 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 2039
+    m_Bits: 8448
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 2048
@@ -9193,7 +9249,7 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 2039
+    m_Bits: 8448
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 2048
@@ -9592,7 +9648,7 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 2039
+    m_Bits: 8448
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 2048
@@ -9724,7 +9780,7 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 2039
+    m_Bits: 8448
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 2048
@@ -10037,7 +10093,7 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 2039
+    m_Bits: 8448
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 2048
@@ -10120,7 +10176,7 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 2039
+    m_Bits: 8448
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 2048

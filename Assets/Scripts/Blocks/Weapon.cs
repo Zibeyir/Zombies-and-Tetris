@@ -1,4 +1,4 @@
-using DG.Tweening;
+﻿using DG.Tweening;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -8,6 +8,7 @@ public class Weapon : MonoBehaviour
     public BulletType BulletType;
     public Transform FirePoint;
     public WeaponType _WeaponType;
+    private Weapon mergeWeapon;
     [SerializeField] FollowObject followObject;
     [SerializeField] private ParticleSystem? particleSystemFire;
     DraggableBlock draggableBlock;
@@ -18,9 +19,15 @@ public class Weapon : MonoBehaviour
     float healthBlock;
     float healthBlockMax;
     public Building _building;
+    public bool MoveBool=false;
+    public bool MoveBoolGreen = false;
+    public float sqrDist=10;
+    public LayerMask layerMask;
 
     private void Start()
     {
+        layerMask = LayerMask.GetMask("Block");
+
         healthBlock = 30;
         healthBlockMax = 30;
         draggableBlock = GetComponent<DraggableBlock>();
@@ -51,7 +58,45 @@ public class Weapon : MonoBehaviour
         }
      
     }
+    private void FixedUpdate()
+    {
+        if (!MoveBool) return;
 
+        // Rayın başlanğıc nöqtəsi və istiqaməti
+        RaycastHit hit;
+        Ray ray = new Ray(transform.position-new Vector3(0,0.3f,0), -transform.forward);  // Bu, obyektdən irəliləyən bir raydır
+
+        // Ray ilə obyektə baxmaq
+        if (Physics.Raycast(ray, out hit, sqrDist, layerMask)) // `sqrDist` məsafəni təyin edirik
+        {
+
+            // Rayın toxunduğu obyektin tagını yoxlayırıq
+            if (hit.collider.CompareTag("Selectedblock") && hit.collider.gameObject != gameObject)
+            {
+                Debug.Log("Weapon Hit");
+
+                mergeWeapon = hit.collider.GetComponent<Weapon>();
+
+                // Obyektin növü və səviyyəsi eynidirsə, merge etmək
+                if (mergeWeapon._WeaponType == _WeaponType && mergeWeapon.WeaponLevel == WeaponLevel)
+                {
+                    Debug.Log("Weapon Merge");
+                    mergeWeapon.MergeBlockAndLevelUp();
+                    MergeBlockAndDestroy();
+                }
+            }
+        }
+    }
+    private void OnDrawGizmos()
+    {
+        // Gizmos ilə rayı çəkmək
+        if (MoveBool) // Rayı yalnız obyekt hərəkət etdikdə göstəririk
+        {
+            Ray ray = new Ray(transform.position - new Vector3(0, 0.5f, 0), -transform.forward); // Rayın başlanğıcı və istiqaməti
+            Gizmos.color = Color.red; // Rayın rəngi (qırmızı)
+            Gizmos.DrawRay(ray.origin, ray.direction * sqrDist); // Rayın başlanğıc nöqtəsindən təyin olunmuş məsafə qədər çəkilməsi
+        }
+    }
 
     private void Fire()
     {
@@ -80,6 +125,8 @@ public class Weapon : MonoBehaviour
 
     public void MergeBlockAndDestroy()
     {
+        Time.timeScale = 1;
+
         _GameTimeData.Instance.ActiveButtonBlocks.Remove(_building.transform);
 
         Destroy(_building.gameObject);
@@ -91,7 +138,7 @@ public class Weapon : MonoBehaviour
                 g.RemoveDraggableBlock();
             }
         }
-       
+        GridMaterial.Instance.CellsAllMaterial();
         Destroy(draggableBlock.gameObject);
     }
     public int GetDamageByLevel(int level)
