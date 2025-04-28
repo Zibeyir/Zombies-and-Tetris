@@ -20,6 +20,8 @@ public class ObjectPool : MonoBehaviour
         public GameObject Prefab;
         public int Size = 10;
     }
+    public RectTransform CoinImage;
+    public RectTransform CristalImage;
 
     public List<BulletPoolItem> BulletItems;
     public List<EffectPoolItem> EffectItems;
@@ -103,7 +105,37 @@ public class ObjectPool : MonoBehaviour
         obj.SetActive(true);
         return obj;
     }
+    public GameObject SpawnCoin(EffectType type, Vector3 position, Quaternion rotation)
+    {
+        // Debug.Log($"Spawning bullet of type: {type} at position: {position} with rotation: {rotation} and damage: {damage}");
+       
 
+        GameObject obj = GetInactiveFromPool(effectPoolDict[type]);
+
+        if (obj == null)
+        {
+            obj = Instantiate(effectPrefabLookup[type], position, rotation);
+            obj.SetActive(false);
+            obj.transform.SetParent(this.transform);
+            effectPoolDict[type].Enqueue(obj);
+        }
+
+        obj.transform.position = position;
+        obj.transform.rotation = rotation;
+        if (type == EffectType.Coin)
+        {
+            obj.GetComponent<CoinMovement>().FlyToUI(CoinImage, position);
+
+        }
+        else if (type == EffectType.Cristal)
+        {
+            obj.GetComponent<CoinMovement>().FlyToUI(CristalImage, position);
+
+        }
+
+        obj.SetActive(true);
+        return obj;
+    }
     // EFFECT spawn (damage-siz)
     public GameObject SpawnEffect(EffectType type, Vector3 position, Quaternion rotation)
     {
@@ -156,5 +188,12 @@ public enum EffectType
     ZombieBlood,
     ShotgunTouchExplode,
     ShotgunTouchExplodeFire,
-    GrenadeExplode
+    GrenadeExplode,
+    Coin,
+    Cristal
+}
+
+public enum Money
+{
+    Coin,Cristal
 }

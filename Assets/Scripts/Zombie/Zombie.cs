@@ -2,6 +2,8 @@
 using System.Collections;
 using DG.Tweening;
 using UnityEngine.AI;
+using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(NavMeshAgent))]
@@ -9,6 +11,8 @@ public class Zombie : MonoBehaviour
 {
     private EnemyData enemyData;
     public float currentHealth;
+    public float maxHealth;
+
     [SerializeField] string enemyName;
     public float MoveSpeed = 1.5f;
     public float AttackInterval = 3.0f;
@@ -18,20 +22,23 @@ public class Zombie : MonoBehaviour
     private bool dieBool = false;
 
     private Animator animator;
-    private Fence targetFence;
+    public Fence targetFence;
     private float checkDistance = 1f;
 
     public string EnemyId;
 
     private Tween hitTween;
     private NavMeshAgent navAgent;
-
+    public UnityEngine.UI.Slider slider;  // UI Slider komponenti
+    [SerializeField] GameObject healthBarPrefab;
     private void OnEnable()
     {
         InitializeComponents();
         LoadEnemyStats();
         SetupNavAgent();
         FindTargetWithRay();
+        slider.enabled = false;
+        healthBarPrefab.SetActive(false);
     }
 
     private void Update()
@@ -59,6 +66,7 @@ public class Zombie : MonoBehaviour
         }
 
         currentHealth = enemyData.HP;
+        maxHealth = currentHealth;
         Damage = enemyData.Damage;
     }
 
@@ -119,6 +127,10 @@ public class Zombie : MonoBehaviour
 
     public void TakeDamage(int damage, BulletType type,Vector3 hitPoint)
     {
+        healthBarPrefab.SetActive(true);
+
+        slider.enabled = true;
+
         TakeDamageBase(damage, type);
         ObjectPool.Instance.SpawnEffect(EffectType.ZombieBlood, hitPoint,Quaternion.identity);
     }
@@ -129,6 +141,7 @@ public class Zombie : MonoBehaviour
             damage *= 2;
 
         currentHealth -= damage;
+        slider.value = currentHealth / maxHealth;
 
         if (!dieBool && (hitTween == null || !hitTween.IsActive() || !hitTween.IsPlaying()))
         {
@@ -146,19 +159,31 @@ public class Zombie : MonoBehaviour
     }
     public void Die()
     {
+        healthBarPrefab.SetActive(false);
+
         navAgent.enabled = false;
         WaveManager.Instance.RemoveZombie(gameObject);
-
+        //navAgent.isStopped = true;
+        GetComponent<BoxCollider>().enabled = false;
         StartCoroutine(DeathCourtineZombie());
         animator.SetTrigger("Die");
         isAttacking = true;
         if (enemyName == "Trump")
         {
+            ObjectPool.Instance.SpawnCoin(EffectType.Cristal, transform.position, Quaternion.identity);
+
             UIManager.Instance.SetCyristals(5);
+        }
+        else
+        {
+            ObjectPool.Instance.SpawnCoin(EffectType.Coin, transform.position, Quaternion.identity);
+
         }
         //Destroy(gameObject, 5f);
         UIManager.Instance.SetCoins(enemyData.CoinReward);
     }
+
+    
     private IEnumerator DeathCourtineZombie()
     {
         yield return new WaitForSeconds(3f);

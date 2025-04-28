@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class FollowObject : MonoBehaviour
 {
-    [SerializeField] private float followSpeedZ = 20f;
+    [SerializeField] private float followSpeedZ = 30;
     [SerializeField] private float touchScaleFactor = 1.1f;
     [SerializeField] private float mergeScaleFactor = 1.2f;
     [SerializeField] private float touchScaleDuration = 0.1f;
@@ -15,14 +15,15 @@ public class FollowObject : MonoBehaviour
     private MeshRenderer materialWeapon;
     private void OnEnable()
     {
+        followSpeedZ = 30;
         materialWeapon = GetComponent<MeshRenderer>();
         materialWeapon.material = GameDataService.Instance.WeaponMaterials[0];
 
     }
     private void Start()
     {
-        targetParent = transform.parent;
-        transform.parent = null;
+        //targetParent = transform.parent;
+        //transform.parent = null;
     }
     public void SetTransparency(float level, float max)
     {
@@ -70,14 +71,5 @@ public class FollowObject : MonoBehaviour
         }
     }
 
-    private void Update()
-    {
-        if (targetParent == null)
-        {
-            Debug.LogWarning("Target parent is null. Object will stop following.");
-            return;
-        }
-
-        transform.position = Vector3.Lerp(transform.position, targetParent.position, followSpeedZ * Time.unscaledDeltaTime);
-    }
+    
 }

@@ -19314,6 +19314,7 @@ GameObject:
   - component: {fileID: 3306434759576438659}
   - component: {fileID: 7998172810255176928}
   - component: {fileID: 5488769826185634762}
+  - component: {fileID: 5341064452089326359}
   m_Layer: 0
   m_Name: Explotion_granade
   m_TagString: Untagged
@@ -24136,6 +24137,19 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &5341064452089326359
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5480030667989736030}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88f1b0d907eae13449fde80261385b15, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  time: 3
 --- !u!1 &8636410138168089528
 GameObject:
   m_ObjectHideFlags: 0

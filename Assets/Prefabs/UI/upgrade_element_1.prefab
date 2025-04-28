@@ -167,15 +167,15 @@ RectTransform:
   m_GameObject: {fileID: 3941309705299871696}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.41469306, y: 1.1933844, z: 0.56033725}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5222378707396257937}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 108, y: -92}
-  m_SizeDelta: {x: 331.4, y: 71.3}
+  m_AnchoredPosition: {x: 108, y: -83.3}
+  m_SizeDelta: {x: 140, y: 140}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4102523021201385300
 CanvasRenderer:
@@ -205,9 +205,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: a28b79b4ffa724c82a6248fe4cb64fd9, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0cb9beafaa56d3d4bb4f2cea10c8c277, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -666,6 +666,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   upgradeText: {fileID: 4123404408926374451}
   upgradeBuyText: {fileID: 4865244110235220016}
+  upgradeImage: {fileID: 6406210993303829865}
+  gameObject: {fileID: 0}
+  BuyPart: {fileID: 1885948494543807147}
   upgradeButton: {fileID: 1971745089499614412}
 --- !u!1 &8990357563401148170
 GameObject:

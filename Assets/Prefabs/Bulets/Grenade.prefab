@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 3108776433286104807}
   - component: {fileID: 8512508636163820991}
   - component: {fileID: 5975098777936923882}
+  - component: {fileID: 3626253211564761950}
   m_Layer: 0
   m_Name: Grenade
   m_TagString: Untagged
@@ -269,3 +270,16 @@ TrailRenderer:
   m_Autodestruct: 0
   m_Emitting: 1
   m_ApplyActiveColorSpace: 1
+--- !u!114 &3626253211564761950
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7750793525610138105}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19424180fea53f04380528e9b9f5fe53, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeFalse: 5

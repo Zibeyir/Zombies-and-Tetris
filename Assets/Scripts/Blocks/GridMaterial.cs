@@ -21,7 +21,10 @@ public class GridMaterial : MonoBehaviour
         DontDestroyOnLoad(gameObject);
         color = material.color;
     }
-
+    private void Start()
+    {
+        CellsAllMaterial();
+    }
     public void CellsAllMaterial()
     {
         for (int i = 0; i < meshRenderer.Length; i++)

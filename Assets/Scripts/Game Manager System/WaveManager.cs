@@ -20,8 +20,8 @@ public class WaveManager : MonoBehaviour
     private float zombiesWaveUI= 0;
 
     WaveData wave;
-    [SerializeField] float enemyAttackDuration = 7f;
-    [SerializeField] float waveDuration = 10f;
+    float enemyAttackDuration = 2.3f;
+    [SerializeField] float waveDuration = 7f;
 
     private List<GameObject> activeZombies = new List<GameObject>();
 
@@ -40,7 +40,7 @@ public class WaveManager : MonoBehaviour
     {
         waves = waveList;
         currentWave = 0;
-        StartCoroutine(StartNextWave());
+        //StartCoroutine(StartNextWave());
     }
 
     private IEnumerator StartNextWave()
@@ -146,7 +146,7 @@ public class WaveManager : MonoBehaviour
         else
         {
             StartCoroutine(StartNextWave());
-
+            enemyAttackDuration -= .7f;
         }
     }
     public void DestroyAllZombies()

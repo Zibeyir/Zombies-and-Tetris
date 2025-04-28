@@ -28,6 +28,8 @@ public class BulletFireGun : BulletBase
                 ObjectPool.Instance.SpawnEffect(EffectType.ShotgunTouchExplodeFire, transform.position, Quaternion.identity);
                 zombie.TakeDamage(Damage, Type, hitPoint);
             }
+            DisableSelf();
+
         }
         else if (other.CompareTag("Boss"))
         {
@@ -39,9 +41,10 @@ public class BulletFireGun : BulletBase
                 ObjectPool.Instance.SpawnEffect(EffectType.ShotgunTouchExplodeFire, transform.position, Quaternion.identity);
                 boss.TakeDamage(Damage, Type, hitPoint);
             }
+            DisableSelf();
+
         }
 
         // Hər iki halda da bulleti deaktiv et
-        DisableSelf();
     }
 }

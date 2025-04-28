@@ -7,6 +7,8 @@ public class LevelManager : MonoBehaviour
     public static LevelManager Instance { get; private set; }
     public SaveData _SaveData { get; private set; }
     [NonSerialized]public int BlockPrice;
+    [SerializeField] public WeaponUpgrade UpgradeUI;
+    int currentLevel;
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -21,12 +23,15 @@ public class LevelManager : MonoBehaviour
 
     private void Start()
     {
+        //LevelComplete();
         //SaveDataService.DeleteSave();
-        int currentLevel = SaveDataService.Load().CurrentLevel;
-        if (currentLevel == 5)
+        currentLevel = SaveDataService.Load().CurrentLevel;
+        Debug.Log("Current Level: " + currentLevel);
+
+        if (currentLevel == 6)
         {
             SaveDataService.DeleteSave();
-            currentLevel = 0;
+            currentLevel = 5;
         }
         LoadLevel(currentLevel);
     }
@@ -34,12 +39,12 @@ public class LevelManager : MonoBehaviour
     public void LoadLevel(int levelIndex)
     {
         var map = GameDataService.Instance.GetMapData()[levelIndex];
-        var waves = GameDataService.Instance.GetWaveData(); // You may filter waves per map
+         // You may filter waves per map
 
         GameObject fence = GameObject.FindGameObjectWithTag("Fence");
         fence.GetComponent<Fence>().GetHP(map.HPStart);
 
-        WaveManager.Instance.StartWaves(waves);
+        StartWaveForLevel();
     }
 
     public void LevelComplete()
@@ -66,10 +71,31 @@ public class LevelManager : MonoBehaviour
     {
 
     }
+
+    public void StartWaveForLevel()
+    {
+        var waves = GameDataService.Instance.GetWaveData();
+        //UpgradeUI.SetActive(false);
+        
+
+        WaveManager.Instance.StartWaves(waves);
+        if (currentLevel == 0)
+        {
+
+            WaveManager.Instance.StartWavesAfterUpgrade();
+        }
+        else
+        {
+            UpgradeUI.OpenWeaponUpgradePanel(GameDataService.Instance.GetWeaponData());
+
+            //UpgradeUI.SetActive(true);
+            //WaveManager.Instance.StartWaves(waves);
+        }
+    }
     public void GameOver()
     {
         SaveData data = SaveDataService.Load();
-        data.Coins = _SaveData.Coins;
+        data.Cristal = _SaveData.Cristal;
 
         SaveDataService.Save(data);
         UIManager.Instance.ShowLose();

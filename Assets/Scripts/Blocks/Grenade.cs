@@ -13,11 +13,13 @@ public class Grenade : BulletBase
     private float timer;
     private Coroutine travelRoutine;
     private bool exploded = false;
-
+    [SerializeField] protected TrailRenderer trailRenderer;
     [SerializeField] private GameObject explosionEffect;
 
     protected override void OnEnable()
     {
+        trailRenderer?.Clear();
+        trailRenderer.enabled = true;
         base.OnEnable();
         exploded = false;
 
@@ -76,7 +78,7 @@ public class Grenade : BulletBase
             }
         }
 
-        //trailRenderer.Clear();
+        trailRenderer.Clear();
         gameObject.SetActive(false);
     }
 

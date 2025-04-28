@@ -6,17 +6,18 @@ using UnityEngine;
 public class ActiveBlocks : MonoBehaviour
 {
     [SerializeField] Transform[] transformsPoints;
-    [SerializeField] GameObject[] blocks;
+     public static List<GameObject> blocks;
      public List<Transform> currentBlocksA=new List<Transform>();
 
     public Transform target; 
     public float duration = 1f;
-
+    public static int OpenedBlockCount;
     bool ActivedButtonOpened=false;
     //GridSelector gridSelector;
     private void Start()
     {
         //gridSelector = FindAnyObjectByType<GridSelector>();
+        GetOpenedBlocks();
     }
 
 
@@ -28,6 +29,10 @@ public class ActiveBlocks : MonoBehaviour
 
             UIManager.Instance.ActivatedBlockButton(true);                  
         }
+    }
+    public static void GetOpenedBlocks()
+    {
+        blocks = GameDataService.Instance.GetActiveWeapons();
     }
     private bool BlocksInGrid()
     {
@@ -51,7 +56,7 @@ public class ActiveBlocks : MonoBehaviour
         _GameTimeData.Instance.ActiveButtonBlocks.Clear();
         for (int i = 0; i < MaxRandom; i++)
         {
-            GameObject instatedBlock = Instantiate(blocks[Random.Range(0,6)], transformsPoints[i].position, Quaternion.identity);
+            GameObject instatedBlock = Instantiate(blocks[Random.Range(0,blocks.Count)], transformsPoints[i].position, Quaternion.identity);
             instatedBlock.transform.SetParent(transform);
             _GameTimeData.Instance.CurrentBlocks.Add(instatedBlock.transform);
             _GameTimeData.Instance.CurrentBlocksWeapons.Add(instatedBlock.GetComponentInChildren<Weapon>());

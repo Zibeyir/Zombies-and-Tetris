@@ -4,43 +4,55 @@
       "Type": "Ak",
       "Name": "AK-47",
       "Damages": [28, 33, 40, 50, 65],
-      "UnlockCondition": "Başlanğıc",
-      "UnlockCost": 0
+      "UnlockCondition": true,
+      "UnlockCost": 0,
+      "Level": 1,
+      "UpgradeCosts":[10, 10, 10, 800]
     },
     {
       "Type": "Pistol",
       "Name": "Tapança",
       "Damages": [30, 35, 42, 52, 68],
-      "UnlockCondition": "Başlanğıc",
-      "UnlockCost": 0
+      "UnlockCondition": true,
+      "UnlockCost": 0,
+      "Level": 1,
+      "UpgradeCosts":[200, 400, 600, 800]
     },
     {
       "Type": "Grenade",
       "Name": "Qumbara",
       "Damages": [35, 41, 49, 61, 79],
-      "UnlockCondition": "Başlanğıc",
-      "UnlockCost": 0
+      "UnlockCondition": true,
+      "UnlockCost": 0,
+      "Level": 1,
+      "UpgradeCosts":[200, 400, 600, 800]
     },
     {
       "Type": "Firegun",
       "Name": "Odlu top (Fireball)",
       "Damages": [40, 46, 55, 69, 90],
-      "UnlockCondition": "Oyunçu Level 3",
-      "UnlockCost": 500
+      "UnlockCondition": false,
+      "UnlockCost": 10,
+      "Level": 1,
+      "UpgradeCosts":[10, 400, 600, 800]
     },
     {
       "Type": "Shotgun",
       "Name": "Barel silahı (Shotgun)",
       "Damages": [45, 52, 62, 77, 100],
-      "UnlockCondition": "Oyunçu Level 5",
-      "UnlockCost": 1000
+      "UnlockCondition": false,
+      "UnlockCost": 10,
+      "Level": 1,
+      "UpgradeCosts":[200, 400, 600, 800]      
     },
     {
       "Type": "Snaper",
       "Name": "Snayper",
       "Damages": [50, 58, 69, 86, 112],
-      "UnlockCondition": "Oyunçu Level 7",
-      "UnlockCost": 1500
+      "UnlockCondition": false,
+      "UnlockCost": 1000,
+      "Level": 1,
+      "UpgradeCosts":[200, 400, 600, 800]
     }
   ],
   "enemies": [
@@ -66,15 +78,15 @@
   "waves": [
     {
       "WaveNumber": 1,
-      "EnemyCount": 30
+      "EnemyCount": 4
     },
     {
       "WaveNumber": 2,
-      "EnemyCount": 35
+      "EnemyCount": 40
     },
     {
       "WaveNumber": 3,
-      "EnemyCount": 40
+      "EnemyCount": 70
     },
     {
       "WaveNumber": 4,

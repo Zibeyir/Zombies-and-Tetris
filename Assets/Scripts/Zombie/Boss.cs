@@ -58,7 +58,7 @@ public class Boss : MonoBehaviour
             return;
         }
 
-        currentHealth = 1500;
+        currentHealth = 3000;
     }
 
     private void SetupNavAgent()

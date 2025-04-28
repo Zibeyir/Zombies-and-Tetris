@@ -71,7 +71,9 @@ public class BuildingsGrid : MonoBehaviour
         if (flyingBuilding != null)
         {
             // Drag ray-ini yalnız bir dəfə təyin edirik
-            dragRay = mainCamera.ScreenPointToRay(GetInputPosition());
+            Vector3 inputPos = GetInputPosition();
+            inputPos.y += 100f; // Barmağın biraz yuxarısından ray at
+            dragRay = mainCamera.ScreenPointToRay(inputPos);
 
             if (groundPlane.Raycast(dragRay, out float distance))
             {
@@ -107,7 +109,9 @@ public class BuildingsGrid : MonoBehaviour
                 if (IsInputUp())
                 {
                     Time.timeScale = 1;
+                    GridMaterial.Instance.CellsAllMaterial();
 
+                    RemoveBuildingFromGrid(flyingBuilding);
                     flyingBuilding._Weapon.MoveBool = false;
 
                     if (available)
@@ -134,6 +138,8 @@ public class BuildingsGrid : MonoBehaviour
                         // Əgər yer boşdursa, binanı geri qaytarırıq
                         flyingBuilding = null;
                     }
+                    flyingBuilding = null;
+
                     firstAvailable = false;
 
                 }
@@ -148,9 +154,9 @@ public class BuildingsGrid : MonoBehaviour
                 if (Physics.Raycast(dragRay, out hit, Mathf.Infinity, gridLayerMask))
                 {
                     var building = hit.collider.GetComponent<Building>();
-                    if (building != null)
+                    if (building != null&&flyingBuilding==null)
                     {
-                        Time.timeScale = 0.4f;
+                        Time.timeScale = 0.5f;
                         firstAvailable = true;
                         RemoveBuildingFromGrid(building);
                         flyingBuilding = building;
@@ -211,8 +217,16 @@ public class BuildingsGrid : MonoBehaviour
             for (int x = 0; x < width; x++)
             {
                 if (!flyingBuilding.Shape[y, x]) continue;
-
-                grid[placeX + x, placeY + y] = flyingBuilding;
+                try
+                {
+                    // Error verə biləcək kod
+                    grid[placeX + x, placeY + y] = flyingBuilding;
+                }
+                catch
+                {
+                    // Error olsa belə, bu hissəyə düşür və proqram dayanmır
+                    Debug.Log("Xəta oldu amma davam edirik");
+                }
             }
         }
         //flyingBuilding._Weapon.MoveBool = false;

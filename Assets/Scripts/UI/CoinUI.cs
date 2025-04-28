@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 public class CoinUI : MonoBehaviour
@@ -6,7 +6,8 @@ public class CoinUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI coinText;
     [SerializeField] private TextMeshProUGUI cyrstalText;
 
-    public int coinValue;
+    public static float counPercent;
+    public float coinValue;
     public int cyrstalValue;
     private void Start()
     {
@@ -18,10 +19,16 @@ public class CoinUI : MonoBehaviour
     }
     public void UpdateCoins(int amount)
     {
-        coinValue += amount;
-        coinText.text = coinValue.ToString();
-        UIManager.Instance.ActivateButtonForSpawnBlocks(coinValue);
+        float bonus = amount * (counPercent / 100f);
+        float totalAmount = amount + bonus;
 
+        // coinValue-ya əlavə edirik
+        coinValue += totalAmount;
+
+        // Text-i int kimi yuvarlaq yazırıq
+        coinText.text = Mathf.RoundToInt(coinValue).ToString();
+
+        UIManager.Instance.ActivateButtonForSpawnBlocks(Mathf.RoundToInt(coinValue));
     }
     public void UpdateCrystals(int amount)
     {
@@ -31,3 +38,5 @@ public class CoinUI : MonoBehaviour
 
     }
 }
+   
+

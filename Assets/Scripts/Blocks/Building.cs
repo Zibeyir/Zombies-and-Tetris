@@ -29,11 +29,15 @@ public class Building : MonoBehaviour
         Width = Shape.GetLength(1);  // Sütun sayını
         ActiveCell = false;
         PrintShape();
+
         //Weapon weapon = gameObject.GetComponentInChildren<Weapon>(); // DraggableBlock'a Building'i təyin edirik
-        //if (weapon != null)
-        //{
-        //    weapon.SetBuilding(this); // Weapon'a Building'i təyin edirik
-        //}
+        if (_Weapon != null)
+        {
+            if (_Weapon._WeaponType == WeaponType.Shotgun)
+            {
+                transform.position -= new Vector3(0.8f, 0, 0); // Yalnız Shotgun üçün
+            }
+        }
     }
 
     private void UpdateShape()

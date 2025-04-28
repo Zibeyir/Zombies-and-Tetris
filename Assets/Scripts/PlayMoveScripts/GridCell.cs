@@ -32,7 +32,7 @@ public class GridCell : MonoBehaviour
         {
             blockPartsCheck = other.GetComponent<BlockPartsCheck>();
             if (blockPartsCheck != null)
-            {Debug.Log(this.name+" Blockpart: " + blockPartsCheck.weapon.name);
+            {//Debug.Log(this.name+" Blockpart: " + blockPartsCheck.weapon.name);
                 cellRenderer.material.color = blockPartsCheck.weapon.MoveBoolGreen ? Color.green : Color.red;
             }
         }
