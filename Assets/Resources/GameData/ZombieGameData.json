@@ -1,194 +1,222 @@
 {
-"weapons": [
-    {
-      "Type": "Ak",
-      "Name": "AK-47",
-      "Damages": [28, 33, 40, 50, 65],
-      "UnlockCondition": true,
-      "UnlockCost": 0,
-      "Level": 1,
-      "UpgradeCosts":[10, 10, 10, 800]
-    },
-    {
-      "Type": "Pistol",
-      "Name": "Tapança",
-      "Damages": [30, 35, 42, 52, 68],
-      "UnlockCondition": true,
-      "UnlockCost": 0,
-      "Level": 1,
-      "UpgradeCosts":[200, 400, 600, 800]
-    },
-    {
-      "Type": "Grenade",
-      "Name": "Qumbara",
-      "Damages": [35, 41, 49, 61, 79],
-      "UnlockCondition": true,
-      "UnlockCost": 0,
-      "Level": 1,
-      "UpgradeCosts":[200, 400, 600, 800]
-    },
-    {
-      "Type": "Firegun",
-      "Name": "Odlu top (Fireball)",
-      "Damages": [40, 46, 55, 69, 90],
-      "UnlockCondition": false,
-      "UnlockCost": 10,
-      "Level": 1,
-      "UpgradeCosts":[10, 400, 600, 800]
-    },
-    {
-      "Type": "Shotgun",
-      "Name": "Barel silahı (Shotgun)",
-      "Damages": [45, 52, 62, 77, 100],
-      "UnlockCondition": false,
-      "UnlockCost": 10,
-      "Level": 1,
-      "UpgradeCosts":[200, 400, 600, 800]      
-    },
-    {
-      "Type": "Snaper",
-      "Name": "Snayper",
-      "Damages": [50, 58, 69, 86, 112],
-      "UnlockCondition": false,
-      "UnlockCost": 1000,
-      "Level": 1,
-      "UpgradeCosts":[200, 400, 600, 800]
-    }
-  ],
-  "enemies": [
-    {
-      "Type": "fast",
-      "Damage": 5,
-      "HP": 60,
-      "CoinReward": 2
-    },
-    {
-      "Type": "easy",
-      "Damage": 10,
-      "HP": 80,
-      "CoinReward": 4
-    },
-    {
-      "Type": "strong",
-      "Damage": 15,
-      "HP": 200,
-      "CoinReward": 8
-    }
-  ],
-  "waves": [
-    {
-      "WaveNumber": 1,
-      "EnemyCount": 4
-    },
-    {
-      "WaveNumber": 2,
-      "EnemyCount": 40
-    },
-    {
-      "WaveNumber": 3,
-      "EnemyCount": 70
-    },
-    {
-      "WaveNumber": 4,
-      "EnemyCount": 50
-    }
-  ],
-  "gamestages": [
-    {
-      "StageName": "Başlanğıc",
-      "HP": 150
-    },
-    {
-      "StageName": "Silah Level 3+",
-      "HP": 200
-    },
-    {
-      "StageName": "Bütün silahlar açıldıqdan sonra",
-      "HP": 250
-    }
-  ],
-  "upgradecosts": [
-    {
-      "Level": "1 → 2",
-      "Cost": 100,
-      "PowerIncreasePercent": "+15%",
-      "SpeedIncreasePercent": "+10%"
-    },
-    {
-      "Level": "2 → 3",
-      "Cost": 200,
-      "PowerIncreasePercent": "+20%",
-      "SpeedIncreasePercent": "+15%"
-    },
-    {
-      "Level": "3 → 4",
-      "Cost": 400,
-      "PowerIncreasePercent": "+25%",
-      "SpeedIncreasePercent": "+20%"
-    },
-    {
-      "Level": "4 → 5",
-      "Cost": 600,
-      "PowerIncreasePercent": "+30%",
-      "SpeedIncreasePercent": "+25%"
-    }
-  ],
-  "maps": [
-    {
-      "MapNumber": 1,
-      "EnemyStrength": "Zəif + Orta",
-      "WaveCount": 4,
-      "EstimatedCoins": 372,
-      "HPStart": 500,
-      "HPMax": 200
-    },
-    {
-      "MapNumber": 2,
-      "EnemyStrength": "Orta + Zəif",
-      "WaveCount": 4,
-      "EstimatedCoins": "500–600",
-      "HPStart": 600,
-      "HPMax": 250
-    },
-    {
-      "MapNumber": 3,
-      "EnemyStrength": "Orta + Güclü",
-      "WaveCount": 4,
-      "EstimatedCoins": "600–700",
-      "HPStart": 700,
-      "HPMax": 300
-    },
-    {
-      "MapNumber": 4,
-      "EnemyStrength": "Güclü + Orta",
-      "WaveCount": 4,
-      "EstimatedCoins": 800,
-      "HPStart": 700,
-      "HPMax": 350
-    },
-    {
-      "MapNumber": 5,
-      "EnemyStrength": "Güclü",
-      "WaveCount": 4,
-      "EstimatedCoins": 900,
-      "HPStart": 700,
-      "HPMax": 400
-    },
-    {
-      "MapNumber": 6,
-      "EnemyStrength": "Güclü + Mini-Boss",
-      "WaveCount": 4,
-      "EstimatedCoins": "1000+",
-      "HPStart": 700,
-      "HPMax": 500
-    },
-    {
-      "MapNumber": 7,
-      "EnemyStrength": "Güclü + Boss",
-      "WaveCount": 4,
-      "EstimatedCoins": "1200+",
-      "HPStart": 700,
-      "HPMax": 600
-    }
-  ]
+    "weapons": [
+        {
+            "Type": "Ak",
+            "Name": "AK-47",
+            "Damages": [
+                28,
+                33,
+                40,
+                50,
+                65
+            ],
+            "UnlockCondition": true,
+            "UnlockCost": 0,
+            "Level": 4,
+            "UpgradeCosts": [
+                10,
+                10,
+                10,
+                800
+            ]
+        },
+        {
+            "Type": "Pistol",
+            "Name": "Tapança",
+            "Damages": [
+                30,
+                35,
+                42,
+                52,
+                68
+            ],
+            "UnlockCondition": true,
+            "UnlockCost": 0,
+            "Level": 1,
+            "UpgradeCosts": [
+                200,
+                400,
+                600,
+                800
+            ]
+        },
+        {
+            "Type": "Grenade",
+            "Name": "Qumbara",
+            "Damages": [
+                35,
+                41,
+                49,
+                61,
+                79
+            ],
+            "UnlockCondition": true,
+            "UnlockCost": 0,
+            "Level": 1,
+            "UpgradeCosts": [
+                200,
+                400,
+                600,
+                800
+            ]
+        },
+        {
+            "Type": "Firegun",
+            "Name": "Odlu top (Fireball)",
+            "Damages": [
+                40,
+                46,
+                55,
+                69,
+                90
+            ],
+            "UnlockCondition": false,
+            "UnlockCost": 10,
+            "Level": 1,
+            "UpgradeCosts": [
+                10,
+                400,
+                600,
+                800
+            ]
+        },
+        {
+            "Type": "Shotgun",
+            "Name": "Barel silahı (Shotgun)",
+            "Damages": [
+                45,
+                52,
+                62,
+                77,
+                100
+            ],
+            "UnlockCondition": false,
+            "UnlockCost": 10,
+            "Level": 1,
+            "UpgradeCosts": [
+                200,
+                400,
+                600,
+                800
+            ]
+        },
+        {
+            "Type": "Snaper",
+            "Name": "Snayper",
+            "Damages": [
+                50,
+                58,
+                69,
+                86,
+                112
+            ],
+            "UnlockCondition": false,
+            "UnlockCost": 1000,
+            "Level": 1,
+            "UpgradeCosts": [
+                200,
+                400,
+                600,
+                800
+            ]
+        }
+    ],
+    "enemies": [
+        {
+            "Type": "fast",
+            "Damage": 5,
+            "HP": 60,
+            "CoinReward": 2
+        },
+        {
+            "Type": "easy",
+            "Damage": 10,
+            "HP": 80,
+            "CoinReward": 4
+        },
+        {
+            "Type": "strong",
+            "Damage": 15,
+            "HP": 200,
+            "CoinReward": 8
+        }
+    ],
+    "waves": [
+        {
+            "WaveNumber": 1,
+            "EnemyCount": 4
+        },
+        {
+            "WaveNumber": 2,
+            "EnemyCount": 40
+        },
+        {
+            "WaveNumber": 3,
+            "EnemyCount": 70
+        },
+        {
+            "WaveNumber": 4,
+            "EnemyCount": 50
+        }
+    ],
+    "gameStages": [],
+    "upgradeCosts": [],
+    "maps": [
+        {
+            "MapNumber": 1,
+            "EnemyStrength": "Zəif + Orta",
+            "WaveCount": 4,
+            "EstimatedCoins": "372",
+            "HPStart": 500,
+            "HPMax": 200
+        },
+        {
+            "MapNumber": 2,
+            "EnemyStrength": "Orta + Zəif",
+            "WaveCount": 4,
+            "EstimatedCoins": "500–600",
+            "HPStart": 600,
+            "HPMax": 250
+        },
+        {
+            "MapNumber": 3,
+            "EnemyStrength": "Orta + Güclü",
+            "WaveCount": 4,
+            "EstimatedCoins": "600–700",
+            "HPStart": 700,
+            "HPMax": 300
+        },
+        {
+            "MapNumber": 4,
+            "EnemyStrength": "Güclü + Orta",
+            "WaveCount": 4,
+            "EstimatedCoins": "800",
+            "HPStart": 700,
+            "HPMax": 350
+        },
+        {
+            "MapNumber": 5,
+            "EnemyStrength": "Güclü",
+            "WaveCount": 4,
+            "EstimatedCoins": "900",
+            "HPStart": 700,
+            "HPMax": 400
+        },
+        {
+            "MapNumber": 6,
+            "EnemyStrength": "Güclü + Mini-Boss",
+            "WaveCount": 4,
+            "EstimatedCoins": "1000+",
+            "HPStart": 700,
+            "HPMax": 500
+        },
+        {
+            "MapNumber": 7,
+            "EnemyStrength": "Güclü + Boss",
+            "WaveCount": 4,
+            "EstimatedCoins": "1200+",
+            "HPStart": 700,
+            "HPMax": 600
+        }
+    ]
 }

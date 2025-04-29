@@ -11,11 +11,10 @@ public class CoinUI : MonoBehaviour
     public int cyrstalValue;
     private void Start()
     {
-        coinValue = 50;
+        coinValue = 90;
         coinText.text = coinValue.ToString();
         cyrstalValue = LevelManager.Instance._SaveData.Cristal;
         cyrstalText.text = cyrstalValue.ToString();
-        Debug.Log("Coin Value: " + coinValue);
     }
     public void UpdateCoins(int amount)
     {

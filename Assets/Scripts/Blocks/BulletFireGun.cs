@@ -5,7 +5,6 @@ public class BulletFireGun : BulletBase
 
     private void OnEnable()
     {
-        Debug.Log("BulletFireGun OnEnable");
         base.OnEnable();
 
         GameObject closest = FindClosestZombie();

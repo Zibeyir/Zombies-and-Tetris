@@ -42,15 +42,18 @@ public class BuildingsGrid : MonoBehaviour
     private void Start()
     {
         gridLayerMask = 1 << LayerMask.NameToLayer("Grid");
-
-        // Başlanğıcda gridin x:2-4, y:4-5 aralığını blok kimi göstər
-        for (int i = 2; i <= 5; i++)
+        if (GridSize.y > 4)
         {
-            for (int j = 0; j <= 1; j++)
+            for (int i = 2; i <= 5; i++)
             {
-                grid[i, j] = new GameObject("BlockedCell").AddComponent<Building>();
+                for (int j = 0; j <= 1; j++)
+                {
+                    grid[i, j] = new GameObject("BlockedCell").AddComponent<Building>();
+                }
             }
         }
+        // Başlanğıcda gridin x:2-4, y:4-5 aralığını blok kimi göstər
+       
     }
 
     public void StartPlacingBuilding(Building buildingPrefab)

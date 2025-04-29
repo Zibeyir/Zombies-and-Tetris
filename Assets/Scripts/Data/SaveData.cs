@@ -30,7 +30,7 @@ public static class SaveDataService
         if (File.Exists(SaveFilePath))
         {
             string json = File.ReadAllText(SaveFilePath);
-            Debug.Log("SaveData loaded from: " + SaveFilePath);
+            //Debug.Log("SaveData loaded from: " + SaveFilePath);
             return JsonUtility.FromJson<SaveData>(json);
         }
         return new SaveData(); // default

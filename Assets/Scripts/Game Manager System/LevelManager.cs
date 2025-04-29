@@ -9,6 +9,9 @@ public class LevelManager : MonoBehaviour
     [NonSerialized]public int BlockPrice;
     [SerializeField] public WeaponUpgrade UpgradeUI;
     int currentLevel;
+
+    [SerializeField] private GameObject bigArea;
+    [SerializeField] private GameObject smallArea;
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -24,15 +27,25 @@ public class LevelManager : MonoBehaviour
     private void Start()
     {
         //LevelComplete();
-        //SaveDataService.DeleteSave();
+        SaveDataService.DeleteSave();
         currentLevel = SaveDataService.Load().CurrentLevel;
         Debug.Log("Current Level: " + currentLevel);
-
-        if (currentLevel == 6)
+        if (currentLevel == 0)
         {
-            SaveDataService.DeleteSave();
-            currentLevel = 5;
+            bigArea.SetActive(false);
+            smallArea.SetActive(true);
         }
+        else
+        {
+            bigArea.SetActive(true);
+            smallArea.SetActive(false);
+            if (currentLevel == 6)
+            {
+                SaveDataService.DeleteSave();
+                currentLevel = 5;
+            }
+        }
+        
         LoadLevel(currentLevel);
     }
 
@@ -58,7 +71,15 @@ public class LevelManager : MonoBehaviour
         data.Cristal = _SaveData.Cristal+50;
         SaveDataService.Save(data);
     }
+    public void UpgradeComplete()
+    {
+        
 
+        SaveData data = SaveDataService.Load();
+       
+        data.Cristal = _SaveData.Cristal;
+        SaveDataService.Save(data);
+    }
     public void NextLevel()
     {
         SceneManager.LoadScene(0);

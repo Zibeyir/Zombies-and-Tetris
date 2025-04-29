@@ -16,6 +16,7 @@ public class Weapon : MonoBehaviour
     int damage;
     public string Name;
     public int[] DamageByLevel = new int[5];
+    int WeaponDamage;
     float healthBlock;
     float healthBlockMax;
     public Building _building;
@@ -32,7 +33,7 @@ public class Weapon : MonoBehaviour
         healthBlockMax = 30;
         draggableBlock = GetComponent<DraggableBlock>();
         DamageByLevel = GameDataService.Instance.GetWeapon(_WeaponType).Damages;
-
+        //WeaponDamage = 
     }
     private void OnCollisionEnter(Collision collision)
     {

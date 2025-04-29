@@ -78,7 +78,6 @@ public class Building : MonoBehaviour
     }
     public void PrintShape()
     {
-        Debug.Log("Shape: " + gameObject.name); // Oyun obyekti adını çap edirik
         // Hər bir elementini çap edirik
         for (int y = 0; y < Height; y++)
         {
@@ -87,7 +86,6 @@ public class Building : MonoBehaviour
             {
                 row += Shape[y, x] ? "1 " : "0 "; // True/False dəyərləri çap edirik
             }
-            Debug.Log(row); // Hər satırı bir string kimi çap edirik
         }
     }
 

@@ -54,7 +54,6 @@ public class WaveManager : MonoBehaviour
         }
         else
         {
-            Debug.Log(currentWave + " Start new Wave" + waves[currentWave].WaveNumber);
 
             wave = waves[currentWave];
             //GameEvents.OnWaveStarted?.Invoke(currentWave + 1);

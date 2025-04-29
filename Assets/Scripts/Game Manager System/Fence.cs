@@ -8,29 +8,31 @@ public class Fence : MonoBehaviour
     public static float HPMax = 100;
 
     [Header("Child Settings")]
-    public static List<MeshRenderer> childRenderers = new List<MeshRenderer>();
-    public static int childrenCount;
-    public static float healthPerChild;
-    public static float previousHealth;
-    public static int previousChildIndex;
-    public static int currentChildIndex;
+    public  List<MeshRenderer> childRenderers = new List<MeshRenderer>();
+    public  int childrenCount;
+    public  float healthPerChild;
+    public  float previousHealth;
+    public  int previousChildIndex;
+    public  int currentChildIndex;
     public  List<MeshRenderer> childRenderersP = new List<MeshRenderer>();
+
+    private float fadeOutTime = .3f;
     private void Start()
     {
-        InitializeChildren();
+        //InitializeChildren();
     }
 
     private void InitializeChildren()
     {
-        childRenderers.Clear();
-        foreach (Transform child in transform)
-        {
-            MeshRenderer rend = child.GetComponent<MeshRenderer>();
-            if (rend != null)
-            {
-                childRenderers.Add(rend);
-            }
-        }
+        //childRenderers.Clear();
+        //foreach (Transform child in transform)
+        //{
+        //    MeshRenderer rend = child.GetComponent<MeshRenderer>();
+        //    if (rend != null)
+        //    {
+        //        childRenderers.Add(rend);
+        //    }
+        //}
         childRenderersP = childRenderers;
         childrenCount = childRenderers.Count;
         if (childrenCount == 0)
@@ -46,7 +48,7 @@ public class Fence : MonoBehaviour
     {
         HPMax = hp;
         HP = hp;
-        Debug.Log(hp + " HP");
+        InitializeChildren();
     }
     public void TakeDamage(int amount)
     {
@@ -90,7 +92,6 @@ public class Fence : MonoBehaviour
 
     public void FadeOutChild(Renderer rend)
     {
-        Debug.Log("FadeOutChild");
         if (rend == null) return;
 
         Material mat = rend.materials[0];
@@ -98,17 +99,16 @@ public class Fence : MonoBehaviour
         Color transparentColor = new Color(originalColor.r, originalColor.g, originalColor.b, 0);
 
         Sequence seq = DOTween.Sequence();
-        seq.Append(mat.DOColor(transparentColor, "_BaseColor", .2f)) // Sönür
-           .Append(mat.DOColor(originalColor, "_BaseColor", .2f))    // Yenidən yanır
-           .Append(mat.DOColor(transparentColor, "_BaseColor", .2f)) // Sönür
-           .Append(mat.DOColor(originalColor, "_BaseColor", .2f))    // Yenidən yanır
-           .Append(mat.DOColor(transparentColor, "_BaseColor", .2f)) // Tamamilə sönür
+        seq.Append(mat.DOColor(transparentColor, "_BaseColor", fadeOutTime)) // Sönür
+           .Append(mat.DOColor(originalColor, "_BaseColor", fadeOutTime))    // Yenidən yanır
+           .Append(mat.DOColor(transparentColor, "_BaseColor", fadeOutTime)) // Sönür
+           .Append(mat.DOColor(originalColor, "_BaseColor", fadeOutTime))    // Yenidən yanır
+           .Append(mat.DOColor(transparentColor, "_BaseColor", fadeOutTime)) // Tamamilə sönür
            .OnComplete(() => rend.enabled = false); // düz
     }
 
     public void FadeInChild(Renderer rend)
     {
-        Debug.Log("FadeInChild");
         if (rend == null) return;
 
         rend.enabled = true; // Önəmli: əvvəldən görünməzdirsə, açmaq lazımdır

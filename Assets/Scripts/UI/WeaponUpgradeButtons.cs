@@ -94,10 +94,13 @@ public class WeaponUpgradeButtons : MonoBehaviour
         if (UnlockCondition)
         {
             weaponData.Level++;
-           Debug.Log(weaponData.Level+" Level Weapon");
+            UIManager.Instance.SetCyristals(UpgradeCosts);
+
+            Debug.Log(weaponData.Level+" Level Weapon");
         }
         else
         {
+            UIManager.Instance.SetCyristals(UnlockCost);
 
             weaponData.UnlockCondition = true;
             Debug.Log(weaponData.UnlockCondition + " UnlockCondition");
