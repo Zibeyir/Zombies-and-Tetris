@@ -25,7 +25,7 @@ public class GameDataService : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-        SaveFilePath = Path.Combine(Application.persistentDataPath, "/Resources/GameData/ZombieGameData");
+        SaveFilePath = Path.Combine(Application.persistentDataPath, "GameData/ZombieGameData");
         Instance = this;
         DontDestroyOnLoad(gameObject);
         LoadData();

@@ -69,13 +69,13 @@ public class WaveManager : MonoBehaviour
         }
           
     }
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Zombie"))
-        {
-            activeZombies.Add(other.gameObject);
-        }
-    }
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    if (other.CompareTag("Zombie"))
+    //    {
+    //        activeZombies.Add(other.gameObject);
+    //    }
+    //}
     private void SpawnBoss()
     {
         
@@ -84,7 +84,7 @@ public class WaveManager : MonoBehaviour
         Vector3 spawnPos = GenerateValidSpawnPosition();
 
         GameObject zombie = Instantiate(selectedZombiePrefab, spawnPos, SpawnPointMax.rotation);
-        //activeZombies.Add(zombie);
+        activeZombies.Add(zombie);
     }
     private void SpawnZombie()
     {
@@ -99,7 +99,7 @@ public class WaveManager : MonoBehaviour
         Vector3 spawnPos = GenerateValidSpawnPosition();
 
         GameObject zombie = Instantiate(selectedZombiePrefab, spawnPos, SpawnPointMax.rotation);
-        //activeZombies.Add(zombie);
+        activeZombies.Add(zombie);
     }
 
     private Vector3 GenerateValidSpawnPosition()

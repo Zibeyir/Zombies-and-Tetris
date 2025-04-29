@@ -75,14 +75,12 @@ public class Weapon : MonoBehaviour
             // Rayın toxunduğu obyektin tagını yoxlayırıq
             if (hit.collider.CompareTag("Selectedblock") && hit.collider.gameObject != gameObject)
             {
-                Debug.Log("Weapon Hit");
 
                 mergeWeapon = hit.collider.GetComponent<Weapon>();
 
                 // Obyektin növü və səviyyəsi eynidirsə, merge etmək
                 if (mergeWeapon._WeaponType == _WeaponType && mergeWeapon.WeaponLevel == WeaponLevel)
                 {
-                    Debug.Log("Weapon Merge");
                     mergeWeapon.MergeBlockAndLevelUp();
                     MergeBlockAndDestroy();
                 }

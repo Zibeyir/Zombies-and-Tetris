@@ -18,7 +18,6 @@ public class GridMaterial : MonoBehaviour
         }
 
         Instance = this;
-        DontDestroyOnLoad(gameObject);
         color = material.color;
     }
     private void Start()

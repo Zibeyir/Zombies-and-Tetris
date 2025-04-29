@@ -27,7 +27,7 @@ public class LevelManager : MonoBehaviour
     private void Start()
     {
         //LevelComplete();
-        //SaveDataService.DeleteSave();
+        //aveDataService.DeleteSave();
         currentLevel = SaveDataService.Load().CurrentLevel;
         Debug.Log("Current Level: " + currentLevel);
         if (currentLevel == 0)
