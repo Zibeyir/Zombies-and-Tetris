@@ -48,7 +48,18 @@ public class WaveManager : MonoBehaviour
         yield return new WaitForSeconds(2f);
         if(waves[currentWave].WaveNumber >= 4)
         {
+            wave = waves[currentWave];
+           
+            zombiesAlive = wave.EnemyCount+10;
             SpawnBoss();
+            Debug.Log("Enemy Boss "+ wave.EnemyCount);
+
+            for (int i = 0; i < wave.EnemyCount; i++)
+            {
+                Debug.Log("Enemy Boss");
+                SpawnZombie();
+                yield return new WaitForSeconds(enemyAttackDuration);
+            }
             Debug.Log("All waves completed!");
             yield break;
         }
@@ -145,7 +156,7 @@ public class WaveManager : MonoBehaviour
     {
         if (waves[currentWave].WaveNumber >= 4)
         {
-            SpawnBoss();
+            StartCoroutine(StartNextWave());
             Debug.Log("All waves completed!");
 
         }

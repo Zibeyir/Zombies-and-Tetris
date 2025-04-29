@@ -15,9 +15,9 @@
             "Level": 1,
             "UpgradeCosts": [
                 10,
-                10,
-                10,
-                800
+                20,
+                30,
+                40
             ]
         },
         {
@@ -34,10 +34,10 @@
             "UnlockCost": 0,
             "Level": 1,
             "UpgradeCosts": [
-                200,
-                400,
-                600,
-                800
+                15,
+                25,
+                35,
+                45
             ]
         },
         {
@@ -54,10 +54,10 @@
             "UnlockCost": 0,
             "Level": 1,
             "UpgradeCosts": [
-                200,
-                400,
-                600,
-                800
+                20,
+                30,
+                40,
+                50
             ]
         },
         {
@@ -71,13 +71,13 @@
                 90
             ],
             "UnlockCondition": false,
-            "UnlockCost": 10,
+            "UnlockCost": 100,
             "Level": 1,
             "UpgradeCosts": [
-                10,
-                400,
-                600,
-                800
+                25,
+                35,
+                45,
+                55
             ]
         },
         {
@@ -91,13 +91,13 @@
                 100
             ],
             "UnlockCondition": false,
-            "UnlockCost": 10,
+            "UnlockCost": 300,
             "Level": 1,
             "UpgradeCosts": [
-                200,
-                400,
-                600,
-                800
+                30,
+                40,
+                50,
+                60
             ]
         },
         {
@@ -111,13 +111,13 @@
                 112
             ],
             "UnlockCondition": false,
-            "UnlockCost": 1000,
+            "UnlockCost": 500,
             "Level": 1,
             "UpgradeCosts": [
-                200,
-                400,
-                600,
-                800
+                35,
+                45,
+                55,
+                65
             ]
         }
     ],
@@ -156,7 +156,7 @@
         },
         {
             "WaveNumber": 4,
-            "EnemyCount": 50
+            "EnemyCount": 20
         }
     ],
     "gameStages": [],

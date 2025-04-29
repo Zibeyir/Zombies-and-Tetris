@@ -15,7 +15,8 @@ public class ActiveBlocks : MonoBehaviour
     public static int OpenedBlockCount;
     bool ActivedButtonOpened=false;
     GameObject instatedBlock;
-    [SerializeField] GameObject[] TestDerstroys;
+    [SerializeField] TutorialStarter tutorialStarter;
+   // [SerializeField] GameObject[] TestDerstroys;
     //GridSelector gridSelector;
     private void Start()
     {
@@ -54,15 +55,7 @@ public class ActiveBlocks : MonoBehaviour
         {
             if (!block.GetComponent<Building>().ActiveCell) return false;
         }
-        try
-        {
-            
-        }
-        catch (System.Exception)
-        {
-            Destroy(TestDerstroys[6]);
-            throw;
-        }
+    
 
         return true;
     }
@@ -98,6 +91,9 @@ public class ActiveBlocks : MonoBehaviour
     }
     private void ActiveBlocksScript()
     {
+        Debug.Log("ActiveBlocksScript");
+        tutorialStarter.StartHandutorial(transformsPoints[1]);
+
         currentBlocksA = _GameTimeData.Instance.ActiveButtonBlocks;
         foreach (var block in currentBlocksA) { 
             block.transform.SetParent(null);

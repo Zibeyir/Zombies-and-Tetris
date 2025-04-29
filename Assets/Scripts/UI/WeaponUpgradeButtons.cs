@@ -29,8 +29,8 @@ public class WeaponUpgradeButtons : MonoBehaviour
         UnlockCost = _weaponData.UnlockCost;
         Level = _weaponData.Level;
         if(Level > 4) Level = 4; // max level is 5
-        Attack = _weaponData.Damages[Level-1];
-        UpgradeCosts = _weaponData.UpgradeCosts[Level-1];
+        Attack = _weaponData.Damages[(Level-1> _weaponData.Damages.Length)? _weaponData.Damages.Length-1 : (Level-1)];
+        UpgradeCosts = _weaponData.UpgradeCosts[(Level - 1 > _weaponData.UpgradeCosts.Length) ? _weaponData.UpgradeCosts.Length - 1 : (Level - 1)];
 
         AttackText.text = Attack.ToString();
         UnlockConditionText.text = UnlockCondition.ToString();

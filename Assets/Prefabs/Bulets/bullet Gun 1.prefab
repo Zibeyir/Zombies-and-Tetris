@@ -264,7 +264,7 @@ MonoBehaviour:
   Type: 0
   Speed: 10
   Damage: 20
-  trailRenderer: {fileID: 2636719087634245784}
+  closest: {fileID: 0}
 --- !u!1001 &5563788925083028422
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -277,6 +277,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Bullet_vfx
+      objectReference: {fileID: 0}
+    - target: {fileID: 1318379143492715230, guid: 87f7bfdb46f08624f8b009e53f582048,
+        type: 3}
+      propertyPath: InitialModule.startLifetime.scalar
+      value: 0.07
       objectReference: {fileID: 0}
     - target: {fileID: 4310875764681565177, guid: 87f7bfdb46f08624f8b009e53f582048,
         type: 3}
