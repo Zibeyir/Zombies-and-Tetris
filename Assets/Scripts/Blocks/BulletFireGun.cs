@@ -6,8 +6,12 @@ public class BulletFireGun : BulletBase
     private void OnEnable()
     {
         base.OnEnable();
-
-        GameObject closest = FindClosestZombie();
+        //GameObject closest = FindClosestZombie();
+        //if (closest == null)
+        //{
+        //    gameObject.SetActive(false);
+        //    return;
+        //}
         moveDirection = (closest != null)
             ? (closest.transform.position - transform.position).normalized
             : -Vector3.forward;

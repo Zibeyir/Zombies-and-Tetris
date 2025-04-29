@@ -6,7 +6,7 @@ public abstract class BulletBase : MonoBehaviour
     public BulletType Type;
     public float Speed = 10f;
     public int Damage = 20;
-
+    public GameObject closest;
     protected Vector3 moveDirection;
     protected Coroutine disableRoutine;
     //[SerializeField] protected TrailRenderer trailRenderer;
@@ -15,7 +15,12 @@ public abstract class BulletBase : MonoBehaviour
     {
         //trailRenderer?.Clear();
         //trailRenderer.enabled = true;
-
+        closest = FindClosestZombie();
+        if (closest == null)
+        {
+            gameObject.SetActive(false);
+            return;
+        }
         if (disableRoutine != null)
             StopCoroutine(disableRoutine);
 

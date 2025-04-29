@@ -18,12 +18,17 @@ public class Grenade : BulletBase
 
     protected override void OnEnable()
     {
+        GameObject closestZombie = FindClosestZombie();
+        if(closestZombie == null)
+        {
+            gameObject.SetActive(false);
+            return;
+        }
         trailRenderer?.Clear();
         trailRenderer.enabled = true;
         base.OnEnable();
         exploded = false;
 
-        GameObject closestZombie = FindClosestZombie();
         if (closestZombie != null)
         {
             startPos = transform.position;

@@ -6,7 +6,7 @@ public class BulletMachineGun : BulletBase
     {
         base.OnEnable();
 
-        GameObject closest = FindClosestZombie();
+        
         moveDirection = (closest != null)
             ? (closest.transform.position - transform.position).normalized
             : -Vector3.forward;

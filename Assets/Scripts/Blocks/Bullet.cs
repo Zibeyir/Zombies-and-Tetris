@@ -5,8 +5,8 @@ public class Bullet : BulletBase
     private void OnEnable()
     {
         base.OnEnable();
-
-        GameObject closest = FindClosestZombie();
+       
+        
         moveDirection = (closest != null)
             ? (closest.transform.position - transform.position).normalized
             : -Vector3.forward;
