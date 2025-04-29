@@ -124,7 +124,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   initialSpeed: 5
   maxSpeed: 8
-  minSpeed: 4
+  minSpeed: 6
   bounceForce: 1
   rotationSpeed: 0
   ZPosition: -10.7094

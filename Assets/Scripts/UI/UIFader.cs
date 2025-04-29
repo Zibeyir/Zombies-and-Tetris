@@ -10,9 +10,11 @@ public class UIFader : MonoBehaviour
     private Button button;
     private void Start()
     {
-        button=GetComponent<Button>();
+        button =GetComponent<Button>();
         graphics.AddRange(GetComponentsInChildren<Image>(includeInactive: true));
         graphics.AddRange(GetComponentsInChildren<TextMeshProUGUI>(includeInactive: true));
+        FadeOutAll(.1f);
+
     }
     public void FadeINOutAll(bool boolButton, float duration = 0.5f)
     {

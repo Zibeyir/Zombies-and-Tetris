@@ -103,7 +103,7 @@ MonoBehaviour:
   Type: 0
   Speed: 10
   Damage: 20
-  ExplosionRadius: 3
+  ExplosionRadius: 1
   ArcHeight: 5
   MaxDistance: 5
   trailRenderer: {fileID: 5975098777936923882}

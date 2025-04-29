@@ -6,7 +6,8 @@ using System.IO;
 public class GameDataService : MonoBehaviour
 {
     public static GameDataService Instance { get; private set; }
-    private string SaveFilePath ;
+
+    private string SaveFilePath;
     public List<ActiveWeapon> activeWeapons;
 
     public ZombieGameData Data;
@@ -24,10 +25,9 @@ public class GameDataService : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-
+        SaveFilePath = Path.Combine(Application.persistentDataPath, "/Resources/GameData/ZombieGameData");
         Instance = this;
         DontDestroyOnLoad(gameObject);
-        SaveFilePath = (Application.dataPath + "/Resources/GameData/ZombieGameData.json");
         LoadData();
     }
     private void Start()
@@ -37,11 +37,10 @@ public class GameDataService : MonoBehaviour
     }
     private void LoadData()
     {
-        //string sataPath=Application.dataPath+ "/Resources/GameData/ZombieGameData.json";
-        string json = File.ReadAllText(SaveFilePath);
+        TextAsset json = Resources.Load<TextAsset>("GameData/ZombieGameData");
         if (json != null)
         {
-            Data = JsonUtility.FromJson<ZombieGameData>(json);
+            Data = JsonUtility.FromJson<ZombieGameData>(json.text);
             Debug.Log("ZombieGameData.json  found in Resources/GameData/");
 
         }
@@ -50,7 +49,10 @@ public class GameDataService : MonoBehaviour
             Debug.LogError("ZombieGameData.json not found in Resources/GameData/");
         }
     }
-  
+    public EnemyData GetEnemyById(string id)
+    {
+        return Data.enemies.FirstOrDefault(e => e.Type == id);
+    }
 
     public void Initialize()
     {
@@ -64,39 +66,6 @@ public class GameDataService : MonoBehaviour
             }
         }
     }
-   
-    public void SaveData()
-    {
-        Debug.Log("Saving game data...");
-        try
-        {
-            // JSON formatına serialize
-            string json = JsonUtility.ToJson(Data, true);
-
-            // Əgər folder yoxdursa yarat
-            string folderPath = Path.GetDirectoryName(SaveFilePath);
-            if (!Directory.Exists(folderPath))
-            {
-                Directory.CreateDirectory(folderPath);
-            }
-
-            // JSON faylı yaz
-            File.WriteAllText(SaveFilePath, json);
-
-            Debug.Log("Game data saved to: " + SaveFilePath);
-        }
-        catch (System.Exception ex)
-        {
-            Debug.LogError("Failed to save game data: " + ex.Message);
-        }
-    }
-
-    public EnemyData GetEnemyById(string id)
-    {
-        return Data.enemies.FirstOrDefault(e => e.Type == id);
-    }
-
-    #region WeaponData
     public List<GameObject> GetActiveWeapons()
     {
         List<GameObject> activeWeaponObjects = new List<GameObject>();
@@ -139,6 +108,30 @@ public class GameDataService : MonoBehaviour
         SaveData();
     }
 
+    public void SaveData()
+    {
+        try
+        {
+            // JSON formatına serialize
+            string json = JsonUtility.ToJson(Data, true);
+
+            // Əgər folder yoxdursa yarat
+            string folderPath = Path.GetDirectoryName(SaveFilePath);
+            if (!Directory.Exists(folderPath))
+            {
+                Directory.CreateDirectory(folderPath);
+            }
+
+            // JSON faylı yaz
+            File.WriteAllText(SaveFilePath, json);
+
+            Debug.Log("Game data saved to: " + SaveFilePath);
+        }
+        catch (System.Exception ex)
+        {
+            Debug.LogError("Failed to save game data: " + ex.Message);
+        }
+    }
     public WeaponData GetWeapon(WeaponType type)
     {
         if (weaponDict == null || weaponDict.Count == 0)
@@ -155,17 +148,13 @@ public class GameDataService : MonoBehaviour
         return null;
     }
 
-    #endregion
-
-    #region Access methods
+    // Access methods
     public List<WeaponData> GetWeaponData() => Data.weapons;
     public List<EnemyData> GetEnemyData() => Data.enemies;
     public List<WaveData> GetWaveData() => Data.waves;
     public List<GameStageData> GetStageData() => Data.gameStages;
     public List<UpgradeCostData> GetUpgradeCosts() => Data.upgradeCosts;
     public List<MapData> GetMapData() => Data.maps;
-
-    #endregion
 }
 
 [System.Serializable]

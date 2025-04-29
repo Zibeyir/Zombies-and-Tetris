@@ -1,4 +1,5 @@
 ﻿
+using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
@@ -13,14 +14,24 @@ public class ActiveBlocks : MonoBehaviour
     public float duration = 1f;
     public static int OpenedBlockCount;
     bool ActivedButtonOpened=false;
+    GameObject instatedBlock;
+    [SerializeField] GameObject[] TestDerstroys;
     //GridSelector gridSelector;
     private void Start()
     {
         //gridSelector = FindAnyObjectByType<GridSelector>();
         GetOpenedBlocks();
+       StartCoroutine(StartTime());
     }
 
+    IEnumerator StartTime()
+    {
+        yield return new WaitForSeconds(1);
+        ActivedButtonOpened = false;
+        SpawnNewBlocks(3);
 
+        transform.DOMove(target.position, duration).OnComplete(() => ActiveBlocksScript());
+    }
     public void ActivetedBlockButtonforSpawn(int coin)
     {
         //Debug.Log("ActiveButtonFunc "+(coin >= LevelManager.Instance.BlockPrice)+" "+ BlocksInGrid());
@@ -38,9 +49,21 @@ public class ActiveBlocks : MonoBehaviour
     {
         currentBlocksA = _GameTimeData.Instance.ActiveButtonBlocks;
 
-        foreach (var block in currentBlocksA) {
+
+        foreach (var block in currentBlocksA)
+        {
             if (!block.GetComponent<Building>().ActiveCell) return false;
         }
+        try
+        {
+            
+        }
+        catch (System.Exception)
+        {
+            Destroy(TestDerstroys[6]);
+            throw;
+        }
+
         return true;
     }
     public void AddBlocks()
@@ -54,13 +77,22 @@ public class ActiveBlocks : MonoBehaviour
     public void SpawnNewBlocks(int MaxRandom)
     {
         _GameTimeData.Instance.ActiveButtonBlocks.Clear();
+
+        
         for (int i = 0; i < MaxRandom; i++)
         {
-            GameObject instatedBlock = Instantiate(blocks[Random.Range(0,blocks.Count)], transformsPoints[i].position, Quaternion.identity);
+            instatedBlock = Instantiate(blocks[Random.Range(0, blocks.Count)], transformsPoints[i].position, Quaternion.identity);
             instatedBlock.transform.SetParent(transform);
             _GameTimeData.Instance.CurrentBlocks.Add(instatedBlock.transform);
             _GameTimeData.Instance.CurrentBlocksWeapons.Add(instatedBlock.GetComponentInChildren<Weapon>());
+            //_GameTimeData.Instance.CurrentBlocksWeapons.Add(instatedBlock.GetComponentInChildren<Weapon>());
+
             _GameTimeData.Instance.ActiveButtonBlocks.Add(instatedBlock.transform);
+
+           
+            //_GameTimeData.Instance.CurrentBlocks.Add(instatedBlock.transform);
+            //_GameTimeData.Instance.CurrentBlocksWeapons.Add(instatedBlock.GetComponentInChildren<Weapon>());
+            //_GameTimeData.Instance.ActiveButtonBlocks.Add(instatedBlock.transform);
             //gridSelector.AddBlocks(instatedBlock.transform,instatedBlock.GetComponent<Weapon>());
         }
     }

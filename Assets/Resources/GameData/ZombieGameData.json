@@ -12,7 +12,7 @@
             ],
             "UnlockCondition": true,
             "UnlockCost": 0,
-            "Level": 4,
+            "Level": 1,
             "UpgradeCosts": [
                 10,
                 10,

@@ -16,7 +16,7 @@ public class Weapon : MonoBehaviour
     int damage;
     public string Name;
     public int[] DamageByLevel = new int[5];
-    int WeaponDamage;
+    int WeaponLevelfromUpgrade;
     float healthBlock;
     float healthBlockMax;
     public Building _building;
@@ -33,6 +33,7 @@ public class Weapon : MonoBehaviour
         healthBlockMax = 30;
         draggableBlock = GetComponent<DraggableBlock>();
         DamageByLevel = GameDataService.Instance.GetWeapon(_WeaponType).Damages;
+        WeaponLevelfromUpgrade = (GameDataService.Instance.GetWeapon(_WeaponType).Level - 1)*5 ;
         //WeaponDamage = 
     }
     private void OnCollisionEnter(Collision collision)
@@ -103,12 +104,12 @@ public class Weapon : MonoBehaviour
     {
         if (BulletType==BulletType.Shotgun)
         {
-            ObjectPool.Instance.SpawnBullet(BulletType, FirePoint.position, FirePoint.rotation, DamageByLevel[WeaponLevel]);
+            ObjectPool.Instance.SpawnBullet(BulletType, FirePoint.position, FirePoint.rotation, DamageByLevel[WeaponLevel]+ WeaponLevelfromUpgrade);
 
         }
         else
         {
-            ObjectPool.Instance.SpawnBullet(BulletType, FirePoint.position, FirePoint.rotation, DamageByLevel[WeaponLevel]);
+            ObjectPool.Instance.SpawnBullet(BulletType, FirePoint.position, FirePoint.rotation, DamageByLevel[WeaponLevel]+ WeaponLevelfromUpgrade);
 
         }
     }

@@ -90,7 +90,7 @@ public class UpgradeManager : MonoBehaviour
             controller.gameObject = UpgradePanel;
             if(count == 2)
             {
-                controller.BuyPart.SetActive(true);
+                controller.BuyPart.SetActive(false);
             }
             else
             {

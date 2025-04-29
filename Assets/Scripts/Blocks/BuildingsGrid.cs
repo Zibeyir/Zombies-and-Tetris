@@ -274,18 +274,18 @@ public class BuildingsGrid : MonoBehaviour
 #endif
     }
 
-    private void OnDrawGizmos()
-    {
-        if (grid == null) grid = new Building[GridSize.x, GridSize.y];
+    //private void OnDrawGizmos()
+    //{
+    //    if (grid == null) grid = new Building[GridSize.x, GridSize.y];
 
-        for (int x = 0; x < GridSize.x; x++)
-        {
-            for (int y = 0; y < GridSize.y; y++)
-            {
-                Vector3 center = transform.position + new Vector3(x * cellSize, 0, y * cellSize);
-                Gizmos.color = grid[x, y] == null ? Color.gray : Color.red;
-                Gizmos.DrawWireCube(center, Vector3.one * cellSize);
-            }
-        }
-    }
+    //    for (int x = 0; x < GridSize.x; x++)
+    //    {
+    //        for (int y = 0; y < GridSize.y; y++)
+    //        {
+    //            Vector3 center = transform.position + new Vector3(x * cellSize, 0, y * cellSize);
+    //            Gizmos.color = grid[x, y] == null ? Color.gray : Color.red;
+    //            Gizmos.DrawWireCube(center, Vector3.one * cellSize);
+    //        }
+    //    }
+    //}
 }
